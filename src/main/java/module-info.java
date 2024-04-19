@@ -1,6 +1,7 @@
 module com.example.pathpilotfx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.pathpilotfx to javafx.fxml;

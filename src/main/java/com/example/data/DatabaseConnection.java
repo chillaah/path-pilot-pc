@@ -1,4 +1,4 @@
-package main.java.com.example.data;
+package com.example.data;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;

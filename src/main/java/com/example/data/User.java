@@ -1,4 +1,4 @@
-package main.java.com.example.data;
+package com.example.data;
 import java.sql.Date;
 public class User {
     private int userID;

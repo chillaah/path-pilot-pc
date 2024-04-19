@@ -1,4 +1,4 @@
-package main.java.com.example.data;
+package com.example.data;
 
 public class Report {
     private int reportID;

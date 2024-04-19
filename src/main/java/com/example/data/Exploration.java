@@ -1,4 +1,4 @@
-package main.java.com.example.data;
+package com.example.data;
 
 public class Exploration {
     private int userID;
