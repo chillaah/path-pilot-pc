@@ -13,8 +13,8 @@
             minHeight="-Infinity"
             minWidth="-Infinity"
             style="-fx-background-color: #F9F5EE;">
-    <Label fx:id="type" text="FOCUS TIMER"/>
-    <Label fx:id="timer" style="-fx-padding: 20;" text="00:00">
+    <Label fx:id="timerType" text="FOCUS"/>
+    <Label fx:id="timerDisplay" style="-fx-padding: 20;" text="00:00">
         <font>
             <Font size="30.0" />
         </font>
