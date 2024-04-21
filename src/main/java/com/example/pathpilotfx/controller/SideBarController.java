@@ -29,7 +29,7 @@ public class SideBarController implements Initializable {
 
     @FXML
     private void home(MouseEvent event){
-        bp.setCenter(ap);
+        loadPage("timer-view.fxml");
     }
 
     @FXML
