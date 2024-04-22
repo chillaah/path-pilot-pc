@@ -1,20 +1,32 @@
+<<<<<<< Updated upstream
 package main.java.com.example.data;
 import java.sql.Date;
+=======
+package com.example.demo;
+import java.sql.Timestamp;
+
+>>>>>>> Stashed changes
 public class User {
+
     private int userID;
     private String username;
     private String email;
     private String password;
-    private Date creationDate;
+    private Timestamp creationDate;
     private int exp;
 
-    public User(int userID, String username, String email, String password, Date creationDate, int exp) {
+    public User(int userID, String username, String email, String password, Timestamp creationDate, int exp) {
         this.userID = userID;
         this.username = username;
         this.email = email;
         this.password = password;
         this.creationDate = creationDate;
         this.exp = exp;
+    }
+
+    public User(int userID)
+    {
+        this.userID = userID;
     }
 
     public int getUserID() {
@@ -57,11 +69,11 @@ public class User {
         this.exp = exp;
     }
 
-    public Date getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 

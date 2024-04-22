@@ -1,12 +1,13 @@
-module com.example.pathpilotfx {
+module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
+<<<<<<< Updated upstream
+=======
+    requires java.sql;
+    requires java.desktop;
+>>>>>>> Stashed changes
 
 
-    opens com.example.pathpilotfx to javafx.fxml;
-    exports com.example.pathpilotfx;
-    exports com.example.pathpilotfx.controller;
-    opens com.example.pathpilotfx.controller to javafx.fxml;
-    //exports com.example.pathpilotfx.model;
-    //opens com.example.pathpilotfx.model to javafx.fxml;
+    opens com.example.demo to javafx.fxml;
+    exports com.example.demo;
 }
