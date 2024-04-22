@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.ToDoTaskController">
+   <children>
+      <Label layoutX="253.0" layoutY="14.0" text="Tasks">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="113.0" layoutY="41.0" prefHeight="281.0" prefWidth="346.0">
+         <content>
+            <VBox fx:id="vBoxContainer" prefHeight="279.0" prefWidth="331.0" style="-fx-background-color: #F9F5EE;">
+               <children>
+                  <!-- This is where dynamically loaded task panes will be added -->
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <JFXButton fx:id="addTaskButton" layoutX="112.0" layoutY="331.0" onAction="#addTaskAction" prefHeight="25.0" prefWidth="346.0" style="-fx-background-color: #193541;" text="Add Task" textFill="WHITE" />
+   </children>
+</AnchorPane>

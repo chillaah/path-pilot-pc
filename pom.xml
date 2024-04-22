@@ -16,6 +16,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>charm-glisten</artifactId>
+            <version>5.0.3</version> <!-- Use a version that is available -->
+        </dependency>
+
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17.0.6</version>
