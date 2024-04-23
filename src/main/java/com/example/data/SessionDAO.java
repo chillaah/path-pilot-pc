@@ -1,4 +1,4 @@
-package main.java.com.example.data;
+package com.example.data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

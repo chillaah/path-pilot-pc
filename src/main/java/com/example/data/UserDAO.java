@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-package main.java.com.example.data;
-=======
-package com.example.demo;
+package com.example.data;
 
->>>>>>> Stashed changes
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

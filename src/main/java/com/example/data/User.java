@@ -1,11 +1,8 @@
-<<<<<<< Updated upstream
-package main.java.com.example.data;
-import java.sql.Date;
-=======
-package com.example.demo;
+package com.example.data;
+
 import java.sql.Timestamp;
 
->>>>>>> Stashed changes
+
 public class User {
 
     private int userID;
