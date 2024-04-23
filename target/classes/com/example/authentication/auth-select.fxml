@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <VBox spacing="20.0"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.demo.AuthSelectController">
+      fx:controller="com.example.authentication.AuthSelectController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>

@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.authentication;
 
+import com.example.data.User;
+import com.example.data.UserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -7,8 +9,8 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static com.example.demo.AuthSelectController.*;
-import static com.example.demo.PasswordHash.*;
+import static com.example.authentication.AuthSelectController.*;
+import static com.example.authentication.PasswordHash.*;
 
 
 public class AuthenticationController {
@@ -23,8 +25,6 @@ public class AuthenticationController {
 
     public String regexE = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
-
-    static UserDAO db = new UserDAO();
 
     @FXML
     protected void onConfirmButtonClick() {
@@ -84,8 +84,8 @@ public class AuthenticationController {
                 Timestamp date = Timestamp.valueOf(ldt);
                 int lastId = db.getLatestUser(); lastId++;
 
-//                String hashedPassword = hashPassword(password);
-                User newUser = new User(lastId, "username", email, password, date, 1);
+                String hashedPassword = hashPassword(password);
+                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
                 db.insert(newUser);
                 System.out.println(newUser.toString());
                 // link to landing page

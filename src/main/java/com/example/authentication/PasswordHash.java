@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.authentication;
+
+import com.example.data.UserDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +17,7 @@ public class PasswordHash {
         }
 
         // Hash the provided password using the same algorithm and salt
-        String hashedPassword = providedPassword; // hashedPassword(providedPassword);
+        String hashedPassword = hashPassword(providedPassword);
 
         // Compare the hashed passwords
         assert hashedPassword != null;
