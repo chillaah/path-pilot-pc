@@ -1,16 +1,17 @@
 package com.example.data;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class DatabaseConnection {
     private static Connection instance = null;
+    public static final String dbURL = "jdbc:sqlite:pathpilotpc.db";
 
     private DatabaseConnection() {
-        String url = "jdbc:sqlite:pathpilotpc.db";
         try {
-            instance = DriverManager.getConnection(url);
+            instance = DriverManager.getConnection(dbURL);
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx);
         }
