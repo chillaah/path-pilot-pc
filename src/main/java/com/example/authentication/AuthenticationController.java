@@ -3,8 +3,12 @@ package com.example.authentication;
 import com.example.data.User;
 import com.example.data.UserDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -19,6 +23,7 @@ public class AuthenticationController {
 
     public Button confimButton;
     public Button clearButton;
+    public Button backButton;
 
     public TextField emailTextField;
     public TextField passwordTextField;
@@ -102,6 +107,15 @@ public class AuthenticationController {
     public void clearFields() {
         emailTextField.clear();
         passwordTextField.clear();
+    }
+
+    @FXML
+    protected void onBackButtonClick() throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), AuthSelectApplication.WIDTH, AuthSelectApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     public boolean isValid(String email, String regexEP) {

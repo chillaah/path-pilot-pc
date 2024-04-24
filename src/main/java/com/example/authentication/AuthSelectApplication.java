@@ -19,15 +19,16 @@ public class AuthSelectApplication extends Application {
 //        Connection connection = DatabaseConnection.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-
-        UserDAO db = new UserDAO();
-        // db.deleteAllUsers(); // clears all database elements
+        // clears all database entries
+//        UserDAO db = new UserDAO();
+//        db.deleteAllUsers();
 
         launch();
     }

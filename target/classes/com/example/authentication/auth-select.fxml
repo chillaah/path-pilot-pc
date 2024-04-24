@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 <VBox spacing="20.0"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.authentication.AuthSelectController">
@@ -14,8 +15,11 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <StackPane prefWidth="200" prefHeight="200">
-        <Label text="Welcome to Path Pilot!"
-               wrapText="true"/>
+        <Label text="Welcome to Path Pilot!" wrapText="true" >
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
     </StackPane>
 <!--    <StackPane prefWidth="200" prefHeight="200">-->
         <RadioButton fx:id="loginButton" text="Log In" onAction="#onAuthSelectClick">

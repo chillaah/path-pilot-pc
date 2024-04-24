@@ -55,6 +55,7 @@ public class AuthSelectController {
         Stage stage = (Stage) nextButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("authentication.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), initWidth, initHeight);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setScene(scene);
     }
 }
