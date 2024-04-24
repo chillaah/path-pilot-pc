@@ -1,10 +1,11 @@
-package com.example.demo;
+package com.example.authentication;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import com.example.data.UserDAO;
 
 
 public class AuthSelectApplication extends Application {
@@ -18,12 +19,17 @@ public class AuthSelectApplication extends Application {
 //        Connection connection = DatabaseConnection.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
+        // clears all database entries
+//        UserDAO db = new UserDAO();
+//        db.deleteAllUsers();
+
         launch();
     }
 }

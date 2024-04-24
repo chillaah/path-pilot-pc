@@ -1,14 +1,20 @@
-package com.example.demo;
+package com.example.authentication;
 
+import com.example.data.User;
+import com.example.data.UserDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static com.example.demo.AuthSelectController.*;
-import static com.example.demo.PasswordHash.*;
+import static com.example.authentication.AuthSelectController.*;
+import static com.example.authentication.PasswordHash.*;
 
 
 public class AuthenticationController {
@@ -17,14 +23,13 @@ public class AuthenticationController {
 
     public Button confimButton;
     public Button clearButton;
+    public Button backButton;
 
     public TextField emailTextField;
     public TextField passwordTextField;
 
     public String regexE = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
-
-    static UserDAO db = new UserDAO();
 
     @FXML
     protected void onConfirmButtonClick() {
@@ -84,8 +89,8 @@ public class AuthenticationController {
                 Timestamp date = Timestamp.valueOf(ldt);
                 int lastId = db.getLatestUser(); lastId++;
 
-//                String hashedPassword = hashPassword(password);
-                User newUser = new User(lastId, "username", email, password, date, 1);
+                String hashedPassword = hashPassword(password);
+                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
                 db.insert(newUser);
                 System.out.println(newUser.toString());
                 // link to landing page
@@ -102,6 +107,15 @@ public class AuthenticationController {
     public void clearFields() {
         emailTextField.clear();
         passwordTextField.clear();
+    }
+
+    @FXML
+    protected void onBackButtonClick() throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), AuthSelectApplication.WIDTH, AuthSelectApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        stage.setScene(scene);
     }
 
     public boolean isValid(String email, String regexEP) {
