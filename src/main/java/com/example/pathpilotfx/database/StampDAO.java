@@ -18,7 +18,7 @@ public class StampDAO {
                     "INSERT INTO stamp VALUES(?,?,?,?)");
             insertData.setInt(1, stamp.getStampID());
             insertData.setInt(2, stamp.getUserID());
-            insertData.setBlob(3, stamp.getStampBlob());
+            insertData.setInt(3, stamp.getBlobID());
             insertData.setBoolean(4, stamp.isObtained());
             insertData.execute();
         }
@@ -28,12 +28,12 @@ public class StampDAO {
     public void update(Stamp stamp) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE stamp SET stamp_id = ?, user_id = ?, stamp_blob = ?," +
+                    "UPDATE stamp SET stamp_id = ?, user_id = ?, blob_id = ?," +
                         " obtained = ? WHERE stamp_id = ?"
             );
             updateData.setInt(1, stamp.getStampID());
             updateData.setInt(2, stamp.getUserID());
-            updateData.setBlob(3, stamp.getStampBlob());
+            updateData.setInt(3, stamp.getBlobID());
             updateData.setBoolean(4, stamp.isObtained());
             updateData.execute();
         } catch (SQLException ex) {
@@ -43,7 +43,8 @@ public class StampDAO {
 
     public void deleteStamp(int id) {
         try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM stamp WHERE stamp_id = ?");
+            PreparedStatement delete = connection.prepareStatement(
+                    "DELETE FROM stamp WHERE stamp_id = ?");
             delete.setInt(1, id);
             delete.execute();
         } catch (SQLException ex) {
@@ -61,7 +62,7 @@ public class StampDAO {
                         new Stamp(
                                 rs.getInt("stamp_id"),
                                 rs.getInt("user_id"),
-                                rs.getBlob("stamp_blob"),
+                                rs.getInt("blob_id"),
                                 rs.getBoolean("obtained")
                         )
                 );
@@ -74,14 +75,15 @@ public class StampDAO {
 
     public Stamp getByStampId(int id) {
         try {
-            PreparedStatement getStamp = connection.prepareStatement("SELECT * FROM stamp WHERE stamp_id = ?");
+            PreparedStatement getStamp = connection.prepareStatement(
+                    "SELECT * FROM stamp WHERE stamp_id = ?");
             getStamp.setInt(1, id);
             ResultSet rs = getStamp.executeQuery();
             if (rs.next()) {
                 return new Stamp(
                         rs.getInt("stamp_id"),
                         rs.getInt("user_id"),
-                        rs.getBlob("stamp_blob"),
+                        rs.getInt("blob_id"),
                         rs.getBoolean("obtained")
                 );
             }
