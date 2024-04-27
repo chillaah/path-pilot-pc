@@ -15,11 +15,10 @@ public class StampDAO {
     public void insert(Stamp stamp) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO stamp VALUES(?,?,?,?)");
+                    "INSERT INTO stamp VALUES(?,?,?)");
             insertData.setInt(1, stamp.getStampID());
             insertData.setInt(2, stamp.getUserID());
-            insertData.setInt(3, stamp.getBlobID());
-            insertData.setBoolean(4, stamp.isObtained());
+            insertData.setBoolean(3, stamp.isObtained());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -28,13 +27,11 @@ public class StampDAO {
     public void update(Stamp stamp) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE stamp SET stamp_id = ?, user_id = ?, blob_id = ?," +
-                        " obtained = ? WHERE stamp_id = ?"
+                    "UPDATE stamp SET obtained = ? WHERE stamp_id = ? AND user_id = ?"
             );
-            updateData.setInt(1, stamp.getStampID());
-            updateData.setInt(2, stamp.getUserID());
-            updateData.setInt(3, stamp.getBlobID());
-            updateData.setBoolean(4, stamp.isObtained());
+            updateData.setBoolean(1, stamp.isObtained());
+            updateData.setInt(2, stamp.getStampID());
+            updateData.setInt(3, stamp.getUserID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -62,7 +59,6 @@ public class StampDAO {
                         new Stamp(
                                 rs.getInt("stamp_id"),
                                 rs.getInt("user_id"),
-                                rs.getInt("blob_id"),
                                 rs.getBoolean("obtained")
                         )
                 );
@@ -83,7 +79,6 @@ public class StampDAO {
                 return new Stamp(
                         rs.getInt("stamp_id"),
                         rs.getInt("user_id"),
-                        rs.getInt("blob_id"),
                         rs.getBoolean("obtained")
                 );
             }
