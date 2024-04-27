@@ -1,6 +1,6 @@
 package com.example.pathpilotfx.controller.authentication;
 
-import com.example.pathpilotfx.AuthSelectApplication;
+import com.example.pathpilotfx.MainApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,8 +13,8 @@ import java.io.IOException;
 
 public class AuthSelectController {
 
-    public double initWidth = AuthSelectApplication.WIDTH*3.0/2.0;
-    public double initHeight = AuthSelectApplication.HEIGHT*1.5;
+    public double initWidth = MainApplication.WIDTH*3.0/2.0;
+    public double initHeight = MainApplication.HEIGHT*1.5;
 
     public ToggleGroup group;
     @FXML
@@ -54,7 +54,7 @@ public class AuthSelectController {
     @FXML
     protected void onNextButtonClick() throws IOException {
         Stage stage = (Stage) nextButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("authentication.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), initWidth, initHeight);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setScene(scene);

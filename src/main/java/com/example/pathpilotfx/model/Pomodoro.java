@@ -1,5 +1,4 @@
-package com.example.pathpilotfx.controller.timer;
-
+package com.example.pathpilotfx.model;
 import javafx.animation.Timeline;
 
 public class Pomodoro {

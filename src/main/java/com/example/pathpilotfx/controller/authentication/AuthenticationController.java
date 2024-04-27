@@ -1,9 +1,8 @@
 package com.example.pathpilotfx.controller.authentication;
 
-import com.example.pathpilotfx.AuthSelectApplication;
-import com.example.pathpilotfx.HomeApplication;
-import com.example.pathpilotfx.HomeController;
-import com.example.pathpilotfx.controller.navigation.SideBarController;
+//import com.example.pathpilotfx.HomeApplication;
+//import com.example.pathpilotfx.HomeController;
+import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +17,11 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.example.pathpilotfx.AuthSelectApplication.db;
-import static com.example.pathpilotfx.HomeController.authSuccess;
+import static com.example.pathpilotfx.MainApplication.db;
+//import static com.example.pathpilotfx.HomeController.authSuccess;
 import static com.example.pathpilotfx.controller.authentication.AuthSelectController.*;
 import static com.example.pathpilotfx.model.PasswordHash.*;
-import com.example.pathpilotfx.HomeController.*;
+//import com.example.pathpilotfx.HomeController.*;
 
 
 public class AuthenticationController {
@@ -139,25 +138,21 @@ public class AuthenticationController {
     @FXML
     protected void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), AuthSelectApplication.WIDTH, AuthSelectApplication.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("auth-select.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setScene(scene);
     }
 
     protected void authSuccess() throws IOException {
+
         Stage stage = (Stage) confirmButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(HomeController.class.getResource("navigation-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/navigation-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
 
-//// Get the scene of the current window
-//        Scene currentScene = confirmButton.getScene();
-//// Load the navigation view FXML
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("navigation-view.fxml"));
-//        Parent navigationView = fxmlLoader.load();
-//// Set the content of the current scene to the navigation view
-//        currentScene.setRoot(navigationView);
+
     }
 
     public boolean isValid(String EP, String regexEP) {

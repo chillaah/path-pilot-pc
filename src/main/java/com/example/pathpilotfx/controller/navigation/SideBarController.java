@@ -27,12 +27,12 @@ public class SideBarController implements Initializable {
     private AnchorPane ap;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadPage("home.fxml"); //Default page when application is loaded
+        loadPage("timer-view.fxml"); //Default page when application is loaded
     }
 
     @FXML
     private void home(MouseEvent event){
-        loadPage("home.fxml");
+        loadPage("timer-view.fxml");
     }
 
     @FXML
