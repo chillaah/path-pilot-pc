@@ -93,6 +93,18 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
+    public void UpdateEXP(int userID, int exp) {
+        try {
+            PreparedStatement updateData = connection.prepareStatement(
+                    "UPDATE user SET exp = ? WHERE user_id = ?"
+            );
+            updateData.setInt(1, exp);
+            updateData.setInt(2, userID);
+            updateData.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
 
     public void deleteUser(int id) {
         try {
@@ -135,7 +147,9 @@ public class UserDAO {
         }
         return users;
     }
-
+//to get the exp,you first get a user based on their ID and then using the returned user,
+    // you can call the class getters e.g getExp() or getRequiredExp(). Concatenating them
+    //can help with the exp / requiredexp part of the passport.
     public User getByUserId(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
