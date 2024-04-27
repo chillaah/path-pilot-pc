@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.ToDoTaskController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.todolist.ToDoTaskController">
    <children>
       <Label layoutX="253.0" layoutY="14.0" text="Tasks">
          <font>
@@ -18,7 +18,7 @@
          <content>
             <VBox fx:id="vBoxContainer" prefHeight="279.0" prefWidth="331.0" style="-fx-background-color: #F9F5EE;">
                <children>
-                  <!-- This is where dynamically loaded task panes will be added -->
+                  <!-- This is where dynamically loaded taskV panes will be added -->
                </children>
             </VBox>
          </content>

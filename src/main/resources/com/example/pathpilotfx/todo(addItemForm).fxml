@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.AddItemFormController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.todolist.AddItemFormController">
    <children>
       <TextField fx:id="taskField" layoutX="112.0" layoutY="59.0" prefHeight="37.0" prefWidth="403.0" promptText="Task Name" />
       <TextField fx:id="descriptionField" layoutX="111.0" layoutY="121.0" prefHeight="37.0" prefWidth="403.0" promptText="Description" />

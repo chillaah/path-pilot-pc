@@ -7,15 +7,18 @@ module com.example.authentication {
 
     opens com.example.pathpilotfx to javafx.fxml;
     exports com.example.pathpilotfx;
-    exports com.example.pathpilotfx.controller;
-    opens com.example.pathpilotfx.controller to javafx.fxml;
-    exports com.example.pathpilotfx.Database;
+//    exports com.example.pathpilotfx.controller.timer;
+//    opens com.example.pathpilotfx.controller.timer to javafx.fxml;
+    exports com.example.pathpilotfx.database;
     opens com.example.pathpilotfx.model to javafx.fxml;
     exports com.example.pathpilotfx.model;
-    opens com.example.pathpilotfx.Database to javafx.fxml;
+    opens com.example.pathpilotfx.database to javafx.fxml;
     //exports com.example.pathpilotfx.model;
     //opens com.example.pathpilotfx.model to javafx.fxml;
-    opens com.example.authentication to javafx.fxml;
-    exports com.example.authentication;
-
+    exports com.example.pathpilotfx.controller.todolist;
+    opens com.example.pathpilotfx.controller.todolist to javafx.fxml;
+    exports com.example.pathpilotfx.controller.navigation;
+    opens com.example.pathpilotfx.controller.navigation to javafx.fxml;
+    exports com.example.pathpilotfx.controller.authentication;
+    opens com.example.pathpilotfx.controller.authentication to javafx.fxml;
 }
