@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class AuthSelectApplication extends Application {
+public class MainApplication extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "Path Pilot";
     public static final double WIDTH = 640/2.0;
@@ -18,7 +18,7 @@ public class AuthSelectApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        Connection connection = DatabaseConnection.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(AuthSelectApplication.class.getResource("auth-select.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("auth-select.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setTitle(TITLE);

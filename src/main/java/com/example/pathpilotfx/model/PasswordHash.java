@@ -4,7 +4,7 @@ import com.example.pathpilotfx.database.UserDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import static com.example.pathpilotfx.AuthSelectApplication.db;
+import static com.example.pathpilotfx.MainApplication.db;
 
 
 public class PasswordHash {

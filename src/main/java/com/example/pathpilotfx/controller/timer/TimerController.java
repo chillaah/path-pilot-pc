@@ -1,11 +1,13 @@
 package com.example.pathpilotfx.controller.timer;
 
+import com.example.pathpilotfx.model.Pomodoro;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+
 
 public class TimerController {
     @FXML
