@@ -13,6 +13,7 @@ module com.example.authentication {
     opens com.example.pathpilotfx.controller.authentication to javafx.fxml;
     opens com.example.pathpilotfx.controller.timer to javafx.fxml;
 
+
     exports com.example.pathpilotfx;
     exports com.example.pathpilotfx.database;
     exports com.example.pathpilotfx.model;

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.todolist.ToDoTaskController">
+<AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.ToDoTaskController">
    <children>
       <Label layoutX="253.0" layoutY="14.0" text="Tasks">
          <font>
@@ -16,10 +17,17 @@
       </Label>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="113.0" layoutY="41.0" prefHeight="281.0" prefWidth="346.0">
          <content>
-            <VBox fx:id="vBoxContainer" prefHeight="279.0" prefWidth="331.0" style="-fx-background-color: #F9F5EE;">
+            <VBox fx:id="vBoxContainer" prefWidth="343.0" style="-fx-background-color: #FFFFFF00;">
+
                <children>
                   <!-- This is where dynamically loaded taskV panes will be added -->
                </children>
+               <padding>
+                  <Insets bottom="3" left="3" right="3" top="3" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="3" left="3" right="3" top="3" />
+               </VBox.margin>
             </VBox>
          </content>
       </ScrollPane>
