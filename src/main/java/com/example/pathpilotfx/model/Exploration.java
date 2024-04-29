@@ -3,15 +3,13 @@ package com.example.pathpilotfx.model;
 public class Exploration {
     private int userID;
     private int countryID;
-    private String countryName;
     private String status;
     private boolean isLocked;
     private boolean isFavourited;
 
-    public Exploration(int userID, int countryID, String countryName, String status, boolean isLocked, boolean isFavourited) {
+    public Exploration(int userID, int countryID, String status, boolean isLocked, boolean isFavourited) {
         this.userID = userID;
         this.countryID = countryID;
-        this.countryName = countryName;
         this.status = status;
         this.isLocked = isLocked;
         this.isFavourited = isFavourited;
@@ -31,14 +29,6 @@ public class Exploration {
 
     public void setCountryID(int countryID) {
         this.countryID = countryID;
-    }
-
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
     }
 
     public String getStatus() {
@@ -70,7 +60,6 @@ public class Exploration {
         return "Exploration{" +
                 "userID=" + userID +
                 ", countryID=" + countryID +
-                ", countryName='" + countryName + '\'' +
                 ", status='" + status + '\'' +
                 ", isLocked=" + isLocked +
                 ", isFavourited=" + isFavourited +
