@@ -1,6 +1,7 @@
 package com.example.pathpilotfx;
 
 import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.database.ExplorationDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class MainApplication extends Application {
     public static final double WIDTH = 640/2.0;
     public static final double HEIGHT = 360/1.5;
     public static UserDAO db = new UserDAO();
+    public static ExplorationDAO db2 = new ExplorationDAO();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -30,6 +32,7 @@ public class MainApplication extends Application {
         // clears all database entries
 
 //        db.deleteAllUsers();
+//        db2.deleteAllExplorations();
 
         launch();
     }

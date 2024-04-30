@@ -12,17 +12,19 @@ public class ExplorationDAO {
         connection = DatabaseConnection.getInstance();
     }
 
+ //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
+    //ExplorationDAO explorationdao = new ExplorationDAO
+    //explorationdao.insert(exploration)
 
     public void insert(Exploration exploration) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO exploration VALUES(?,?,?,?,?,?)");
+                    "INSERT INTO exploration VALUES(?,?,?,?,?)");
             insertData.setInt(1, exploration.getUserID());
             insertData.setInt(2, exploration.getCountryID());
-            insertData.setString(3, exploration.getCountryName());
-            insertData.setString(4, exploration.getStatus());
-            insertData.setBoolean(5, exploration.isLocked());
-            insertData.setBoolean(6, exploration.isFavourited());
+            insertData.setString(3, exploration.getStatus());
+            insertData.setBoolean(4, exploration.isLocked());
+            insertData.setBoolean(5, exploration.isFavourited());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -65,7 +67,6 @@ public class ExplorationDAO {
                         new Exploration(
                                 rs.getInt("user_id"),
                                 rs.getInt("country_id"),
-                                rs.getString("country_name"),
                                 rs.getString("status"),
                                 rs.getBoolean("lockedStatus"),
                                 rs.getBoolean("favourited")
@@ -87,7 +88,6 @@ public class ExplorationDAO {
                 return new Exploration(
                         rs.getInt("user_id"),
                         rs.getInt("country_id"),
-                        rs.getString("country_name"),
                         rs.getString("status"),
                         rs.getBoolean("lockedStatus"),
                         rs.getBoolean("favourited")
@@ -97,6 +97,35 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
         return null;
+    }
+
+    public String getCurrentExploring(int id) {
+        String countryName = null;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT c.country_name " +
+                            "FROM exploration e LEFT JOIN country c " +
+                            "ON e.country_id = c.country_id " +
+                            "WHERE e.status = 'Exploring' AND user_id = ?");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                countryName = resultSet.getString("country_name");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return countryName;
+    }
+
+
+    public void deleteAllExplorations() {
+        try {
+            PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");
+            delete.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
     }
 
     public void close() {

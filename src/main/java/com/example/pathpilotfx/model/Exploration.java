@@ -8,10 +8,9 @@ public class Exploration {
     private boolean isLocked;
     private boolean isFavourited;
 
-    public Exploration(int userID, int countryID, String countryName, String status, boolean isLocked, boolean isFavourited) {
+    public Exploration(int userID, int countryID, String status, boolean isLocked, boolean isFavourited) {
         this.userID = userID;
         this.countryID = countryID;
-        this.countryName = countryName;
         this.status = status;
         this.isLocked = isLocked;
         this.isFavourited = isFavourited;
