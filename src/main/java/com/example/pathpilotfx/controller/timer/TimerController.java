@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
-import java.awt.event.MouseEvent;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -51,8 +51,6 @@ public class TimerController {
     @FXML
     private Label taskPopUpLabel;
 
-    @FXML
-    private AnchorPane rootAnchorPane;
 
     @FXML
     private Button crossButton;
