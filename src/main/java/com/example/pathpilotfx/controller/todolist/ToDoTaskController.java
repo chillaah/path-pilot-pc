@@ -4,7 +4,10 @@ package com.example.pathpilotfx.controller.todolist;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javafx.scene.control.Button;
@@ -19,7 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 @SuppressWarnings("javaFxVersionMismatch")
-public class ToDoTaskController {
+public class ToDoTaskController implements TaskChangeListener {
 
     @FXML
     private AnchorPane rootAnchorPane;
@@ -31,16 +34,24 @@ public class ToDoTaskController {
     private VBox vBoxContainer;
 
     @FXML
+    private ScrollPane scrollPane2;
+
+    @FXML
+    private VBox CompletedTask;
+
+    @FXML
 //    private JFXButton addTaskButton;
     private Button addTaskButton;
+    private List<Task> taskList;
+    private List<Task> CompletedList = new ArrayList<>();
 
     @FXML
     void initialize() throws IOException {
+
         //intialise DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        List<Task> taskList = toDoDAO.getAll();
-
+        taskList = toDoDAO.getAll();
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));
@@ -72,9 +83,9 @@ public class ToDoTaskController {
             vBoxContainer.getChildren().add(taskPane);
             TaskController controller = loader.getController();
             controller.setTask(task);
-
             // Set bottom margin for the taskPane for space between each task
             VBox.setMargin(taskPane, new Insets(0, 0, 5, 0)); // 5px bottom margin
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,6 +104,14 @@ public class ToDoTaskController {
 
     }
 
+    private void moveTaskToCompleted(Task task) {
+        if (task.getStatus()){
+            vBoxContainer.getChildren().remove(scrollPane);
+            CompletedTask.getChildren().add(scrollPane2);
+        }
+    }
+
+
     @FXML
     void addTaskAction(ActionEvent event) throws IOException {
         // Load addItemForm.fxml and preload fields with task details
@@ -101,4 +120,36 @@ public class ToDoTaskController {
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
+    @FXML
+    void CheckBoxL(ActionListener e ){
+    }
+    public void Refresh(){
+        for (Task task : taskList) {
+            if (task.getStatus()){
+                CompletedList.add(task);
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(task).fxml"));
+                    Pane taskPane = loader.load();
+                    //add task to the vBox container in taskPage
+                    vBoxContainer.getChildren().remove(taskPane);
+                    CompletedTask.getChildren().add(taskPane);
+                    TaskController controller = loader.getController();
+                    controller.setTask(task);
+
+                    // Set bottom margin for the taskPane for space between each task
+                    VBox.setMargin(taskPane, new Insets(0, 0, 5, 0)); // 5px bottom margin
+
+                    System.out.println("Completed Task :" + CompletedTask);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+    @Override
+    public void onTaskChange(boolean isSelected) {
+        System.out.println("Pass here");
+    }
 }

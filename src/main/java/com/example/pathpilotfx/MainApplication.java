@@ -18,9 +18,10 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        Connection connection = DatabaseConnection.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("auth-select.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
