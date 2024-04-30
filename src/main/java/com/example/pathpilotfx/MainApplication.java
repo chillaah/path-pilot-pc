@@ -1,7 +1,7 @@
 package com.example.pathpilotfx;
 
 import com.example.pathpilotfx.database.UserDAO;
-import com.example.pathpilotfx.model.User;
+import com.example.pathpilotfx.database.ExplorationDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,10 +15,7 @@ public class MainApplication extends Application {
     public static final double WIDTH = 640/2.0;
     public static final double HEIGHT = 360/1.5;
     public static UserDAO db = new UserDAO();
-    public static String AusImagePath = "src/main/resources/assets/australia-stamp.jpeg";
-    public static String FrImagePath ="src/main/resources/assets/France.jpeg";
-    public static String JPImagePath ="src/main/resources/assets/Japan.jpeg";
-    public static String SLImagePath ="src/main/resources/assets/srilanka-stamp.jpeg";
+    public static ExplorationDAO db2 = new ExplorationDAO();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -35,8 +32,10 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         // clears all database entries
+
 //        db.deleteAllUsers();
-        //Logic follows the lecture material, so updating/inserting work the same.
+//        db2.deleteAllExplorations();
+
         launch();
     }
 }

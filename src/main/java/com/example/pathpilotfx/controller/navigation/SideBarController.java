@@ -1,16 +1,20 @@
 package com.example.pathpilotfx.controller.navigation;
 
 
+import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +55,7 @@ public class SideBarController implements Initializable {
 
     @FXML
     private void map(MouseEvent event){
-        loadPage("map.fxml");
+        loadPage("map-view.fxml");
     }
 
     @FXML
