@@ -18,7 +18,8 @@ public class Task {
         this.description = description;
         this.priority = priority;
         this.datecreated = java.sql.Date.valueOf(LocalDate.now());
-        if (dueDate != null){
+        // Check if dueDate is not null and is not a past date
+        if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
         }
 
@@ -77,10 +78,16 @@ public class Task {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = new java.sql.Date(dueDate.getTime());
+
     }
 
     public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate != null ? java.sql.Date.valueOf(dueDate) : null;
+        if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
+            this.dueDate = java.sql.Date.valueOf(dueDate);
+        }
+        else{
+            this.dueDate = null;
+        }
     }
 
 }

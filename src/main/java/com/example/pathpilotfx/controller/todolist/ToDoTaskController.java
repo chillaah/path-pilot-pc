@@ -14,9 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 @SuppressWarnings("javaFxVersionMismatch")
 public class ToDoTaskController {
@@ -52,6 +51,7 @@ public class ToDoTaskController {
                 addTask(task);
             }
         }
+
         //toDoDOA.close();
     }
 
@@ -64,6 +64,7 @@ public class ToDoTaskController {
             taskPane.setOnMouseClicked(event -> {
                 try {
                     editTask(task);
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -74,7 +75,7 @@ public class ToDoTaskController {
             controller.setTask(task);
 
             // Set bottom margin for the taskPane for space between each task
-            VBox.setMargin(taskPane, new Insets(0, 0, 5, 0)); // 5px bottom margin
+            VBox.setMargin(taskPane, new Insets(0, 0, 3, 0)); // 5px bottom margin
         } catch (IOException e) {
             e.printStackTrace();
         }
