@@ -33,14 +33,15 @@ public class ExplorationDAO {
     public void update(Exploration exploration) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE exploration SET user_id = ?, country_id = ?, country_name = ?, status = ?, lockedStatus = ?, favourited = ? WHERE country_id = ?"
+                    "UPDATE exploration SET user_id = ?, " +
+                            "country_id = ?, status = ?, lockedStatus = ?, " +
+                            "favourited = ? WHERE country_id = ?"
             );
             updateData.setInt(1, exploration.getUserID());
             updateData.setInt(2, exploration.getCountryID());
-            updateData.setString(3, exploration.getCountryName());
-            updateData.setString(4, exploration.getStatus());
-            updateData.setBoolean(5, exploration.isLocked());
-            updateData.setBoolean(6, exploration.isFavourited());
+            updateData.setString(3, exploration.getStatus());
+            updateData.setBoolean(4, exploration.isLocked());
+            updateData.setBoolean(5, exploration.isFavourited());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -62,6 +63,52 @@ public class ExplorationDAO {
         try {
             Statement getAll = connection.createStatement();
             ResultSet rs = getAll.executeQuery("SELECT * FROM exploration");
+            while (rs.next()) {
+                explorationData.add(
+                        new Exploration(
+                                rs.getInt("user_id"),
+                                rs.getInt("country_id"),
+                                rs.getString("status"),
+                                rs.getBoolean("lockedStatus"),
+                                rs.getBoolean("favourited")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return explorationData;
+    }
+
+    public List<Exploration> getAllLocked() {
+        List<Exploration> explorationData = new ArrayList<>();
+        try {
+            Statement getAll = connection.createStatement();
+            ResultSet rs = getAll.executeQuery(
+                    "SELECT * FROM exploration where lockedStatus = 1");
+            while (rs.next()) {
+                explorationData.add(
+                        new Exploration(
+                                rs.getInt("user_id"),
+                                rs.getInt("country_id"),
+                                rs.getString("status"),
+                                rs.getBoolean("lockedStatus"),
+                                rs.getBoolean("favourited")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return explorationData;
+    }
+
+    public List<Exploration> getAllUnlocked() {
+        List<Exploration> explorationData = new ArrayList<>();
+        try {
+            Statement getAll = connection.createStatement();
+            ResultSet rs = getAll.executeQuery(
+                    "SELECT * FROM exploration where lockedStatus = 0");
             while (rs.next()) {
                 explorationData.add(
                         new Exploration(

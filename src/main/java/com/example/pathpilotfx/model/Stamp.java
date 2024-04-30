@@ -5,13 +5,11 @@ import java.sql.Blob;
 public class Stamp {
     private int stampID;
     private int userID;
-    private Blob stampBlob;
     private boolean isObtained;
 
-    public Stamp(int stampID, int userID, Blob stampBlob, boolean isObtained) {
+    public Stamp(int stampID, int userID, boolean isObtained) {
         this.stampID = stampID;
         this.userID = userID;
-        this.stampBlob = stampBlob;
         this.isObtained = isObtained;
     }
 
@@ -31,13 +29,6 @@ public class Stamp {
         this.userID = userID;
     }
 
-    public Blob getStampBlob() {
-        return stampBlob;
-    }
-
-    public void setStampBlob(Blob stampBlob) {
-        this.stampBlob = stampBlob;
-    }
 
     public boolean isObtained() {
         return isObtained;
@@ -52,7 +43,6 @@ public class Stamp {
         return "Stamp{" +
                 "stampID=" + stampID +
                 ", userID=" + userID +
-                ", stampBlob=" + stampBlob +
                 ", isObtained=" + isObtained +
                 '}';
     }
