@@ -18,10 +18,9 @@ public class CountryDAO {
     public void insert(Country country) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO country VALUES(?,?,?)");
-            insertData.setInt(1, country.getCountryID());
-            insertData.setString(2, country.getCountryName());
-            insertData.setInt(3, country.getRequiredEXP());
+                    "INSERT INTO country VALUES(?,?)");
+            insertData.setString(1, country.getCountryName());
+            insertData.setInt(2, country.getRequiredEXP());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -30,12 +29,12 @@ public class CountryDAO {
     public void update(Country country) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE country SET country_id = ?, country_name = ?, " +
-                            "required_exp = ?"
+                    "UPDATE country SET country_name = ?, " +
+                            "required_exp = ? WHERE country_id = ?"
             );
-            updateData.setInt(1, country.getCountryID());
-            updateData.setString(2, country.getCountryName());
-            updateData.setInt(3, country.getRequiredEXP());
+            updateData.setString(1, country.getCountryName());
+            updateData.setInt(2, country.getRequiredEXP());
+            updateData.setInt(3, country.getCountryID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);

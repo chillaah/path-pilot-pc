@@ -20,6 +20,13 @@ public class User {
         this.creationDate = creationDate;
         this.exp = exp;
     }
+    public User(String username, String email, String password, Timestamp creationDate, int exp) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.creationDate = creationDate;
+        this.exp = exp;
+    }
 
     public User(int userID)
     {

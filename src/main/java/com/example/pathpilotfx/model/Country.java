@@ -10,6 +10,10 @@ public class Country {
         this.countryName = countryName;
         this.requiredEXP = requiredEXP;
     }
+    public Country(String countryName, int requiredEXP) {
+        this.countryName = countryName;
+        this.requiredEXP = requiredEXP;
+    }
 
     public int getCountryID() {
         return countryID;

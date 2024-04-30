@@ -28,17 +28,18 @@ public class TimerDAO {
     public void update(Timer timer) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE timer SET user_id = ?, timer_id = ?, dayName = ?, duration = ? WHERE timer_id = ?"
+                    "UPDATE timer SET user_id = ?, dayName = ?, duration = ? WHERE timer_id = ?"
             );
             updateData.setInt(1, timer.getUserID());
-            updateData.setInt(2, timer.getTimerID());
-            updateData.setString(3, timer.getDayName());
-            updateData.setInt(4, timer.getDuration());
+            updateData.setString(2, timer.getDayName());
+            updateData.setInt(3, timer.getDuration());
+            updateData.setInt(4, timer.getTimerID()); // Specify the timer_id for the WHERE clause
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
+
 
     public void deleteTimer(int id) {
         try {

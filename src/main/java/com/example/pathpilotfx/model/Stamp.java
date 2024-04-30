@@ -1,7 +1,5 @@
 package com.example.pathpilotfx.model;
 
-import java.sql.Blob;
-
 public class Stamp {
     private int stampID;
     private int userID;
