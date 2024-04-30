@@ -4,26 +4,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.pathpilotfx.controller.timer.TimerController"
-      alignment="CENTER"
-      maxHeight="1.7976931348623157E308"
-      maxWidth="1.7976931348623157E308"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
-      style="-fx-background-color: #F9F5EE;">
-    <Label fx:id="timerType" text="FOCUS"/>
-    <Label fx:id="timerDisplay" style="-fx-padding: 20;" text="00:00">
-        <font>
-            <Font size="30.0" />
-        </font>
-    </Label>
-    <HBox alignment="CENTER">
-        <Button onAction="#onStartButtonClick" text="Start" />
-        <Button onAction="#onStopButtonClick" text="Stop" />
-        <Button onAction="#onTypeButtonClick" text="Change Type" />
-    </HBox>
+<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
+
+    <VBox alignment="CENTER" prefHeight="371.0" prefWidth="549.0" spacing="10">
+        <Button fx:id="settingsButton" layoutX="476.0" layoutY="14.0" onAction="#onSettingsButtonClick" text="Settings" textAlignment="CENTER" />
+        <Label fx:id="timerType" style="-fx-padding: 10;" text="FOCUS">
+            <font>
+                <Font size="25" />
+            </font>
+        </Label>
+        <Label fx:id="timerDisplay" style="-fx-padding: 20;" text="00:00">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" spacing="10">
+            <Button onAction="#onStartButtonClick" text="Start" />
+            <Button onAction="#onStopButtonClick" text="Stop" />
+            <Button onAction="#onTypeButtonClick" text="Change Type" />
+        </HBox>
+    </VBox>
 
 
-</VBox>
+</AnchorPane>
