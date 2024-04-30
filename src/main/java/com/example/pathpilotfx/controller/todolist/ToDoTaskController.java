@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -42,6 +43,8 @@ public class ToDoTaskController implements TaskChangeListener {
     @FXML
 //    private JFXButton addTaskButton;
     private Button addTaskButton;
+
+    private TaskController child;
     private List<Task> taskList;
     private List<Task> CompletedList = new ArrayList<>();
 
@@ -51,7 +54,7 @@ public class ToDoTaskController implements TaskChangeListener {
         //intialise DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        taskList = toDoDAO.getAll();
+        taskList = toDoDAO.getUncomplet();
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));
@@ -64,6 +67,7 @@ public class ToDoTaskController implements TaskChangeListener {
             }
         }
         //toDoDOA.close();
+
     }
 
     private void addTask(Task task) {
@@ -86,6 +90,9 @@ public class ToDoTaskController implements TaskChangeListener {
             // Set bottom margin for the taskPane for space between each task
             VBox.setMargin(taskPane, new Insets(0, 0, 5, 0)); // 5px bottom margin
 
+            child = controller;
+            child.setTaskChangeListener(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,13 +111,6 @@ public class ToDoTaskController implements TaskChangeListener {
 
     }
 
-    private void moveTaskToCompleted(Task task) {
-        if (task.getStatus()){
-            vBoxContainer.getChildren().remove(scrollPane);
-            CompletedTask.getChildren().add(scrollPane2);
-        }
-    }
-
 
     @FXML
     void addTaskAction(ActionEvent event) throws IOException {
@@ -123,33 +123,15 @@ public class ToDoTaskController implements TaskChangeListener {
     @FXML
     void CheckBoxL(ActionListener e ){
     }
-    public void Refresh(){
-        for (Task task : taskList) {
-            if (task.getStatus()){
-                CompletedList.add(task);
-
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(task).fxml"));
-                    Pane taskPane = loader.load();
-                    //add task to the vBox container in taskPage
-                    vBoxContainer.getChildren().remove(taskPane);
-                    CompletedTask.getChildren().add(taskPane);
-                    TaskController controller = loader.getController();
-                    controller.setTask(task);
-
-                    // Set bottom margin for the taskPane for space between each task
-                    VBox.setMargin(taskPane, new Insets(0, 0, 5, 0)); // 5px bottom margin
-
-                    System.out.println("Completed Task :" + CompletedTask);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
     @Override
     public void onTaskChange(boolean isSelected) {
-        System.out.println("Pass here");
+        // reload updated task page
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(taskPage).fxml"));
+            AnchorPane todoTaskPage = loader.load();
+            rootAnchorPane.getChildren().setAll(todoTaskPage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.example.pathpilotfx.model;
 
+import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
@@ -12,6 +15,7 @@ public class Task {
     private String priority;
     private java.sql.Date datecreated,dueDate;
 
+    private TaskChangeListener taskChangeListener;
     public Task(String task, String description, String priority, LocalDate dueDate) {
         this.task = task;
         this.status = false;
@@ -81,6 +85,16 @@ public class Task {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate != null ? java.sql.Date.valueOf(dueDate) : null;
+    }
+
+    public void setListener(TaskChangeListener listener) {
+        this.taskChangeListener = listener;
+    }
+
+    private void notifyListeners() {
+
+        taskChangeListener.onTaskChange(this.status);
+
     }
 
 }

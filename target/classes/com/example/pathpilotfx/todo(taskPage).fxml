@@ -34,6 +34,5 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <JFXButton fx:id="refreshButton" layoutX="20.0" layoutY="331.0" onAction="#Refresh" prefHeight="25.0" prefWidth="78.0" style="-fx-background-color: #193541;" text="Refresh" textFill="WHITE" />
    </children>
 </AnchorPane>

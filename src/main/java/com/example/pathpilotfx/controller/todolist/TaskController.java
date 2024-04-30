@@ -43,9 +43,10 @@ public class TaskController {
         // Set up an event handler for the checkbox to handle status change
         checkboxField.setOnAction(event -> {
             handleStatusChange();
+
             System.out.println("Checkbox action triggered: " + checkboxField.isSelected());
             boolean isSelected = checkboxField.isSelected();
-            notifyTaskChangeListener(isSelected);
+
         });
 
 
@@ -60,21 +61,7 @@ public class TaskController {
         toDoDAO.update(task);
         //toDoDOA.close();
 
-        handleCheckboxAction(toDoDAO);
-    }
-
-    @FXML
-    private void handleCheckboxAction(ToDoDAO toDoDAO) {
-        int Orignial_id = task.getID();
-        if (checkboxField.isSelected()) {
-            toDoDAO.MarkCompleted(task);
-            toDoDAO.delete(task.getID());
-            System.out.println("Mark Completed");
-        } else {
-            toDoDAO.insertTask(task);
-            toDoDAO.MarkUnCompleted(task);
-            System.out.println("Mark UnCompleted");
-        }
+        notifyTaskChangeListener(task.getStatus());
     }
 
     public void setTask(Task task) {
@@ -94,4 +81,15 @@ public class TaskController {
         }
     }
 
+    public CheckBox getCheckboxField(){
+        return checkboxField;
+    }
+
+    public void setParent(ToDoTaskController parent) {
+        this.parent = parent;
+    }
+
+    public Task getTask(){
+        return this.task;
+    }
 }
