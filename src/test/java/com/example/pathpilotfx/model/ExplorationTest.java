@@ -39,19 +39,6 @@ public class ExplorationTest {
     }
 
     @Test
-    public void testGetCountryName() {
-        Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        assertNull(exploration.getCountryName());
-    }
-
-    @Test
-    public void testSetCountryName() {
-        Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        exploration.setCountryName("USA");
-        assertEquals("USA", exploration.getCountryName());
-    }
-
-    @Test
     public void testGetStatus() {
         Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
         assertEquals("InProgress", exploration.getStatus());
@@ -93,7 +80,7 @@ public class ExplorationTest {
     @Test
     public void testToString() {
         Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        String expectedToString = "Exploration{userID=1, countryID=100, countryName='null', status='InProgress', isLocked=false, isFavourited=true}";
+        String expectedToString = "Exploration{userID=1, countryID=100, status='InProgress', isLocked=false, isFavourited=true}";
         assertEquals(expectedToString, exploration.toString());
     }
 }
