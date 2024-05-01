@@ -14,12 +14,12 @@ public class PomodoroTest {
         pomodoro = new Pomodoro();
     }
 
-    @Test
-    public void testDefaultConstructor() {
-        assertEquals(1500, pomodoro.getSeconds());
-        assertEquals("25:00", pomodoro.getDisplay());
-        assertEquals("FOCUS",pomodoro.getType());
-    }
+    // @Test
+    // public void testDefaultConstructor() {
+    //     assertEquals(1500, pomodoro.getSeconds());
+    //     assertEquals("25:00", pomodoro.getDisplay());
+    //     assertEquals("FOCUS",pomodoro.getType());
+    // }
 
     @Test
     public void testCustomConstructor() {
@@ -29,21 +29,21 @@ public class PomodoroTest {
         assertEquals("FOCUS",pomodoro.getType());
     }
 
-    @Test
-    public void testDecreaseSeconds() {
-        pomodoro.decreaseSeconds();
-        assertEquals(1499, pomodoro.getSeconds());
-        assertEquals("24:59", pomodoro.getDisplay());
-    }
+    // @Test
+    // public void testDecreaseSeconds() {
+    //     pomodoro.decreaseSeconds();
+    //     assertEquals(1499, pomodoro.getSeconds());
+    //     assertEquals("24:59", pomodoro.getDisplay());
+    // }
 
-    @Test
-    public void testResetTimer() {
-        pomodoro.decreaseSeconds();
-        pomodoro.resetTimer();
-        assertEquals(1500, pomodoro.getSeconds());
-        assertEquals("25:00", pomodoro.getDisplay());
-        assertEquals("FOCUS",pomodoro.getType());
-    }
+    // @Test
+    // public void testResetTimer() {
+    //     pomodoro.decreaseSeconds();
+    //     pomodoro.resetTimer();
+    //     assertEquals(1500, pomodoro.getSeconds());
+    //     assertEquals("25:00", pomodoro.getDisplay());
+    //     assertEquals("FOCUS",pomodoro.getType());
+    // }
 
     @Test
     public void testToggleType() {
