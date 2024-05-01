@@ -29,19 +29,19 @@ public class SessionDAO {
     public void update(Session session) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE session SET user_id = ?, session_id = ?, " +
-                        "session_start = ?, session_end = ?, session_length = ? WHERE session_id = ?"
+                    "UPDATE session SET session_start = ?, session_end = ?, session_length = ? WHERE user_id = ? AND session_id = ?"
             );
-            updateData.setInt(1, session.getUserID());
-            updateData.setInt(2, session.getSessionID());
-            updateData.setDate(3, session.getSessionStart());
-            updateData.setDate(4, session.getSessionEnd());
-            updateData.setInt(5, session.getSessionLength());
+            updateData.setDate(1, session.getSessionStart());
+            updateData.setDate(2, session.getSessionEnd());
+            updateData.setInt(3, session.getSessionLength());
+            updateData.setInt(4, session.getUserID());
+            updateData.setInt(5, session.getSessionID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
+
 
     public void deleteSession(int id) {
         try {
