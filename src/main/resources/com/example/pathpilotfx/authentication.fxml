@@ -17,7 +17,7 @@
 <!--    <HBox VBox.vgrow="ALWAYS" spacing="20.0">-->
 <!--        <VBox spacing="20.0" prefWidth="320" >-->
             <StackPane prefWidth="200" prefHeight="200">
-                <Label text="Please Enter You Details" alignment="CENTER"/>
+                <Label fx:id="headerMsg" alignment="CENTER"/>
             </StackPane>
             <GridPane hgap="10.0" vgap="10.0" >
                 <columnConstraints>
@@ -29,6 +29,7 @@
                 <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity"/>
                 <TextField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </GridPane>
+            <Label fx:id="statusLabel" text=" " />
             <StackPane prefWidth="200" prefHeight="200">
                 <Label text="NOTE: Password must be at least 8 characters including
 &#10;one uppercase letter, one lowercase letter, one digit,

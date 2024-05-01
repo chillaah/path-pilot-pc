@@ -13,9 +13,6 @@ import java.io.IOException;
 
 public class AuthSelectController {
 
-    public double initWidth = MainApplication.WIDTH*3.0/2.0;
-    public double initHeight = MainApplication.HEIGHT*1.5;
-
     public ToggleGroup group;
     @FXML
     private Button nextButton;
@@ -55,7 +52,7 @@ public class AuthSelectController {
     protected void onNextButtonClick() throws IOException {
         Stage stage = (Stage) nextButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), initWidth, initHeight);
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         stage.setScene(scene);
     }

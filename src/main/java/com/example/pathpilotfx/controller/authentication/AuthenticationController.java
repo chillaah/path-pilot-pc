@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -23,6 +24,8 @@ import static com.example.pathpilotfx.MainApplication.db;
 //import static com.example.pathpilotfx.HomeController.authSuccess;
 import static com.example.pathpilotfx.controller.authentication.AuthSelectController.*;
 import static com.example.pathpilotfx.model.PasswordHash.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 //import com.example.pathpilotfx.HomeController.*;
 
 
@@ -39,7 +42,19 @@ public class AuthenticationController {
 
     public String regexE = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+    public Label statusLabel;
+    public Label headerMsg;
 
+    @FXML
+    public void initialize() {
+
+        if (authVal == 0) {
+            headerMsg.setText("Log In, Please Enter Your Credentials");
+        }
+        else {
+            headerMsg.setText("Sign Up, Please Enter Your Credentials");
+        }
+    }
 
     @FXML
     protected void onConfirmButtonClick() throws IOException {
@@ -58,34 +73,25 @@ public class AuthenticationController {
             // check if db pw = provided pw
             // if true auth user
             // else clear pw field and display wrong password message
-            if (!isValid(email, regexE))
+            if (email.isEmpty() || password.isEmpty())
+            {
+                statusLabel.setText("Empty email/password");
+            }
+            else if (!isValid(email, regexE) || !isValid(password, regexP) || !authenticateUser(email, password))
             {
                 clearFields();
-                System.out.println("invalid email format");
+                statusLabel.setText("Incorrect email/password");
             }
 
             else if (!db.isEmailAvailable(email))
             {
                 clearFields();
-                System.out.println("email not found");
-            }
-
-            else if (!isValid(password, regexP))
-            {
-                passwordTextField.clear();
-                System.out.println("invalid password format");
-            }
-
-            else if (!authenticateUser(email, password))
-            {
-                passwordTextField.clear();
-                System.out.println("incorrect password");
+                statusLabel.setText("Email not found");
             }
 
             else
             {
                 // link to landing page
-                System.out.println("You're In");
                 authSuccess();
             }
         }
@@ -94,23 +100,28 @@ public class AuthenticationController {
             // create account logic
             // add sanity checks to email and pw
             // if email not right clear both field
-            if (!isValid(email, regexE))
+            if (email.isEmpty() || password.isEmpty())
+            {
+                statusLabel.setText("Empty email/password");
+            }
+
+            else if (!isValid(email, regexE))
             {
                 clearFields();
-                System.out.println("invalid email format");
+                statusLabel.setText("Invalid email format");
             }
 
             else if (db.isEmailAvailable(email))
             {
                 clearFields();
-                System.out.println("email already in use");
+                statusLabel.setText("Email already in use");
             }
             // if password not right clear pw field only
             // At least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
             else if (!isValid(password, regexP))
             {
                 passwordTextField.clear();
-                System.out.println("invalid password format");
+                statusLabel.setText("Invalid password format");
             }
             // else auth user
             else
@@ -127,10 +138,8 @@ public class AuthenticationController {
                 Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
                 explorationDAO.insert(exploration);
 
-                System.out.println(newUser.toString());
+                System.out.println(newUser);
                 // link to landing page
-                System.out.println("You're In");
-
                 authSuccess();
             }
         }
@@ -160,7 +169,7 @@ public class AuthenticationController {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/navigation-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 500);
+        Scene scene = new Scene(root, MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
 
