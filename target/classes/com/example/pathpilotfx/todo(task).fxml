@@ -5,14 +5,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="taskPane" prefHeight="57.0" prefWidth="313.0" style="-fx-background-color: #193541;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.todolist.TaskController">
+<Pane fx:id="taskPane" prefHeight="57.0" prefWidth="313.0" style="-fx-background-color: #193541;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.TaskController">
+<!--   prefHeight="57.0"-->
    <children>
       <CheckBox fx:id="checkboxField" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleStatusChange" prefHeight="28.0" prefWidth="18.0">
          <font>
             <Font size="16.0" />
          </font>
       </CheckBox>
-      <Label fx:id="taskNameField" layoutX="57.0" layoutY="19.0" prefHeight="20.0" prefWidth="250.0" text="Label" textFill="WHITE">
+      <Label fx:id="taskNameField" layoutX="49.0" layoutY="19.0" prefHeight="12.0" prefWidth="250.0" text="Label" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

@@ -3,6 +3,8 @@ package com.example.pathpilotfx.controller.authentication;
 //import com.example.pathpilotfx.HomeApplication;
 //import com.example.pathpilotfx.HomeController;
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.database.ExplorationDAO;
+import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +40,7 @@ public class AuthenticationController {
     public String regexE = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
 
+
     @FXML
     protected void onConfirmButtonClick() throws IOException {
 
@@ -46,6 +49,8 @@ public class AuthenticationController {
         System.out.println(authVal);
         System.out.println(email + password);
 
+
+//        authSuccess(); // for instant access
         if (authVal == 0)
         {
             // login logic
@@ -117,9 +122,15 @@ public class AuthenticationController {
                 String hashedPassword = hashPassword(password);
                 User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
                 db.insert(newUser);
+
+                ExplorationDAO explorationDAO = new ExplorationDAO();
+                Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
+                explorationDAO.insert(exploration);
+
                 System.out.println(newUser.toString());
                 // link to landing page
                 System.out.println("You're In");
+
                 authSuccess();
             }
         }
@@ -149,10 +160,8 @@ public class AuthenticationController {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/navigation-view.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 400);
+        Scene scene = new Scene(root, 700, 500);
         stage.setScene(scene);
-
-
     }
 
     public boolean isValid(String EP, String regexEP) {

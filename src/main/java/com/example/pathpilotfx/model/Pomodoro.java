@@ -6,6 +6,7 @@ public class Pomodoro {
     private String display; // text string formatted to represent the timer display.
     private int sessionCount; // sessionCount to be used for long breaks.
     private int rest;
+    //private boolean test; // for running test purpose only
     private int work;
     private Boolean isWork; //work = true, rest = false
 
@@ -23,12 +24,21 @@ public class Pomodoro {
     //constructor for customised timer duration
     public Pomodoro (int work, int rest) {
         this.work = work;
-        this.seconds = work * 60;
+        this.seconds = (int) work * 60;
         this.rest = rest;
         this.sessionCount = 0;
         this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
         this.isWork = true;
     }
+
+    //for testing purpose only
+//    public Pomodoro (int seconds, int rest, boolean test) {
+//        this.seconds = seconds;
+//        this.rest = rest;
+//        this.sessionCount = 0;
+//        this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
+//        this.isWork = true;
+//    }
 
     public int getSeconds(){
         return seconds;
@@ -46,12 +56,15 @@ public class Pomodoro {
     //decrements the seconds count by 1, and updates displays.
     //this method will be used for the keyframe animation to update the timer every 1 second.
     public void decreaseSeconds() {
-        seconds--;
+        if(seconds > 0){
+            seconds--;
+        }
+
         display = String.format("%02d:%02d", seconds/60 , seconds % 60);
     }
 
     public void resetTimer(){
-        this.seconds = (isWork) ? work * 60 : rest * 60;
+        this.seconds = (isWork) ? (int) work * 60 : rest * 60;
         this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
     }
 
