@@ -12,6 +12,9 @@ public class ExplorationDAO {
         connection = DatabaseConnection.getInstance();
     }
 
+ //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
+    //ExplorationDAO explorationdao = new ExplorationDAO
+    //explorationdao.insert(exploration)
 
     public void insert(Exploration exploration) {
         try {
@@ -46,8 +49,7 @@ public class ExplorationDAO {
 
     public void deleteCountryData(int id) {
         try {
-            PreparedStatement delete = connection.prepareStatement(
-                    "DELETE FROM exploration WHERE country_id = ?");
+            PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration WHERE country_id = ?");
             delete.setInt(1, id);
             delete.execute();
         } catch (SQLException ex) {
@@ -76,6 +78,7 @@ public class ExplorationDAO {
         }
         return explorationData;
     }
+
     public List<Exploration> getAllLocked() {
         List<Exploration> explorationData = new ArrayList<>();
         try {
@@ -98,6 +101,7 @@ public class ExplorationDAO {
         }
         return explorationData;
     }
+
     public List<Exploration> getAllUnlocked() {
         List<Exploration> explorationData = new ArrayList<>();
         try {
@@ -123,8 +127,7 @@ public class ExplorationDAO {
 
     public Exploration getByCountryId(int countryID) {
         try {
-            PreparedStatement explorationData = connection.prepareStatement(
-                    "SELECT * FROM exploration WHERE country_id = ?");
+            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE country_id = ?");
             explorationData.setInt(1, countryID);
             ResultSet rs = explorationData.executeQuery();
             if (rs.next()) {
@@ -140,6 +143,35 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
         return null;
+    }
+
+    public String getCurrentExploring(int id) {
+        String countryName = null;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT c.country_name " +
+                            "FROM exploration e LEFT JOIN country c " +
+                            "ON e.country_id = c.country_id " +
+                            "WHERE e.status = 'Exploring' AND user_id = ?");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                countryName = resultSet.getString("country_name");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return countryName;
+    }
+
+
+    public void deleteAllExplorations() {
+        try {
+            PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");
+            delete.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
     }
 
     public void close() {

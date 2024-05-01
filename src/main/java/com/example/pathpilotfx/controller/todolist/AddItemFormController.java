@@ -1,32 +1,33 @@
 // AddItemFormController.java
 package com.example.pathpilotfx.controller.todolist;
 
+import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-@SuppressWarnings("javaFxVersionMismatch")
 public class AddItemFormController {
     @FXML
-    private ResourceBundle resources;
+    private ImageView cancelTaskButton;
 
     @FXML
-    private JFXButton cancelTaskButton;
+    private JFXButton startTimerButton;
 
     @FXML
     private DatePicker dateButton;
@@ -59,7 +60,9 @@ public class AddItemFormController {
         // delete button hidden when adding a task
         if(!editMode){
             deleteTaskButton.setVisible(false);
+            startTimerButton.setVisible(false);
         }
+
 
         // Initialize ToDoDOA
         ToDoDAO toDoDAO = new ToDoDAO();
@@ -68,9 +71,22 @@ public class AddItemFormController {
         // Add priority options
         priorityOptions.getItems().addAll("HIGH", "MEDIUM", "LOW");
 
+        // Disable past dates in the DatePicker
+        dateButton.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                // Disable past dates
+                if (date != null && date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;"); // Optional: Change style for disabled dates
+                }
+            }
+        });
+
         // Cancel button event
         cancelTaskButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            System.out.println("Cancel Clicked!");
+
             try {
                 List<Task> taskList = toDoDAO.getAll();
                 AnchorPane formPane;
@@ -89,7 +105,6 @@ public class AddItemFormController {
 
         // Save button event
         savedTaskButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
-            System.out.println("Save Pressed!");
 
             if(editMode){
                 // Editing an existing task
@@ -115,10 +130,15 @@ public class AddItemFormController {
                 throw new RuntimeException(e);
             }
         });
+
+
+
     }
 
+
+
     @FXML
-    void deleteTaskAction(ActionEvent event) {
+    void deleteTaskAction() {
 
         // Initialize ToDoDOA
         ToDoDAO toDoDAO = new ToDoDAO();
@@ -144,6 +164,11 @@ public class AddItemFormController {
         descriptionField.setText(task.getDescription());
         priorityOptions.setValue(task.getPriority());
         dateButton.setValue(task.getDueDate()!= null ? task.getDueDate().toLocalDate() : null);
+
+
+        startTimerButton.setVisible(!task.getStatus());
+
+
     }
 
     // sets todo(addItemForm) to edit mode when task is being edited
@@ -152,5 +177,21 @@ public class AddItemFormController {
         this.editedTask = editedTask;
         deleteTaskButton.setVisible(true);
 
+    }
+
+    @FXML
+    void startTimerAction(){
+        System.out.println("button clicked start timer");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/timer-view.fxml"));
+            AnchorPane timerPage = loader.load();
+
+             //Get the controller instance
+            TimerController timerController = loader.getController();
+            timerController.setTaskMode(true,this.task);
+            rootAnchorPane.getChildren().setAll(timerPage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

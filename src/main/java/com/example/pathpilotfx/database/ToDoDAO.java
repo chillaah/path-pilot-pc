@@ -27,7 +27,6 @@ public class ToDoDAO {
                     + "due_date DATE "
                     + ")"
             );
-
         } catch (SQLException ex){
             System.err.println(ex);
         }
@@ -111,6 +110,36 @@ public class ToDoDAO {
         return taskList;
     }
 
+    public List<Task> getUncomplet() {
+        List<Task> taskList = new ArrayList<>();
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                Statement getAll = connection.createStatement();
+                ResultSet rs = getAll.executeQuery("SELECT * FROM tasks WHERE status = 0");
+                while (rs.next()) {
+                    Task task = new Task(
+                            rs.getString("taskName"),
+                            rs.getString("description"),
+                            rs.getString("priority"),
+                            getLocalDateOrNull(rs.getDate("due_date"))
+
+                    );
+                    task.setId(rs.getInt("id"));
+                    task.setStatus(rs.getBoolean("status"));
+                    task.setDatecreated(rs.getDate("date_created"));
+
+                    taskList.add(task);
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+        return taskList;
+    }
+
     private LocalDate getLocalDateOrNull(Date date) {
         return date != null ? date.toLocalDate() : null;
     }
@@ -147,4 +176,5 @@ public class ToDoDAO {
             ex.printStackTrace();
         }
     }
+
 }
