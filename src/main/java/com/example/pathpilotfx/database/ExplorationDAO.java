@@ -33,15 +33,14 @@ public class ExplorationDAO {
     public void update(Exploration exploration) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE exploration SET user_id = ?, " +
-                            "country_id = ?, status = ?, lockedStatus = ?, " +
-                            "favourited = ? WHERE country_id = ?"
+                    "UPDATE exploration SET status = ?, lockedStatus = ?, " +
+                            "favourited = ? WHERE country_id = ? AND user_id = ?"
             );
-            updateData.setInt(1, exploration.getUserID());
-            updateData.setInt(2, exploration.getCountryID());
-            updateData.setString(3, exploration.getStatus());
-            updateData.setBoolean(4, exploration.isLocked());
-            updateData.setBoolean(5, exploration.isFavourited());
+            updateData.setString(1, exploration.getStatus());
+            updateData.setBoolean(2, exploration.isLocked());
+            updateData.setBoolean(3, exploration.isFavourited());
+            updateData.setInt(4, exploration.getCountryID());
+            updateData.setInt(5, exploration.getUserID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
