@@ -17,7 +17,7 @@
       </Label>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="59.0" layoutY="41.0" prefHeight="281.0" prefWidth="445.0">
          <content>
-            <VBox fx:id="vBoxContainer" prefWidth="343.0" style="-fx-background-color: #FFFFFF00;">
+            <VBox fx:id="vBoxContainer" prefWidth="443.0" style="-fx-background-color: #FFFFFF00;">
 
                <children>
                   <!-- This is where dynamically loaded taskV panes will be added -->

@@ -65,84 +65,84 @@ public class AuthenticationController {
         System.out.println(email + password);
 
 
-        authSuccess(); // for instant access
-//        if (authVal == 0)
-//        {
-//            // login logic
-//            // traverse emails on db until matching email found
-//            // check if db pw = provided pw
-//            // if true auth user
-//            // else clear pw field and display wrong password message
-//            if (email.isEmpty() || password.isEmpty())
-//            {
-//                statusLabel.setText("Empty email/password");
-//            }
-//            else if (!isValid(email, regexE) || !isValid(password, regexP) || !authenticateUser(email, password))
-//            {
-//                clearFields();
-//                statusLabel.setText("Incorrect email/password");
-//            }
-//
-//            else if (!db.isEmailAvailable(email))
-//            {
-//                clearFields();
-//                statusLabel.setText("Email not found");
-//            }
-//
-//            else
-//            {
-//                // link to landing page
-//                authSuccess();
-//            }
-//        }
-//        else // authVal = 1
-//        {
-//            // create account logic
-//            // add sanity checks to email and pw
-//            // if email not right clear both field
-//            if (email.isEmpty() || password.isEmpty())
-//            {
-//                statusLabel.setText("Empty email/password");
-//            }
-//
-//            else if (!isValid(email, regexE))
-//            {
-//                clearFields();
-//                statusLabel.setText("Invalid email format");
-//            }
-//
-//            else if (db.isEmailAvailable(email))
-//            {
-//                clearFields();
-//                statusLabel.setText("Email already in use");
-//            }
-//            // if password not right clear pw field only
-//            // At least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
-//            else if (!isValid(password, regexP))
-//            {
-//                passwordTextField.clear();
-//                statusLabel.setText("Invalid password format");
-//            }
-//            // else auth user
-//            else
-//            {
-//                LocalDateTime ldt = LocalDateTime.now();
-//                Timestamp date = Timestamp.valueOf(ldt);
-//                int lastId = db.getLatestUser(); lastId++;
-//
-//                String hashedPassword = hashPassword(password);
-//                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
-//                db.insert(newUser);
-//
-//                ExplorationDAO explorationDAO = new ExplorationDAO();
-//                Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
-//                explorationDAO.insert(exploration);
-//
-//                System.out.println(newUser);
-//                // link to landing page
-//                authSuccess();
-//            }
-//        }
+        //authSuccess(); // for instant access
+        if (authVal == 0)
+        {
+            // login logic
+            // traverse emails on db until matching email found
+            // check if db pw = provided pw
+            // if true auth user
+            // else clear pw field and display wrong password message
+            if (email.isEmpty() || password.isEmpty())
+            {
+                statusLabel.setText("Empty email/password");
+            }
+            else if (!isValid(email, regexE) || !isValid(password, regexP) || !authenticateUser(email, password))
+            {
+                clearFields();
+                statusLabel.setText("Incorrect email/password");
+            }
+
+            else if (!db.isEmailAvailable(email))
+            {
+                clearFields();
+                statusLabel.setText("Email not found");
+            }
+
+            else
+            {
+                // link to landing page
+                authSuccess();
+            }
+        }
+        else // authVal = 1
+        {
+            // create account logic
+            // add sanity checks to email and pw
+            // if email not right clear both field
+            if (email.isEmpty() || password.isEmpty())
+            {
+                statusLabel.setText("Empty email/password");
+            }
+
+            else if (!isValid(email, regexE))
+            {
+                clearFields();
+                statusLabel.setText("Invalid email format");
+            }
+
+            else if (db.isEmailAvailable(email))
+            {
+                clearFields();
+                statusLabel.setText("Email already in use");
+            }
+            // if password not right clear pw field only
+            // At least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
+            else if (!isValid(password, regexP))
+            {
+                passwordTextField.clear();
+                statusLabel.setText("Invalid password format");
+            }
+            // else auth user
+            else
+            {
+                LocalDateTime ldt = LocalDateTime.now();
+                Timestamp date = Timestamp.valueOf(ldt);
+                int lastId = db.getLatestUser(); lastId++;
+
+                String hashedPassword = hashPassword(password);
+                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
+                db.insert(newUser);
+
+                ExplorationDAO explorationDAO = new ExplorationDAO();
+                Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
+                explorationDAO.insert(exploration);
+
+                System.out.println(newUser);
+                // link to landing page
+                authSuccess();
+            }
+        }
     }
 
     @FXML
