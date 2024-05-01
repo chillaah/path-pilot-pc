@@ -120,9 +120,7 @@ public class ToDoTaskController implements TaskChangeListener {
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
-    @FXML
-    void CheckBoxL(ActionListener e ){
-    }
+
     @Override
     public void onTaskChange(boolean isSelected) {
         // reload updated task page

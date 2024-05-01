@@ -48,8 +48,6 @@ public class TaskController {
             boolean isSelected = checkboxField.isSelected();
 
         });
-
-
     }
     @FXML
     void handleStatusChange() {
@@ -81,13 +79,6 @@ public class TaskController {
         }
     }
 
-    public CheckBox getCheckboxField(){
-        return checkboxField;
-    }
-
-    public void setParent(ToDoTaskController parent) {
-        this.parent = parent;
-    }
 
     public Task getTask(){
         return this.task;

@@ -27,18 +27,6 @@ public class ToDoDAO {
                     + "due_date DATE "
                     + ")"
             );
-
-            createTable.execute("CREATE TABLE IF NOT EXISTS completedTask ("
-                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "taskName VARCHAR NOT NULL, "
-                    + "status BOOLEAN NOT NULL, "
-                    + "description VARCHAR NOT NULL, "
-                    + "priority VARCHAR, "
-                    + "date_created DATETIME NOT NULL, "
-                    + "due_date DATE "
-                    + ")"
-            );
-
         } catch (SQLException ex){
             System.err.println(ex);
         }
@@ -186,35 +174,6 @@ public class ToDoDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-    }
-
-    public void MarkCompleted(Task task) {
-        try {
-            int Original_ID = task.getID();
-            PreparedStatement insertTask = connection.prepareStatement(
-                    "INSERT INTO completedTask (taskName,status,description,priority,date_created,due_date) VALUES (?, ?, ?, ?, ?, ?)"
-            );
-            //Add completed task in to Completed task table
-            insertTask.setString(1, task.getTask());
-            insertTask.setBoolean(2, task.getStatus());
-            insertTask.setString(3, task.getDescription());
-            insertTask.setString(4, task.getPriority());
-            insertTask.setDate(5, task.getDatecreated());
-            insertTask.setDate(6,task.getDueDate());
-            insertTask.execute();
-        } catch (SQLException ex) {
-            System.out.println("An error occurred while inserting the task:");
-            ex.printStackTrace(); // Print the stack trace for detailed error information
-        }
-    }
-    public void MarkUnCompleted(Task task) {
-        try {
-            PreparedStatement deleteAccount = connection.prepareStatement("DELETE FROM completedTask WHERE taskName = ?");
-            deleteAccount.setString(1, task.getTask());
-            deleteAccount.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
         }
     }
 

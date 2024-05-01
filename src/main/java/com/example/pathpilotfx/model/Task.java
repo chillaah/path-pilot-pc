@@ -86,15 +86,4 @@ public class Task {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate != null ? java.sql.Date.valueOf(dueDate) : null;
     }
-
-    public void setListener(TaskChangeListener listener) {
-        this.taskChangeListener = listener;
-    }
-
-    private void notifyListeners() {
-
-        taskChangeListener.onTaskChange(this.status);
-
-    }
-
 }
