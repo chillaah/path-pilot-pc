@@ -31,8 +31,7 @@
             </GridPane>
             <Label fx:id="statusLabel" text=" " />
             <StackPane prefWidth="200" prefHeight="200">
-                <Label text="NOTE: Password must be at least 8 characters including
-&#10;one uppercase letter, one lowercase letter, one digit,
+                <Label text="NOTE: Password must be at least 8 characters including one uppercase letter, one lowercase letter, one digit,
 &#10;and one special character"
                        alignment="CENTER" />
             </StackPane>
