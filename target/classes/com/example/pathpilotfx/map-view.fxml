@@ -47,7 +47,7 @@
     <MenuBar VBox.vgrow="NEVER" />
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <VBox layoutX="400.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="300.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <VBox />
                   <Button fx:id="passportButton" mnemonicParsing="false" onAction="#onPassportSelect" prefHeight="40.0" prefWidth="200.0" text="Passport">
@@ -63,9 +63,9 @@
 <!--            <Font size="18.0" />-->
 <!--          </font>-->
 <!--        </Label>-->
-            <Label layoutX="25.0" layoutY="9.0" text="Current Location">
+            <Label layoutX="25.0" layoutY="9.0" text="Good Onya!">
                <font>
-                  <Font size="20.0" />
+                  <Font size="16.0" />
                </font>
             </Label>
 <!--          <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
@@ -74,8 +74,8 @@
 <!--                         preserveRatio="true">-->
 <!--                  <Image url="assets/australia-stamp.png"/>-->
 <!--              </ImageView>-->
-          <VBox layoutX="419.0" layoutY="77.0" />
-            <ImageView fx:id="stamp" fitHeight="343.0" fitWidth="352.0" layoutX="25.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+          <VBox layoutX="419.0" layoutY="30.0" />
+            <ImageView fx:id="stamp" fitHeight="300.0" fitWidth="250.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/australia-stamp.png" />
                </image>
