@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
    <children>
-      <VBox alignment="CENTER" layoutX="190.0" layoutY="122.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F9F5EE;">
+      <VBox alignment="CENTER" layoutX="147.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F9F5EE;">
          <children>
 
             <Label fx:id="timerType" style="-fx-padding: 10;" text="FOCUS">
@@ -30,12 +29,12 @@
                   <Button onAction="#onStartButtonClick" text="Start" />
                   <Button onAction="#onStopButtonClick" text="Stop" />
                   <Button onAction="#onTypeButtonClick" text="Change Type" />
-                  <Button fx:id="settingsButton" onAction="#onSettingsButtonClick" text="Settings"/>
+                  <Button fx:id="settingsButton" onAction="#onSettingsButtonClick" text="Settings" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <AnchorPane fx:id="taskPopUp" layoutX="128.0" layoutY="57.0" prefHeight="35.0" prefWidth="292.0" style="-fx-background-color: #193541; -fx-background-radius: 5px;">
+      <AnchorPane fx:id="taskPopUp" layoutX="129.0" layoutY="51.0" prefHeight="35.0" prefWidth="292.0" style="-fx-background-color: #193541; -fx-background-radius: 5px;">
          <children>
             <Label fx:id="taskPopUpLabel" alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="25.0" prefWidth="239.0" text="Label" textFill="WHITE" />
             <Button fx:id="crossButton" layoutX="254.0" layoutY="1.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="13.0" style="-fx-background-color: #FFFFFF00;">
