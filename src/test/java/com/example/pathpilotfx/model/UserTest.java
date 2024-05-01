@@ -48,6 +48,7 @@ class UserTest {
     @Test
     void testSetUserID() {
         User user = new User(1, "username", "email@example.com", "password", null, 0);
+
         user.setUserID(2);
         assertEquals(2, user.getUserID());
     }
