@@ -1,0 +1,4 @@
+--patch-module
+com.example.authentication=_
+--add-reads
+com.example.authentication=ALL-UNNAMED
