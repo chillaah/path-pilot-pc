@@ -54,14 +54,14 @@ public class MockTimerDAOTest {
     @Test
     public void testGetByTimerId_InvalidId() {
         MockTimerDAO timerDAO = new MockTimerDAO();
-        assertNull(timerDAO.getByTimerId(100)); // Assuming 100 is an invalid ID
+        assertNull(timerDAO.getByTimerId(100));
     }
 
 
     @Test
     public void testGetByTimerId_NonExistentId() {
         MockTimerDAO timerDAO = new MockTimerDAO();
-        assertNull(timerDAO.getByTimerId(999)); // Assuming 999 does not exist
+        assertNull(timerDAO.getByTimerId(999));
     }
 
     @Test

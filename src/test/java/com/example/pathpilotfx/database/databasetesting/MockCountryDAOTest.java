@@ -61,16 +61,16 @@ public class MockCountryDAOTest {
 
     @Test
     public void testGetByCountryId_NotFound() {
-        assertNull(mockCountryDAO.getByCountryId(100)); // Assuming 100 is not a valid country ID
+        assertNull(mockCountryDAO.getByCountryId(100));
     }
 
     @Test
     public void testGetByCountryId_Null() {
-        assertNull(mockCountryDAO.getByCountryId(-1)); // Assuming -1 is not a valid country ID
+        assertNull(mockCountryDAO.getByCountryId(-1));
     }
 
     @Test
     public void testGetByCountryId_NegativeId() {
-        assertNull(mockCountryDAO.getByCountryId(-5)); // Assuming -5 is not a valid country ID
+        assertNull(mockCountryDAO.getByCountryId(-5));
     }
 }
