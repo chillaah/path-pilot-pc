@@ -63,7 +63,7 @@ public class SideBarController implements Initializable {
         loadPage("profile.fxml");
     }
 
-    private void loadPage(String page){
+    public void loadPage(String page){
         Parent root = null;
 
         try {

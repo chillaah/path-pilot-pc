@@ -6,9 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.pathpilotfx.controller.map.PassportController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox
+    xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.example.pathpilotfx.controller.map.PassportController"
+    alignment="CENTER" spacing="10"
+    prefHeight="400.0" prefWidth="700.0">
 
-</AnchorPane>
+    <children>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <ListView fx:id="countryListView"/>
+            </content>
+        </ScrollPane>
+    </children>
+
+    <Button fx:id="backButton" text="Back" onAction="#onBackButtonClick"/>
+
+</VBox>
