@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+<VBox
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.example.pathpilotfx.controller.map.LockedController"
+        alignment="CENTER" spacing="10"
+        prefHeight="400.0" prefWidth="700.0">
+
+    <children>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <ListView fx:id="countryListView"/>
+            </content>
+        </ScrollPane>
+    </children>
+
+    <Button fx:id="backButton" text="Back" onAction="#onBackButtonClick"/>
+
+</VBox>
+

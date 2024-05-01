@@ -1,6 +1,9 @@
 package com.example.pathpilotfx.model;
 
+import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
@@ -12,13 +15,15 @@ public class Task {
     private String priority;
     private java.sql.Date datecreated,dueDate;
 
+    private TaskChangeListener taskChangeListener;
     public Task(String task, String description, String priority, LocalDate dueDate) {
         this.task = task;
         this.status = false;
         this.description = description;
         this.priority = priority;
         this.datecreated = java.sql.Date.valueOf(LocalDate.now());
-        if (dueDate != null){
+        // Check if dueDate is not null and is not a past date
+        if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
         }
 
@@ -77,10 +82,15 @@ public class Task {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = new java.sql.Date(dueDate.getTime());
+
     }
 
     public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate != null ? java.sql.Date.valueOf(dueDate) : null;
+        if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
+            this.dueDate = java.sql.Date.valueOf(dueDate);
+        }
+        else{
+            this.dueDate = null;
+        }
     }
-
 }

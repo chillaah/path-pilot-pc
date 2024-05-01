@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.navigation.SideBarController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.navigation.SideBarController">
    <left>
       <VBox prefHeight="400.0" prefWidth="147.0" style="-fx-background-color: #70Aff6;" BorderPane.alignment="CENTER">
          <children>
@@ -39,9 +39,9 @@
       <AnchorPane fx:id="ap" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" />
    </center>
    <top>
-      <Pane prefHeight="27.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="27.0" prefWidth="700.0" style="-fx-background-color: #193541;" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="339.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Pilot">
+            <Text fill="WHITE" layoutX="339.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Pilot">
                <font>
                   <Font size="14.0" />
                </font>
