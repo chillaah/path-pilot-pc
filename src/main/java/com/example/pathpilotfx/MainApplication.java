@@ -2,6 +2,7 @@ package com.example.pathpilotfx;
 
 import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
+import com.example.pathpilotfx.model.Exploration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,8 +32,9 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        // clears all database entries
 
+
+//      clears all database entries
 //        db.deleteAllUsers();
 //        db2.deleteAllExplorations();
 
