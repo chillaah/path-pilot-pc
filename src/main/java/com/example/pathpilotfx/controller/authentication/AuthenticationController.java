@@ -4,6 +4,7 @@ package com.example.pathpilotfx.controller.authentication;
 //import com.example.pathpilotfx.HomeController;
 import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.database.ExplorationDAO;
+import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 import javafx.fxml.FXML;
@@ -44,6 +45,7 @@ public class AuthenticationController {
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
     public Label statusLabel;
     public Label headerMsg;
+    public int lastId;
 
     @FXML
     public void initialize() {
@@ -91,6 +93,10 @@ public class AuthenticationController {
 
             else
             {
+                UserDAO userDAO = new UserDAO();
+                int ID = userDAO.getIdByEmail(email);
+                SessionManager.setLoggedInUserId(ID);
+                System.out.println(ID);
                 // link to landing page
                 authSuccess();
             }
@@ -129,17 +135,24 @@ public class AuthenticationController {
                 LocalDateTime ldt = LocalDateTime.now();
                 Timestamp date = Timestamp.valueOf(ldt);
                 int lastId = db.getLatestUser(); lastId++;
-
                 String hashedPassword = hashPassword(password);
-                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
+                User newUser = new User(lastId,"username", email, hashedPassword, date, 1);
                 db.insert(newUser);
 
+
                 ExplorationDAO explorationDAO = new ExplorationDAO();
-                Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
-                explorationDAO.insert(exploration);
+                Exploration insertAU = new Exploration(newUser.getUserID(), 1, "Exploring", false, false);
+                Exploration insertJP = new Exploration(newUser.getUserID(),2, "Unexplored", true, false);
+                Exploration insertFR = new Exploration(newUser.getUserID(),3, "Unexplored", true, false);
+                Exploration insertSL = new Exploration(newUser.getUserID(),4, "Unexplored", true, false);
+                explorationDAO.insert(insertAU);
+                explorationDAO.insert(insertJP);
+                explorationDAO.insert(insertFR);
+                explorationDAO.insert(insertSL);
 
                 System.out.println(newUser);
                 // link to landing page
+                SessionManager.setLoggedInUserId(lastId);
                 authSuccess();
             }
         }

@@ -79,51 +79,7 @@ public class ExplorationDAO {
         return explorationData;
     }
 
-    public List<Exploration> getAllLocked() {
-        List<Exploration> explorationData = new ArrayList<>();
-        try {
-            Statement getAll = connection.createStatement();
-            ResultSet rs = getAll.executeQuery(
-                    "SELECT * FROM exploration where lockedStatus = 1");
-            while (rs.next()) {
-                explorationData.add(
-                        new Exploration(
-                                rs.getInt("user_id"),
-                                rs.getInt("country_id"),
-                                rs.getString("status"),
-                                rs.getBoolean("lockedStatus"),
-                                rs.getBoolean("favourited")
-                        )
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return explorationData;
-    }
 
-    public List<Exploration> getAllUnlocked() {
-        List<Exploration> explorationData = new ArrayList<>();
-        try {
-            Statement getAll = connection.createStatement();
-            ResultSet rs = getAll.executeQuery(
-                    "SELECT * FROM exploration where lockedStatus = 0");
-            while (rs.next()) {
-                explorationData.add(
-                        new Exploration(
-                                rs.getInt("user_id"),
-                                rs.getInt("country_id"),
-                                rs.getString("status"),
-                                rs.getBoolean("lockedStatus"),
-                                rs.getBoolean("favourited")
-                        )
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return explorationData;
-    }
 
     public Exploration getByCountryId(int countryID) {
         try {

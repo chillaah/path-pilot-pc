@@ -92,6 +92,43 @@ public class CountryDAO {
         }
         return null;
     }
+    public List<String> getLockedCountryNamesByUserId(int userId) {
+        List<String> lockedCountryNames = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT c.country_name FROM country c " +
+                            "JOIN " + "exploration e ON e.country_id = c.country_id " +
+                            "WHERE e.user_id = ? AND e.lockedStatus = 1");
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                lockedCountryNames.add(resultSet.getString("country_name"));
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lockedCountryNames;
+    }
+
+    public List<String> getUnlockedCountryNamesByUserId(int userId) {
+        List<String> lockedCountryNames = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT c.country_name FROM country c " +
+                            "JOIN " + "exploration e ON e.country_id = c.country_id " +
+                            "WHERE e.user_id = ? AND e.lockedStatus = 0");
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                lockedCountryNames.add(resultSet.getString("country_name"));
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lockedCountryNames;
+    }
 
     public void close() {
         try {

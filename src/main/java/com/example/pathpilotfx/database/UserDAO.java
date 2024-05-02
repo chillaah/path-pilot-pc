@@ -169,6 +169,20 @@ public class UserDAO {
         }
         return null;
     }
+    public int getIdByEmail(String email) {
+        try {
+            PreparedStatement getUser = connection.prepareStatement(
+                    "SELECT user_id FROM user WHERE email = ?");
+            getUser.setString(1, email);
+            ResultSet rs = getUser.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return 0;
+    }
 
     public User getLatestID(int id) {
         try {

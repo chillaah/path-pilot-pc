@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.controller.map;
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.authentication.SessionManager;
+import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.model.Exploration;
 import javafx.collections.FXCollections;
@@ -26,11 +28,15 @@ public class PassportController {
     public ListView countryListView;
     @FXML
     private Button backButton;
+    private CountryDAO countryDAO;
+    public PassportController() {
+        // Initialize the countryDAO object
+        this.countryDAO = new CountryDAO();
+    }
 
     public void initialize() {
-        ObservableList<String> countries = FXCollections.observableArrayList(
-                "Australia");
-
+        ObservableList<String> countries = FXCollections.observableArrayList(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
+        System.out.println(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
         countryListView.setItems(countries);
     }
 
