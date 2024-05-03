@@ -29,7 +29,12 @@ public class LockedController {
     public ListView countryListView;
     @FXML
     private Button backButton;
+    @FXML
+    private Button viewButton;
+    private Object newVal;
+
     private CountryDAO countryDAO;
+
     public LockedController() {
         // Initialize the countryDAO object
         this.countryDAO = new CountryDAO();
@@ -40,6 +45,12 @@ public class LockedController {
             ObservableList<String> countries = FXCollections.observableArrayList(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
             System.out.println(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
             countryListView.setItems(countries);
+            countryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+            {
+                newVal = newValue;
+                System.out.println("Selected item: " + newValue);
+                viewButton.setVisible(true);
+            });
         } else {
             System.out.println("countryDAO is null.");
         }
@@ -54,5 +65,23 @@ public class LockedController {
 
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
+    }
+    public void onViewButtonClick() throws IOException {
+        Stage stage = (Stage) viewButton.getScene().getWindow();
+        if(newVal.toString().equals("Sri Lanka")){
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("srilanka-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 700, 400);
+            stage.setScene(scene);
+        }
+        else
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(newVal.toString().toLowerCase() + "-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 700, 400);
+            stage.setScene(scene);
+        }
+
+
     }
 }
