@@ -28,9 +28,9 @@
         </ImageView>
         <HBox alignment="CENTER" spacing="25" layoutX="11.0" layoutY="325.0" prefHeight="61.0" prefWidth="577.0">
             <children>
-                <Button mnemonicParsing="false" text="Begin Exploration" />
-                <Button mnemonicParsing="false" text="Unlock Country" />
-                <Button mnemonicParsing="false" text="Cancel Exploration" />
+                <Button fx:id="beginButton" mnemonicParsing="false" text="Begin Exploration" onAction="#onBeginButtonClick"/>
+                <Button fx:id="unlockButton" mnemonicParsing="false" text="Unlock Country" onAction="#onUnlockButtonClick"/>
+                <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel Exploration" onAction="#onCancelButtonClick"/>
             </children>
             <padding>
                 <Insets right="20.0" />

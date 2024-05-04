@@ -1,5 +1,6 @@
 package com.example.pathpilotfx.database;
 import com.example.pathpilotfx.model.Exploration;
+import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ public class ExplorationDAO {
     //explorationdao.insert(exploration)
 
     public void insert(Exploration exploration) {
+        UserDAO userDAO = new UserDAO();
         try {
+            int userId = userDAO.getLatestUser();
             PreparedStatement insertData = connection.prepareStatement(
                     "INSERT INTO exploration VALUES(?,?,?,?,?)");
-            insertData.setInt(1, exploration.getUserID());
+            insertData.setInt(1, userId);
             insertData.setInt(2, exploration.getCountryID());
             insertData.setString(3, exploration.getStatus());
             insertData.setBoolean(4, exploration.isLocked());
@@ -81,10 +84,10 @@ public class ExplorationDAO {
 
 
 
-    public Exploration getByCountryId(int countryID) {
+    public Exploration getByUserId(int userID) {
         try {
-            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE country_id = ?");
-            explorationData.setInt(1, countryID);
+            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ?");
+            explorationData.setInt(1, userID);
             ResultSet rs = explorationData.executeQuery();
             if (rs.next()) {
                 return new Exploration(
