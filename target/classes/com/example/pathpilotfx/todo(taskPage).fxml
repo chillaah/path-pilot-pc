@@ -17,7 +17,7 @@
       </Label>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="59.0" layoutY="41.0" prefHeight="281.0" prefWidth="445.0">
          <content>
-            <VBox fx:id="vBoxContainer" prefWidth="343.0" style="-fx-background-color: #FFFFFF00;">
+            <VBox fx:id="vBoxContainer" prefWidth="443.0" style="-fx-background-color: #FFFFFF00;">
 
                <children>
                   <!-- This is where dynamically loaded taskV panes will be added -->
@@ -31,6 +31,6 @@
             </VBox>
          </content>
       </ScrollPane>
-      <JFXButton fx:id="addTaskButton" layoutX="112.0" layoutY="331.0" onAction="#addTaskAction" prefHeight="25.0" prefWidth="346.0" style="-fx-background-color: #193541;" text="Add Task" textFill="WHITE" />
+      <JFXButton fx:id="addTaskButton" layoutX="60.0" layoutY="331.0" onAction="#addTaskAction" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #193541;" text="Add Task" textFill="WHITE" />
    </children>
 </AnchorPane>
