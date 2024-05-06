@@ -21,9 +21,10 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
 //        Connection connection = DatabaseConnection.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 //        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-//        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/com/example/pathpilotfx/styles.css").toExternalForm());
 
         stage.setTitle(TITLE);
         stage.setScene(scene);
