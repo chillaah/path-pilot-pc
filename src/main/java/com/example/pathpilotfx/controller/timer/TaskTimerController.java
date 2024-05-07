@@ -25,6 +25,9 @@ public class TaskTimerController {
 
     @FXML
     private Label taskLabel;
+    @FXML
+    private Label taskLabel1;
+
 
     private Task task;
     public boolean timer_finish = false;
@@ -64,6 +67,7 @@ public class TaskTimerController {
     void initialize(){
         if (task != null) {
             taskLabel.setText("Task: " + task.getTask());
+
         } else {
             taskLabel.setText("Task: N/A");
         }

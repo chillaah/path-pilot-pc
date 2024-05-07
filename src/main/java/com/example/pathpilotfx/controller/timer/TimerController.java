@@ -50,6 +50,8 @@ public class TimerController {
 
     @FXML
     private Label taskPopUpLabel;
+    @FXML
+    private Label taskPopUpLabel1;
 
 
     @FXML
@@ -62,6 +64,7 @@ public class TimerController {
     @FXML
     protected void onStartButtonClick() {
         timerTimeline.play();
+
     }
 
     @FXML
@@ -73,6 +76,7 @@ public class TimerController {
 
     @FXML
     protected void onTypeButtonClick(){
+
         handleRestTimer();
     }
 
@@ -149,6 +153,7 @@ public class TimerController {
         this.task = task;
         taskPopUp.setVisible(this.taskMode); // update the visibility
         taskPopUpLabel.setText("Focus Task: " + this.task.getTask());
+        taskPopUpLabel1.setText(this.task.getDescription());
 
     }
 

@@ -1,0 +1,44 @@
+.scrollPane {
+    -fx-background-color: black;
+    -fx-background-radius: 30 30 30 30;
+}
+.task {
+    -fx-background-color: #ADD8E6;
+    -fx-background-radius: 15 15 15 15;
+}
+.taskPrio{
+-fx-background-color: Coral;
+-fx-background-radius: 15 15 15 15;
+
+}
+.checkbox .box{
+
+-fx-background-color: white;
+-fx-border-radius:5px;
+-fx-background-radius:5px;
+
+}
+
+.button {
+-fx-border: none;
+}
+
+.timerButton{
+    -fx-background-color: green;
+-fx-background-radius:30 30 30 30 ;
+}
+
+.timerButtonStop{
+-fx-background-color: red;
+-fx-background-radius:30 30 30 30 ;
+}
+
+.setting{
+-fx-background-color:  transparent;
+-fx-border-radius:5px;
+-fx-background-radius:5px;
+}
+.timer {
+-fx-background-color: Gainsboro;
+-fx-background-radius:10 10 10 10 ;
+}
