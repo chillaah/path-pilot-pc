@@ -15,11 +15,10 @@ public class TimerDAO {
     public void insert(Timer timer) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO timer VALUES(?,?,?,?)");
+                    "INSERT INTO timer VALUES(?,?,?)");
             insertData.setInt(1, timer.getUserID());
-            insertData.setInt(2, timer.getTimerID());
-            insertData.setString(3, timer.getDayName());
-            insertData.setInt(4, timer.getDuration());
+            insertData.setInt(2, timer.getBreakDuration());
+            insertData.setInt(3, timer.getWorkDuration());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -28,12 +27,12 @@ public class TimerDAO {
     public void update(Timer timer) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE timer SET dayName = ?, duration = ? WHERE timer_id = ? AND user_id = ?"
+                    "UPDATE timer SET user_id = ?, break_duration = ?, work_duration = ? WHERE timer_id = ?"
             );
-            updateData.setString(1, timer.getDayName());
-            updateData.setInt(2, timer.getDuration());
-            updateData.setInt(3, timer.getTimerID());
-            updateData.setInt(4, timer.getUserID());
+            updateData.setInt(1, timer.getUserID());
+            updateData.setInt(2, timer.getBreakDuration());
+            updateData.setInt(3, timer.getWorkDuration());
+            updateData.setInt(4, timer.getTimerID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -55,14 +54,14 @@ public class TimerDAO {
         List<Timer> timers = new ArrayList<>();
         try {
             Statement getAll = connection.createStatement();
-            ResultSet rs = getAll.executeQuery("SELECT * FROM bankAccounts");
+            ResultSet rs = getAll.executeQuery("SELECT * FROM timer");
             while (rs.next()) {
                 timers.add(
                         new Timer(
                                 rs.getInt("user_id"),
                                 rs.getInt("timer_id"),
-                                rs.getString("dayName"),
-                                rs.getInt("duration")
+                                rs.getInt("break_duration"),
+                                rs.getInt("work_duration")
                         )
                 );
             }
@@ -81,8 +80,8 @@ public class TimerDAO {
                 return new Timer(
                         rs.getInt("user_id"),
                         rs.getInt("timer_id"),
-                        rs.getString("dayName"),
-                        rs.getInt("duration")
+                        rs.getInt("break_duration"),
+                        rs.getInt("work_duration")
                 );
             }
         } catch (SQLException ex) {

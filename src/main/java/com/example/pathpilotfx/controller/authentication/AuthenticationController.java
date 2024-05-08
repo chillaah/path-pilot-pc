@@ -47,6 +47,7 @@ public class AuthenticationController {
     public Label headerMsg;
     public int lastId;
 
+
     @FXML
     public void initialize() {
 
@@ -134,17 +135,17 @@ public class AuthenticationController {
             {
                 LocalDateTime ldt = LocalDateTime.now();
                 Timestamp date = Timestamp.valueOf(ldt);
-                int lastId = db.getLatestUser(); lastId++;
-                String hashedPassword = hashPassword(password);
-                User newUser = new User(lastId,"username", email, hashedPassword, date, 1);
-                db.insert(newUser);
 
+                String hashedPassword = hashPassword(password);
+                User newUser = new User("username", email, hashedPassword, date, 0);
+                db.insert(newUser);
+                int userId = db.getIdByEmail(email);
 
                 ExplorationDAO explorationDAO = new ExplorationDAO();
-                Exploration insertAU = new Exploration(newUser.getUserID(), 1, "Exploring", false, false);
-                Exploration insertJP = new Exploration(newUser.getUserID(),2, "Unexplored", true, false);
-                Exploration insertFR = new Exploration(newUser.getUserID(),3, "Unexplored", true, false);
-                Exploration insertSL = new Exploration(newUser.getUserID(),4, "Unexplored", true, false);
+                Exploration insertAU = new Exploration(userId, 1, "Exploring", false, false);
+                Exploration insertJP = new Exploration(userId,2, "Unexplored", true, false);
+                Exploration insertFR = new Exploration(userId,3, "Unexplored", true, false);
+                Exploration insertSL = new Exploration(userId,4, "Unexplored", true, false);
                 explorationDAO.insert(insertAU);
                 explorationDAO.insert(insertJP);
                 explorationDAO.insert(insertFR);
@@ -152,7 +153,7 @@ public class AuthenticationController {
 
                 System.out.println(newUser);
                 // link to landing page
-                SessionManager.setLoggedInUserId(lastId);
+                SessionManager.setLoggedInUserId(userId);
                 authSuccess();
             }
         }

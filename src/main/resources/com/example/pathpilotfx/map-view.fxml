@@ -72,10 +72,10 @@
 <!--                     preserveRatio="true" />-->
 <!--              <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
 <!--                         preserveRatio="true">-->
-<!--                  <Image url="assets/australia-stamp.png"/>-->
+<!--                  <Image url="assets/australia-image.png"/>-->
 <!--              </ImageView>-->
           <VBox layoutX="419.0" layoutY="30.0" />
-            <ImageView fx:id="stamp" fitHeight="300.0" fitWidth="250.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image" fitHeight="300.0" fitWidth="250.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/australia-stamp.png" />
                </image>
