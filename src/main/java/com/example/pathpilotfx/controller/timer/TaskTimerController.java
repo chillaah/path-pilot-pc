@@ -25,6 +25,9 @@ public class TaskTimerController {
 
     @FXML
     private Label taskLabel;
+    @FXML
+    private Label taskLabel1;
+
 
     private Task task;
     public boolean timer_finish = false; // flag to determine if this screen has been loaded because timer has finished
@@ -77,12 +80,17 @@ public class TaskTimerController {
         }
     }
 
-    /**
-     * Sets the task for Task Timer screen.
-     *
-     * @param task The task for which the screen is being loaded.
-     */
-    public void setTaskTimer(Task task) {
+    @FXML
+    void initialize(){
+        if (task != null) {
+            taskLabel.setText("Task: " + task.getTask());
+
+        } else {
+            taskLabel.setText("Task: N/A");
+        }
+    }
+
+    public void setTaskComplete(Task task) {
         this.task = task;
     }
 

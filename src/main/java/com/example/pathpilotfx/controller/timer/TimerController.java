@@ -47,7 +47,16 @@ public class TimerController {
     private Label taskPopUpLabel; // task name or details in taskPopUp label
 
     @FXML
-    private Button crossButton; // button to exit focus task
+    private Label taskPopUpLabel;
+    @FXML
+    private Label taskPopUpLabel1;
+
+
+    @FXML
+    private Button crossButton;
+
+    private Task task;
+    private boolean taskMode = false;
 
     public Pomodoro sessionTimer; // Pomodoro instance
     private Task task; // task instance (when a timer started corresponding to a task)
@@ -72,6 +81,7 @@ public class TimerController {
     @FXML
     protected void onStartButtonClick() {
         timerTimeline.play();
+
     }
 
     @FXML
@@ -94,6 +104,7 @@ public class TimerController {
 
     @FXML
     protected void onTypeButtonClick(){
+
         handleRestTimer();
     } // toggles between timer type
 
@@ -179,8 +190,10 @@ public class TimerController {
     public void setTaskMode(boolean taskMode, Task task) {
         this.taskMode = taskMode;
         this.task = task;
-        taskPopUp.setVisible(this.taskMode); // Update the visibility of the task pop-up
-        taskPopUpLabel.setText("Focus Task: " + this.task.getTask()); // Update the task pop-up label
+        taskPopUp.setVisible(this.taskMode); // update the visibility
+        taskPopUpLabel.setText("Focus Task: " + this.task.getTask());
+        taskPopUpLabel1.setText(this.task.getDescription());
+
     }
 
 

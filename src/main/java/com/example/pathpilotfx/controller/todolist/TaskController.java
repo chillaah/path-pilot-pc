@@ -31,6 +31,9 @@ public class TaskController {
     private Label taskNameField;
 
     @FXML
+    private Label taskPrioField;
+
+    @FXML
     private Pane taskPane;
 
     private Task task;
@@ -65,12 +68,12 @@ public class TaskController {
     public void setTask(Task task) {
         this.task = task;
         taskNameField.setText(task.getTask());
+        taskPrioField.setText((task.getPriority()));
         checkboxField.setSelected(task.getStatus());
     }
 
     public void setTaskChangeListener(TaskChangeListener listener) {
         this.listener = listener;
-        System.out.println("Listener set in TaskController: " + listener);
     }
 
     private void notifyTaskChangeListener(boolean isSelected) {
