@@ -47,6 +47,7 @@ public class AuthenticationController {
     public Label headerMsg;
     public int lastId;
 
+
     @FXML
     public void initialize() {
 

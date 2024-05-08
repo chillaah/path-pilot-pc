@@ -19,12 +19,14 @@ public class ToDoDAO {
             Statement createTable = connection.createStatement();
             createTable.execute("CREATE TABLE IF NOT EXISTS tasks ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "user_id INTEGER NOT NULL, "
                     + "taskName VARCHAR NOT NULL, "
                     + "status BOOLEAN NOT NULL, "
                     + "description VARCHAR NOT NULL, "
                     + "priority VARCHAR, "
                     + "date_created DATETIME NOT NULL, "
-                    + "due_date DATE "
+                    + "due_date DATE, "
+                    + "FOREIGN KEY (user_id) REFERENCES user(user_id)"
                     + ")"
             );
         } catch (SQLException ex){
@@ -39,13 +41,14 @@ public class ToDoDAO {
         try {
 
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO tasks VALUES(?,?,?,?,?,?)");
+                    "INSERT INTO tasks (user_id,taskName,status,description,priority,date_created,due_date) VALUES(?,?,?,?,?,?,?)");
             insertData.setInt(1, task.getUserID());
             insertData.setString(2, task.getTask());
-            insertData.setString(3, task.getDescription());
-            insertData.setString(4, task.getPriority());
-            insertData.setDate(5, task.getDatecreated());
-            insertData.setDate(6, task.getDueDate());
+            insertData.setBoolean(3, task.getStatus());
+            insertData.setString(4, task.getDescription());
+            insertData.setString(5, task.getPriority());
+            insertData.setDate(6, task.getDatecreated());
+            insertData.setDate(7, task.getDueDate());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -55,14 +58,14 @@ public class ToDoDAO {
         try {
             PreparedStatement updateData = connection.prepareStatement(
                     "UPDATE tasks SET user_id = ?, task_name = ?, status = ?, " +
-                            "description = ?, priority = ?, date_created = ?, due_date = ? " +
+                            "description = ?, priority = ?, due_date = ? " +
                             "WHERE id = ?"
             );
             updateData.setInt(1, task.getUserID());
             updateData.setString(2, task.getTask());
-            updateData.setString(3, task.getDescription());
-            updateData.setString(4, task.getPriority());
-            updateData.setDate(5, task.getDatecreated());
+            updateData.setBoolean(3,task.getStatus());
+            updateData.setString(4, task.getDescription());
+            updateData.setString(5, task.getPriority());
             updateData.setDate(6, task.getDueDate());
             updateData.setInt(7, task.getID());
             updateData.execute();
@@ -72,7 +75,7 @@ public class ToDoDAO {
     }
 
 
-    public void deleteTask(int id) {
+    public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement(
                     "DELETE FROM tasks WHERE id = ?");
@@ -108,12 +111,14 @@ public class ToDoDAO {
         return tasks;
     }
 
-    public List<Task> getUncomplet() {
+    public List<Task> getUncomplete(int id) {
         List<Task> taskList = new ArrayList<>();
         try {
             if (!connection.isClosed()) { // Check if connection is still open
                 Statement getAll = connection.createStatement();
-                ResultSet rs = getAll.executeQuery("SELECT * FROM tasks WHERE status = 0");
+                PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
                 while (rs.next()) {
                     Task task = new Task(
                             rs.getInt("id"),
