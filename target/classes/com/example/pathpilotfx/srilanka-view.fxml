@@ -23,7 +23,7 @@
         </Label>
         <ImageView fitHeight="181.0" fitWidth="215.0" layoutX="26.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@assets/srilanka-image.png" />
+                <Image url="@assets/srilanka-stamp.png" />
             </image>
         </ImageView>
         <HBox alignment="CENTER" spacing="25" layoutX="11.0" layoutY="325.0" prefHeight="61.0" prefWidth="577.0">

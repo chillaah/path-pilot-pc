@@ -47,7 +47,7 @@ public class JapanController {
             cancelButton.setDisable(true);
         }
         //set cancel exploration button as disabled if current exploration is not Japan
-        else if (explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()) != "Japan"){
+        else if (!explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()).equals("Japan")){
             cancelButton.setDisable(true);
         }
         else {cancelButton.setDisable(false);}
@@ -55,6 +55,10 @@ public class JapanController {
         //set unlock button as disabled if it is already unlocked or not enough exp
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("Japan")
                 && user.getExp() < 10){
+            unlockButton.setDisable(true);
+        }
+        else if(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("Japan")){
+            System.out.println("successfully in if statement");
             unlockButton.setDisable(true);
         }
         else{unlockButton.setDisable(false);}
@@ -80,9 +84,10 @@ public class JapanController {
         if(sendWarningConfirmation()) {
             String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
             Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
-            Exploration explorationFR = new Exploration(SessionManager.getLoggedInUserId(), 2, "Exploring", false, false);
+            Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
+            toUpdate.setStatus("Exploring");
             explorationDAO.update(explorationExpl);
-            explorationDAO.update(explorationFR);
+            explorationDAO.update(toUpdate);
             Stage stage = (Stage) beginButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
             Parent root = fxmlLoader.load();
@@ -104,13 +109,22 @@ public class JapanController {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
     public void onUnlockButtonClick() throws IOException {
-        Stage stage = (Stage) unlockButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 400);
-        stage.setScene(scene);
+        if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("Japan")) {
+            Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
+            toUpdate.setLocked(false);
+            explorationDAO.update(toUpdate);
+            Stage stage = (Stage) unlockButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 700, 400);
+            stage.setScene(scene);
+        }
+        else{System.out.println("already unlocked");}
     }
     public void onCancelButtonClick() throws IOException {
+        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
+        toUpdate.setStatus("Unexplored");
+        explorationDAO.update(toUpdate);
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("japan-view.fxml"));
         Parent root = fxmlLoader.load();

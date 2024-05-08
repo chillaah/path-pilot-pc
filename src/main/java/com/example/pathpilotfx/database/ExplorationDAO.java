@@ -84,10 +84,11 @@ public class ExplorationDAO {
 
 
 
-    public Exploration getByUserId(int userID) {
+    public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
-            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ?");
+            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
             explorationData.setInt(1, userID);
+            explorationData.setInt(2, countryID);
             ResultSet rs = explorationData.executeQuery();
             if (rs.next()) {
                 return new Exploration(
