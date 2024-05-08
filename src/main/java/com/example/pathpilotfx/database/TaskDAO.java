@@ -36,26 +36,27 @@ public class TaskDAO {
     public void update(TaskV taskV) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE task SET title = ?, description = ?, deadline = ?, reminder = ?, selectionStatus = ?, assignment = ?, status = ?, category = ?, priority = ?, extra_notes = ? WHERE task_id = ? AND user_id = ?"
+                    "UPDATE task SET user_id = ?, task_id = ?, title = ?, " +
+                        "description = ?, deadline = ?, reminder = ?, selectionStatus = ?, " +
+                        "assignment = ?, status = ?, category = ?, priority = ?, extra_notes = ? WHERE task_id = ?"
             );
-            updateData.setString(1, taskV.getTaskName());
-            updateData.setString(2, taskV.getDescription());
-            updateData.setDate(3, taskV.getDeadline());
-            updateData.setDate(4, taskV.getReminder());
-            updateData.setBoolean(5, taskV.isSelected());
-            updateData.setInt(6, taskV.getAssignmentID());
-            updateData.setString(7, taskV.getStatus());
-            updateData.setString(8, taskV.getCategory());
-            updateData.setString(9, taskV.getPriority());
-            updateData.setString(10, taskV.getExtraNotes());
-            updateData.setInt(11, taskV.getTaskID());
-            updateData.setInt(12, taskV.getUserID());
+            updateData.setInt(1, taskV.getUserID());
+            updateData.setInt(2, taskV.getTaskID());
+            updateData.setString(3, taskV.getTaskName());
+            updateData.setString(4, taskV.getDescription());
+            updateData.setDate(5, taskV.getDeadline());
+            updateData.setDate(6, taskV.getReminder());
+            updateData.setBoolean(7, taskV.isSelected());
+            updateData.setInt(8, taskV.getAssignmentID());
+            updateData.setString(9, taskV.getStatus());
+            updateData.setString(10, taskV.getCategory());
+            updateData.setString(11, taskV.getPriority());
+            updateData.setString(12, taskV.getExtraNotes());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
-
 
     public void deleteTask(int id) {
         try {

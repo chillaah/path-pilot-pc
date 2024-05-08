@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.MapController">
+<fx:root prefHeight="400.0" prefWidth="640.0" type="VBox" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.MapController">
   <children>
     <MenuBar VBox.vgrow="NEVER" />
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -72,10 +72,10 @@
 <!--                     preserveRatio="true" />-->
 <!--              <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
 <!--                         preserveRatio="true">-->
-<!--                  <Image url="assets/australia-image.png"/>-->
+<!--                  <Image url="assets/australia-stamp.png"/>-->
 <!--              </ImageView>-->
           <VBox layoutX="419.0" layoutY="30.0" />
-            <ImageView fx:id="image" fitHeight="300.0" fitWidth="250.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="stamp" fitHeight="300.0" fitWidth="250.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/australia-stamp.png" />
                </image>
@@ -83,4 +83,4 @@
       </children>
     </AnchorPane>
   </children>
-</VBox>
+</fx:root>

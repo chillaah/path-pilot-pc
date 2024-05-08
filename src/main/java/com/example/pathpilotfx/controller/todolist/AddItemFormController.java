@@ -1,7 +1,6 @@
 // AddItemFormController.java
 package com.example.pathpilotfx.controller.todolist;
 
-import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
@@ -55,7 +54,6 @@ public class AddItemFormController {
 
     private boolean editMode = false;
     private Task editedTask;
-
     @FXML
     void initialize() throws SQLException {
 
@@ -65,12 +63,10 @@ public class AddItemFormController {
             startTimerButton.setVisible(false);
         }
 
+
         // Initialize ToDoDOA
         ToDoDAO toDoDAO = new ToDoDAO();
         toDoDAO.createTaskTable();
-
-        //Initialise logged in user
-        int userID = SessionManager.getLoggedInUserId();
 
         // Add priority options
         priorityOptions.getItems().addAll("HIGH", "MEDIUM", "LOW");
@@ -92,9 +88,9 @@ public class AddItemFormController {
         cancelTaskButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
             try {
-                List<Task> taskList = toDoDAO.getUncomplete(userID);
+                List<Task> taskList = toDoDAO.getAll();
                 AnchorPane formPane;
-                // loads appropriate page depending on if tasks exist
+                // loads appropriate page depending if tasks exist
                 if(taskList.isEmpty()){
                     formPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml")));
                 }
@@ -119,8 +115,8 @@ public class AddItemFormController {
                 toDoDAO.update(editedTask); // Update the task in the database
             }else{
                 // insert new task into DB
-                Task newTask = new Task(taskField.getText(),userID, descriptionField.getText(), priorityOptions.getValue(), dateButton.getValue());
-                toDoDAO.insert(newTask);
+                Task newTask = new Task(taskField.getText(), descriptionField.getText(), priorityOptions.getValue(), dateButton.getValue());
+                toDoDAO.insertTask(newTask);
 
             }
 

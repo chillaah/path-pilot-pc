@@ -62,37 +62,37 @@ public class UserDAO {
     public void insert(User user) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO user (username, email, password, creation_date, exp) VALUES(?,?,?,?,?)");
-            insertData.setString(1, user.getUsername());
-            insertData.setString(2, user.getEmail());
-            insertData.setString(3, user.getPassword());
-            insertData.setTimestamp(4, user.getCreationDate());
-            insertData.setInt(5, user.getExp());
+                    "INSERT INTO user (user_id, username, email, password, creation_date, exp) VALUES(?,?,?,?,?,?)");
+            insertData.setInt(1, user.getUserID());
+            insertData.setString(2, user.getUsername());
+            insertData.setString(3, user.getEmail());
+            insertData.setString(4, user.getPassword());
+            insertData.setTimestamp(5, user.getCreationDate());
+            insertData.setInt(6, user.getExp());
             insertData.execute();
         } catch (SQLException sqlexc) {
             System.err.println(sqlexc);
         }
     }
 
-
-
     public void update(User user) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET username = ?, email = ?, password = ?, creation_date = ?, exp = ? WHERE user_id = ?"
+                    "UPDATE user SET user_id = ?, username = ?, " +
+                            "email = ?, password = ?, creation_date = ?, " +
+                            "exp = ?"
             );
-            updateData.setString(1, user.getUsername());
-            updateData.setString(2, user.getEmail());
-            updateData.setString(3, user.getPassword());
-            updateData.setTimestamp(4, user.getCreationDate());
-            updateData.setInt(5, user.getExp());
-            updateData.setInt(6, user.getUserID());
+            updateData.setInt(1, user.getUserID());
+            updateData.setString(2, user.getUsername());
+            updateData.setString(3, user.getEmail());
+            updateData.setString(4, user.getPassword());
+            updateData.setTimestamp(5, user.getCreationDate());
+            updateData.setInt(6, user.getExp());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
-
     public void UpdateEXP(int userID, int exp) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -169,20 +169,6 @@ public class UserDAO {
             System.err.println(ex);
         }
         return null;
-    }
-    public int getIdByEmail(String email) {
-        try {
-            PreparedStatement getUser = connection.prepareStatement(
-                    "SELECT user_id FROM user WHERE email = ?");
-            getUser.setString(1, email);
-            ResultSet rs = getUser.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("user_id");
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return 0;
     }
 
     public User getLatestID(int id) {

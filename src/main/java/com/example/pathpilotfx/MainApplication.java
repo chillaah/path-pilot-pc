@@ -2,7 +2,6 @@ package com.example.pathpilotfx;
 
 import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
-import com.example.pathpilotfx.model.Exploration;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +20,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        Connection connection = DatabaseConnection.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 //        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
 //        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
@@ -32,14 +32,11 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        // clears all database entries
 
-
-//      clears all database entries
-          db.deleteAllUsers();
-
+//        db.deleteAllUsers();
 //        db2.deleteAllExplorations();
-        ExplorationDAO explorationDAO = new ExplorationDAO();
-        explorationDAO.deleteAllExplorations();
+
         launch();
     }
 }

@@ -1,8 +1,6 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
-import com.example.pathpilotfx.database.UserDAO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,16 +10,14 @@ public class Task {
 
     private String task;
     private Integer id;
-    private int userID;
     private boolean status;
     private String description;
     private String priority;
-    private java.sql.Date datecreated, dueDate;
+    private java.sql.Date datecreated,dueDate;
 
     private TaskChangeListener taskChangeListener;
-    public Task(String task, int user_id, String description, String priority, LocalDate dueDate) {
+    public Task(String task, String description, String priority, LocalDate dueDate) {
         this.task = task;
-        this.userID = user_id;
         this.status = false;
         this.description = description;
         this.priority = priority;
@@ -30,19 +26,7 @@ public class Task {
         if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
         }
-    }
-    public Task(int id, int user_id, String task, boolean status, String description, String priority, LocalDate datecreated, LocalDate dueDate) {
-        this.id = id;
-        this.task = task;
-        this.userID = user_id;
-        this.status = status;
-        this.description = description;
-        this.priority = priority;
-        this.datecreated = java.sql.Date.valueOf(LocalDate.now());
-        // Check if dueDate is not null and is not a past date
-        if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
-            this.dueDate = java.sql.Date.valueOf(dueDate);
-        }
+
     }
 
     public int getID() {
@@ -108,13 +92,5 @@ public class Task {
         else{
             this.dueDate = null;
         }
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 }

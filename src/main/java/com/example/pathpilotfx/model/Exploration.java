@@ -6,6 +6,7 @@ public class Exploration {
     private String status;
     private boolean isLocked;
     private boolean isFavourited;
+
     public Exploration(int userID, int countryID, String status, boolean isLocked, boolean isFavourited) {
         this.userID = userID;
         this.countryID = countryID;

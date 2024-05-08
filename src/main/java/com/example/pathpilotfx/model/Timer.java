@@ -3,19 +3,14 @@ package com.example.pathpilotfx.model;
 public class Timer {
     private int userID;
     private int timerID;
-    private int breakDuration;
-    private int workDuration;
+    private String dayName;
+    private int duration;
 
-    public Timer(int userID, int timerID, int breakDuration, int workDuration) {
+    public Timer(int userID, int timerID, String dayName, int duration) {
         this.userID = userID;
         this.timerID = timerID;
-        this.breakDuration = breakDuration;
-        this.workDuration = workDuration;
-    }
-    public Timer(int userID, int breakDuration, int workDuration) {
-        this.userID = userID;
-        this.breakDuration = breakDuration;
-        this.workDuration = workDuration;
+        this.dayName = dayName;
+        this.duration = duration;
     }
 
     public int getUserID() {
@@ -34,19 +29,29 @@ public class Timer {
         this.timerID = timerID;
     }
 
-    public int getBreakDuration() {
-        return breakDuration;
+    public String getDayName() {
+        return dayName;
     }
 
-    public void setBreakDuration(int breakDuration) {
-        this.breakDuration = breakDuration;
+    public void setDayName(String dayName) {
+        this.dayName = dayName;
     }
 
-    public int getWorkDuration() {
-        return workDuration;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setWorkDuration(int workDuration) {
-        this.workDuration = workDuration;
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    @Override
+    public String toString() {
+        return "Timer{" +
+                "userID=" + userID +
+                ", timerID=" + timerID +
+                ", dayName='" + dayName + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }

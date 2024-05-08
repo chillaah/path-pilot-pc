@@ -2,7 +2,6 @@ package com.example.pathpilotfx.controller.navigation;
 
 
 import com.example.pathpilotfx.MainApplication;
-import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 import javafx.event.ActionEvent;
@@ -44,8 +43,7 @@ public class SideBarController implements Initializable {
     private void todo(MouseEvent event){
         //establish a connection with the database
         ToDoDAO toDoDAO = new ToDoDAO();
-        int userID = SessionManager.getLoggedInUserId();
-        List<Task> taskList = toDoDAO.getUncomplete(userID);
+        List<Task> taskList = toDoDAO.getAll();
 
         if(taskList.isEmpty()){
             loadPage("todo(addItem).fxml");   // empty page asking users to add tasks
