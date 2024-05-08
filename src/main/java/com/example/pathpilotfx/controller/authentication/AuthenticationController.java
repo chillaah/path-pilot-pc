@@ -42,7 +42,9 @@ public class AuthenticationController {
     public String regexE = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public String regexP = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
     public Label statusLabel;
-    public Label headerMsg;
+//    public Label headerMsg;
+
+
 
     @FXML
     public void initialize() {
@@ -144,7 +146,7 @@ public class AuthenticationController {
 //    protected void onClearButtonClick() {
 //        clearFields();
 //    }
-//
+
     public void clearFields() {
         emailTextField.clear();
         passwordTextField.clear();
@@ -165,6 +167,7 @@ public class AuthenticationController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/navigation-view.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, MainApplication.WIDTH, MainApplication.HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/com/example/pathpilotfx/styles.css").toExternalForm());
         stage.setScene(scene);
     }
 
