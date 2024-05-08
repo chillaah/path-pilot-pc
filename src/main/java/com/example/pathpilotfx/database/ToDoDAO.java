@@ -114,10 +114,12 @@ public class ToDoDAO {
         List<Task> taskList = new ArrayList<>();
         try {
             if (!connection.isClosed()) { // Check if connection is still open
-                Statement getAll = connection.createStatement();
-                ResultSet rs = getAll.executeQuery("SELECT * FROM tasks WHERE status = 0");
+                PreparedStatement getTask = connection.prepareStatement("SELECT * FROM tasks WHERE status = ?");
+                getTask.setBoolean(1, false);
+                ResultSet rs = getTask.executeQuery();
                 while (rs.next()) {
                     Task task = new Task(
+
                             rs.getString("taskName"),
                             rs.getString("description"),
                             rs.getString("priority"),

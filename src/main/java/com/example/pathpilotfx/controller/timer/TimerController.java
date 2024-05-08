@@ -124,8 +124,8 @@ public class TimerController {
         //initialise the timer with default values
         if (this.sessionTimer == null){
             System.out.println("timer is null right now");
-            //sessionTimer = new Pomodoro(25, 5);
-            sessionTimer = new Pomodoro(1, 5);
+            sessionTimer = new Pomodoro(25, 5);
+//            sessionTimer = new Pomodoro(1, 5);
         }
         else {
             sessionTimer.resetTimer();
