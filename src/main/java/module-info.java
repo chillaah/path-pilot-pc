@@ -14,6 +14,7 @@ module com.example.pathpilotfx {
     opens com.example.pathpilotfx.controller.map to javafx.fxml;
     opens com.example.pathpilotfx.controller.timer to javafx.fxml;
     opens com.example.pathpilotfx.controller.countries to javafx.fxml;
+    opens com.example.pathpilotfx.controller.profile to javafx.fxml;
 
 
     exports com.example.pathpilotfx;
@@ -25,4 +26,5 @@ module com.example.pathpilotfx {
     exports com.example.pathpilotfx.controller.timer;
     exports com.example.pathpilotfx.controller.map;
     exports com.example.pathpilotfx.controller.countries;
+    exports com.example.pathpilotfx.controller.profile;
 }

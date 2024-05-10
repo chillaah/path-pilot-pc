@@ -1,6 +1,9 @@
 package com.example.pathpilotfx.database;
 
 import com.example.pathpilotfx.model.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -176,6 +179,55 @@ public class ToDoDAO {
             System.err.println(ex);
         }
         return null;
+    }
+
+    public List<Date> getDueDatesByUserId(int userId) {
+        List<Date> tasks = new ArrayList<>();
+        try {
+            PreparedStatement getTasks = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?");
+            getTasks.setInt(1, userId);
+            ResultSet rs = getTasks.executeQuery();
+            Date date = null;
+            while (rs.next()) {
+                date = Date.valueOf(getLocalDateOrNull(rs.getDate("due_date")));
+            }
+            tasks.add(date);
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return tasks;
+    }
+    public ObservableList<PieChart.Data> getPriorityCountsByUserId(int userId) {
+        ObservableList<PieChart.Data> priorities = FXCollections.observableArrayList();
+        try {
+            PreparedStatement getTasks = connection.prepareStatement(
+                "SELECT priority, COUNT(*) AS count FROM tasks WHERE user_id = ? GROUP BY priority");
+            getTasks.setInt(1, userId);
+            ResultSet rs = getTasks.executeQuery();
+            while (rs.next()) {
+                String priority = rs.getString("priority");
+                int count = rs.getInt("count");
+                priorities.add(new PieChart.Data(priority, count));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return priorities;
+    }
+
+    public int getTaskIDCount(int userID) {
+        try {
+            PreparedStatement getAccount = connection.prepareStatement("SELECT count(id) AS count FROM tasks WHERE user_id = ?");
+            getAccount.setInt(1, userID);
+            ResultSet rs = getAccount.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return 0;
     }
 
     public void close() {
