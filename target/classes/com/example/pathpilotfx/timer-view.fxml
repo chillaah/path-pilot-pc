@@ -5,48 +5,76 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
    <children>
-      <VBox alignment="CENTER" layoutX="190.0" layoutY="122.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F9F5EE;">
+      <ImageView fitHeight="372.0" fitWidth="549.0" pickOnBounds="true">
+         <image>
+            <Image url="@assets/vibrant-fluid-gradient-background-with-curvy-shapes_1017-32108.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="213.0" layoutY="94.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: transparent;" />
+      <AnchorPane fx:id="taskPopUp" prefHeight="59.0" prefWidth="549.0" style="-fx-background-color: MediumAquaMarine; -fx-background-radius: 5px;">
          <children>
-            <Button fx:id="settingsButton" layoutX="476.0" layoutY="14.0" onAction="#onSettingsButtonClick" text="Settings" textAlignment="CENTER" />
-            <Label fx:id="timerType" style="-fx-padding: 10;" text="FOCUS">
+            <Label fx:id="taskPopUpLabel" alignment="CENTER" layoutX="7.0" layoutY="2.0" prefHeight="25.0" prefWidth="479.0" stylesheets="@todopage.css" text="Label">
                <font>
-                  <Font size="25" />
-               </font>
-            </Label>
-            <Label fx:id="timerDisplay" style="-fx-padding: 20;" text="00:00">
-               <font>
-                  <Font size="40.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER">
-               <children>
-                  <Button onAction="#onStartButtonClick" text="Start" />
-                  <Button onAction="#onStopButtonClick" text="Stop" />
-                  <Button onAction="#onTypeButtonClick" text="Change Type" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <AnchorPane fx:id="taskPopUp" layoutX="128.0" layoutY="57.0" prefHeight="35.0" prefWidth="292.0" style="-fx-background-color: #193541; -fx-background-radius: 5px;">
-         <children>
-            <Label fx:id="taskPopUpLabel" alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="25.0" prefWidth="239.0" text="Label" textFill="WHITE" />
-            <Button fx:id="crossButton" layoutX="254.0" layoutY="1.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="13.0" style="-fx-background-color: #FFFFFF00;">
-               <graphic>
-                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/close-window.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+                  <Font size="14.0" />
+               </font></Label>
+            <Button fx:id="crossButton" layoutX="326.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="13.0" style="-fx-background-color: #FFFFFF00;" />
+            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="501.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/close-window.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="taskPopUpLabel1" alignment="CENTER" layoutX="7.0" layoutY="27.0" prefHeight="25.0" prefWidth="485.0" stylesheets="@todopage.css" text="Label" />
          </children>
       </AnchorPane>
+      <Button layoutX="457.0" layoutY="79.0" onAction="#onTypeButtonClick" text="Change Type" />
+      <Button fx:id="settingsButton" layoutX="345.0" layoutY="280.0" onAction="#onSettingsButtonClick" prefHeight="43.0" prefWidth="43.0" styleClass="setting" stylesheets="@todopage.css">
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/gear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="145.0" layoutY="280.0" onAction="#onStartButtonClick" prefHeight="43.0" prefWidth="43.0" styleClass="setting" stylesheets="@todopage.css">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/play.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="245.0" layoutY="280.0" onAction="#onStopButtonClick" prefHeight="43.0" prefWidth="43.0" styleClass="setting" stylesheets="@todopage.css">
+         <font>
+            <Font size="11.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/stop-button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="timerDisplay" layoutX="177.0" layoutY="150.0" prefHeight="118.0" prefWidth="195.0" style="-fx-padding: 20;" styleClass="timer" stylesheets="@todopage.css" text="00:00">
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Label>
+
+      <Label fx:id="timerType" layoutX="195.0" layoutY="65.0" prefHeight="71.0" prefWidth="159.0" style="-fx-padding: 10;" text="FOCUS">
+         <font>
+             <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -21,16 +21,32 @@ public class TaskTimerController {
     private JFXButton notcompleteTaskButton;
 
     @FXML
-    private AnchorPane rootAnchorPane;
+    private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
 
     @FXML
     private Label taskLabel;
+    @FXML
+    private Label taskLabel1;
+
 
     private Task task;
-    public boolean timer_finish = false;
+    public boolean timer_finish = false; // flag to determine if this screen has been loaded because timer has finished
 
     @FXML
-    void completeTaskAction(ActionEvent event) {
+    void initialize(){
+        // setting the task label if a task is available
+        if (task != null) {
+            taskLabel.setText("Task: " + task.getTask());
+        } else {
+            taskLabel.setText("Task: N/A");
+        }
+    }
+    /**
+     * Action handler for completing the task.
+     * Updates the task status in the database and navigates to the task page.
+     */
+    @FXML
+    void completeTaskAction() {
         task.setStatus(true);
         //updates Db about task status
         ToDoDAO toDoDAO = new ToDoDAO();
@@ -44,8 +60,12 @@ public class TaskTimerController {
         }
     }
 
+    /**
+     * Action handler for not completing the task.
+     * Navigates back to the timer view or starts the rest timer, depending on the timer finish flag..
+     */
     @FXML
-    void notcompleteTaskAction(ActionEvent event) {
+    void notcompleteTaskAction() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/timer-view.fxml"));
             Parent timerPage = loader.load();
@@ -60,16 +80,18 @@ public class TaskTimerController {
         }
     }
 
-    @FXML
-    void initialize(){
-        if (task != null) {
-            taskLabel.setText("Task: " + task.getTask());
-        } else {
-            taskLabel.setText("Task: N/A");
-        }
-    }
+
 
     public void setTaskComplete(Task task) {
+        this.task = task;
+    }
+
+    /**
+     * Sets the task for Task Timer screen.
+     *
+     * @param task The task for which the screen is being loaded.
+     */
+    public void setTaskTimer(Task task) {
         this.task = task;
     }
 

@@ -1,46 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<VBox spacing="20.0"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.pathpilotfx.controller.authentication.AuthenticationController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-<!--    <HBox VBox.vgrow="ALWAYS" spacing="20.0">-->
-<!--        <VBox spacing="20.0" prefWidth="320" >-->
-            <StackPane prefWidth="200" prefHeight="200">
-                <Label fx:id="headerMsg" alignment="CENTER"/>
-            </StackPane>
-            <GridPane hgap="10.0" vgap="10.0" >
-                <columnConstraints>
-                    <ColumnConstraints minWidth="50" />
-                    <ColumnConstraints hgrow="ALWAYS"/>
-                </columnConstraints>
-                <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity"/>
-                <TextField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            </GridPane>
-            <Label fx:id="statusLabel" text=" " />
-            <StackPane prefWidth="200" prefHeight="200">
-                <Label text="NOTE: Password must be at least 8 characters including one uppercase letter, one lowercase letter, one digit,
-&#10;and one special character"
-                       alignment="CENTER" />
-            </StackPane>
 
-            <HBox spacing="10.0" alignment="CENTER">
-                <Button fx:id="confirmButton" text="Confirm" onAction="#onConfirmButtonClick"/>
-                <Button fx:id="clearButton" text="Clear" onAction="#onClearButtonClick"/>
-                <Button fx:id="backButton" text="Back"  onAction="#onBackButtonClick"/>
-            </HBox>
-<!--        </VBox>-->
-<!--    </HBox>-->
-</VBox>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.authentication.AuthenticationController">
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="250.0" style="-fx-background-color: #193541;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutY="163.0" text="Path Pilot" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="163.0">
+               <font>
+                  <Font name="Verdana Bold" size="24.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="213.0" text="Productivity App" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Line endX="100.0" layoutX="108.0" layoutY="204.0" startX="-65.0" stroke="WHITE" strokeWidth="2.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+         <children>
+                     <GridPane hgap="10.0" layoutX="72.0" layoutY="107.0" prefHeight="60.0" prefWidth="298.0" vgap="10.0">
+                         <columnConstraints>
+                             <ColumnConstraints minWidth="50" />
+                             <ColumnConstraints hgrow="ALWAYS" />
+                         </columnConstraints>
+                         <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                         <TextField fx:id="emailTextField" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+               <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                     </GridPane>
+                      <Label alignment="CENTER" layoutX="72.0" layoutY="199.0" maxWidth="348.0" prefHeight="56.0" prefWidth="304.0" text="NOTE: Password must be at least 8 characters including one uppercase letter, one lowercase letter, one digit, &#10;and one special character" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+                     <Label fx:id="statusLabel" layoutX="135.0" layoutY="167.0" text=" " />
+            <Label alignment="CENTER" layoutX="193.0" layoutY="50.0" text="Login">
+               <font>
+                  <Font name="Verdana" size="24.0" />
+               </font>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Label>
+                      <Button fx:id="confirmButton" layoutX="72.0" layoutY="278.0" onAction="#onConfirmButtonClick" prefHeight="33.0" prefWidth="303.0" style="-fx-background-color: #193541;" text="Login" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="createAccountButton" layoutX="72.0" layoutY="325.0" onAction="#onCreateAccountButtonClick" prefHeight="33.0" prefWidth="303.0" style="-fx-background-color: #193541;" text="Create Account" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

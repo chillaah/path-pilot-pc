@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -9,44 +12,98 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.navigation.SideBarController">
-   <left>
-      <VBox prefHeight="400.0" prefWidth="147.0" style="-fx-background-color: #70Aff6;" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="home_button" mnemonicParsing="false" onMouseClicked="#home" prefHeight="107.0" prefWidth="147.0" style="-fx-background-color: #193541; -fx-background-radius: 0px;" text="Home" textFill="#f9f5ee">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="todo_button" mnemonicParsing="false" onMouseClicked="#todo" prefHeight="100.0" prefWidth="147.0" style="-fx-background-color: #008080; -fx-background-radius: 0px;" text="To-Do" textFill="#f9f5ee">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="map_button" mnemonicParsing="false" onMouseClicked="#map" prefHeight="100.0" prefWidth="147.0" style="-fx-background-color: #1D3D5D; -fx-background-radius: 0px;" text="Map" textFill="#f9f5ee">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="profile_button" mnemonicParsing="false" onMouseClicked="#profile" prefHeight="100.0" prefWidth="147.0" style="-fx-background-color: #869EAC; -fx-background-radius: 0px;" text="Profile" textFill="#f9f5ee">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
-   </left>
    <center>
       <AnchorPane fx:id="ap" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" />
    </center>
    <top>
       <Pane prefHeight="27.0" prefWidth="700.0" style="-fx-background-color: #193541;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="WHITE" layoutX="339.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Pilot">
+            <Text fill="WHITE" layoutX="320.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Pilot">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
+            <ImageView fx:id="menu" onMouseClicked="#menu"  fitHeight="22.0" fitWidth="35.0" layoutX="7.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/Menu.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="menuClose" onMouseClicked="#menuClose" visible="false" fitHeight="22.0" fitWidth="35.0" layoutX="7.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/Menu.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </top>
+   <left>
+      <AnchorPane fx:id="slider" prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: #193541;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="147.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Button fx:id="home_button" styleClass="sideBarItem" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#home" prefHeight="40.0" prefWidth="147.0" style="-fx-background-radius: 0px; -fx-background-color: #193541;" text="Home" textFill="#f9f5ee">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/home.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="todo_button" styleClass="sideBarItem" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#todo" prefHeight="40.0" prefWidth="147.0" style="-fx-background-radius: 0px; -fx-background-color: #193541;" text="To-Do" textFill="#f9f5ee">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/todo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="map_button" styleClass="sideBarItem" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#map" prefHeight="40.0" prefWidth="147.0" style="-fx-background-color: #193541; -fx-background-radius: 0px;" text="Map" textFill="#f9f5ee">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/world.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="profile_button" styleClass="sideBarItem" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#profile" prefHeight="40.0" prefWidth="147.0" style="-fx-background-color: #193541; -fx-background-radius: 0px;" text="Profile" textFill="#f9f5ee">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/user.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
 </BorderPane>

@@ -12,46 +12,46 @@
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.AddItemFormController">
    <children>
-      <TextField fx:id="taskField" layoutX="112.0" layoutY="76.0" prefHeight="37.0" prefWidth="403.0" promptText="Task Name" />
-      <TextField fx:id="descriptionField" layoutX="112.0" layoutY="136.0" prefHeight="37.0" prefWidth="403.0" promptText="Description" />
-      <JFXButton fx:id="savedTaskButton" layoutX="391.0" layoutY="274.0" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #193541;" text="Save Task" textFill="WHITE">
+      <TextField fx:id="taskField" layoutX="112.0" layoutY="76.0" prefHeight="37.0" prefWidth="403.0" promptText="Please Enter Task Name" />
+      <TextField fx:id="descriptionField" layoutX="112.0" layoutY="136.0" prefHeight="37.0" prefWidth="403.0" promptText="Please Enter Description" />
+      <JFXButton fx:id="savedTaskButton" layoutX="367.0" layoutY="274.0" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #193541;" styleClass="task" stylesheets="@todopage.css" text="Save Task" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <Label layoutX="24.0" layoutY="79.0" prefHeight="31.0" prefWidth="49.0" text="Task">
+      <Label layoutX="24.0" layoutY="79.0" prefHeight="31.0" prefWidth="87.0" text="Task name">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label layoutX="24.0" layoutY="139.0" prefHeight="31.0" prefWidth="87.0" text="Description">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Label layoutX="24.0" layoutY="196.0" prefHeight="31.0" prefWidth="87.0" text="Priority">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Label layoutX="259.0" layoutY="196.0" prefHeight="31.0" prefWidth="87.0" text="Due Date">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dateButton" layoutX="336.0" layoutY="199.0" />
+      <DatePicker fx:id="dateButton" layoutX="336.0" layoutY="199.0" promptText="Choose a date" />
       <ChoiceBox fx:id="priorityOptions" layoutX="111.0" layoutY="198.0" prefHeight="27.0" prefWidth="123.0" />
-      <JFXButton fx:id="deleteTaskButton" layoutX="24.0" layoutY="274.0" onAction="#deleteTaskAction" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #BB3F3F;" text="Delete Task" textFill="WHITE">
+      <JFXButton fx:id="deleteTaskButton" layoutX="50.0" layoutY="274.0" onAction="#deleteTaskAction" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #BB3F3F;" styleClass="task" stylesheets="@todopage.css" text="Delete Task" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <ImageView fx:id="cancelTaskButton" fitHeight="31.0" fitWidth="14.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cancelTaskButton" fitHeight="41.0" fitWidth="37.0" layoutX="16.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@assets/backButton.png" />
+            <Image url="@assets/return-104.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="startTimerButton" layoutX="213.0" layoutY="274.0" onAction="#startTimerAction" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #008080;" text="Start Timer" textFill="WHITE">
+      <JFXButton fx:id="startTimerButton" layoutX="213.0" layoutY="274.0" onAction="#startTimerAction" prefHeight="45.0" prefWidth="123.0" style="-fx-background-color: #008080;" styleClass="task" stylesheets="@todopage.css" text="Start Timer" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
