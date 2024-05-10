@@ -80,17 +80,18 @@ public class TaskTimerController {
         }
     }
 
-    @FXML
-    void initialize(){
-        if (task != null) {
-            taskLabel.setText("Task: " + task.getTask());
 
-        } else {
-            taskLabel.setText("Task: N/A");
-        }
-    }
 
     public void setTaskComplete(Task task) {
+        this.task = task;
+    }
+
+    /**
+     * Sets the task for Task Timer screen.
+     *
+     * @param task The task for which the screen is being loaded.
+     */
+    public void setTaskTimer(Task task) {
         this.task = task;
     }
 

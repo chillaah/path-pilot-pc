@@ -47,16 +47,11 @@ public class TimerController {
     private Label taskPopUpLabel; // task name or details in taskPopUp label
 
     @FXML
-    private Label taskPopUpLabel;
-    @FXML
     private Label taskPopUpLabel1;
 
 
     @FXML
     private Button crossButton;
-
-    private Task task;
-    private boolean taskMode = false;
 
     public Pomodoro sessionTimer; // Pomodoro instance
     private Task task; // task instance (when a timer started corresponding to a task)

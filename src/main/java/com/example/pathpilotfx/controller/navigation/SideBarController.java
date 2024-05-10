@@ -111,17 +111,23 @@ public class SideBarController implements Initializable {
     public void loadPage(String page){
         Parent root = null;
 
+
         try {
+//            System.out.println("The page is " + page);
             // load the required page
+          //  FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
+
 
         } catch (IOException e) {
             System.out.println("root has not been found");
             throw new RuntimeException(e);
         }
         //set the loaded page in the 'center' location in the border pane in navigation-view.fxml
+
         bp.setCenter(root);
         BorderPane.setAlignment(root, Pos.CENTER);
+        //System.out.println(root.idProperty());
 
     }
 
