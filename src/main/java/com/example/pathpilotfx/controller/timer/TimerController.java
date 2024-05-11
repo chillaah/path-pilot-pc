@@ -1,7 +1,9 @@
 package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.todolist.AddItemFormController;
+import com.example.pathpilotfx.database.PomodoroDAO;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import javafx.animation.KeyFrame;
@@ -58,9 +60,15 @@ public class TimerController {
     private boolean taskMode = false; // determines if the timer started is corresponding to a task
     private boolean isCrossButtonPressed = false;
 
+    //establish connection with the timer
+    PomodoroDAO timer = new PomodoroDAO();
+
     @FXML
     public void initialize(){
         taskPopUp.setVisible(taskMode); // visibility of the task pop-up based on task mode
+
+
+
         setupTimer();
         // Add event handler for mouse click on the cross button
         crossButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -130,8 +138,10 @@ public class TimerController {
         //initialise the timer with default values
         if (this.sessionTimer == null){
             System.out.println("timer is null right now");
-            sessionTimer = new Pomodoro(25, 5);
-//            sessionTimer = new Pomodoro(1, 5);
+            sessionTimer = timer.getTimerByUser(SessionManager.getLoggedInUserId());
+            if(sessionTimer == null){ //Timer settings not found. Using default settings.
+                sessionTimer = new Pomodoro(25, 5);
+            }
         }
         else {
             sessionTimer.resetTimer();

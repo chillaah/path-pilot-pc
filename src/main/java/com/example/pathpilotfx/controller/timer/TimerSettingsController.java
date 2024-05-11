@@ -1,6 +1,7 @@
 package com.example.pathpilotfx.controller.timer;
 
 
+import com.example.pathpilotfx.database.PomodoroDAO;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import javafx.application.Platform;
@@ -30,6 +31,8 @@ public class TimerSettingsController {
 
     private Pomodoro timer; // This keeps the instance of the timer in the app
 
+    PomodoroDAO pomodoroDAO = new PomodoroDAO();
+
     @FXML
     void initialize(){
 
@@ -53,8 +56,12 @@ public class TimerSettingsController {
         };
 
         if(passedValidation) {
-            this.timer.setWork(Integer.parseInt(workLength.getText()));
-            this.timer.setRest(Integer.parseInt(breakLength.getText()));
+            int newWorkLength = Integer.parseInt(workLength.getText());
+            int newRestLength = Integer.parseInt(breakLength.getText());
+            this.timer.setWork(newWorkLength);
+            this.timer.setRest(newRestLength);
+            pomodoroDAO.update(timer);
+
 
             loadTimerSettings();
 
