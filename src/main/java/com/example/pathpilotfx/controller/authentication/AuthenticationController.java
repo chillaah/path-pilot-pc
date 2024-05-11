@@ -4,7 +4,9 @@ package com.example.pathpilotfx.controller.authentication;
 //import com.example.pathpilotfx.HomeController;
 import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.database.ExplorationDAO;
+import com.example.pathpilotfx.database.PomodoroDAO;
 import com.example.pathpilotfx.model.Exploration;
+import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -134,6 +136,11 @@ public class AuthenticationController {
                 ExplorationDAO explorationDAO = new ExplorationDAO();
                 Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
                 explorationDAO.insert(exploration);
+
+                //Curate new user timer settings
+                PomodoroDAO pomodoroDAO = new PomodoroDAO();
+                Pomodoro pomodoro = new Pomodoro();
+                pomodoroDAO.insert(pomodoro);
 
                 System.out.println(newUser);
                 // link to landing page
