@@ -80,21 +80,29 @@ public class JapanController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+     void beginMethod() throws IOException{
+        String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
+        Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
+        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
+        toUpdate.setStatus("Exploring");
+        explorationDAO.update(explorationExpl);
+        explorationDAO.update(toUpdate);
+        Stage stage = (Stage) beginButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 400);
+        stage.setScene(scene);
+    }
     public void onBeginButtonClick() throws IOException {
-        if(sendWarningConfirmation()) {
-            String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
-            Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
-            Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
-            toUpdate.setStatus("Exploring");
-            explorationDAO.update(explorationExpl);
-            explorationDAO.update(toUpdate);
-            Stage stage = (Stage) beginButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 700, 400);
-            stage.setScene(scene);
+        int userID = SessionManager.getLoggedInUserId();
+        if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
+            if (sendWarningConfirmation()) {
+                beginMethod();
+            } else {
+                System.out.println("do nothing");
+            }
         }
-        else{System.out.println("do nothing");}
+        else{beginMethod();}
     }
     private boolean sendWarningConfirmation() {
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());

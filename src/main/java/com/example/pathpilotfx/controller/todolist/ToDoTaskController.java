@@ -1,6 +1,7 @@
 // ToDoTaskController.java
 package com.example.pathpilotfx.controller.todolist;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 
@@ -53,7 +54,7 @@ public class ToDoTaskController implements TaskChangeListener {
         //intialise DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        taskList = toDoDAO.getUncomplet();
+        taskList = toDoDAO.getUncomplete(SessionManager.getLoggedInUserId());
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));

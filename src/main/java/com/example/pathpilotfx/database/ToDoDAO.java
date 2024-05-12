@@ -19,12 +19,14 @@ public class ToDoDAO {
             Statement createTable = connection.createStatement();
             createTable.execute("CREATE TABLE IF NOT EXISTS tasks ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "user_id INTEGER NOT NULL, "
                     + "taskName VARCHAR NOT NULL, "
                     + "status BOOLEAN NOT NULL, "
                     + "description VARCHAR NOT NULL, "
                     + "priority VARCHAR, "
                     + "date_created DATETIME NOT NULL, "
-                    + "due_date DATE "
+                    + "due_date DATE, "
+                    + "FOREIGN KEY (user_id) REFERENCES user(user_id)"
                     + ")"
             );
         } catch (SQLException ex){
@@ -34,95 +36,98 @@ public class ToDoDAO {
     }
 
     //TO UPDATE
-    public void insertTask(Task task) {
-        try {
-            PreparedStatement insertTask = connection.prepareStatement(
-                    "INSERT INTO tasks (taskName,status,description,priority,date_created,due_date) VALUES (?, ?, ?, ?, ?, ?)"
-            );
-            insertTask.setString(1, task.getTask());
-            insertTask.setBoolean(2, task.getStatus());
-            insertTask.setString(3, task.getDescription());
-            insertTask.setString(4, task.getPriority());
-            insertTask.setDate(5, task.getDatecreated());
-            insertTask.setDate(6,task.getDueDate());
-            insertTask.execute();
-        } catch (SQLException ex) {
-            System.out.println("An error occurred while inserting the task:");
-            ex.printStackTrace(); // Print the stack trace for detailed error information
-        }
-    }
 
+    public void insert(Task task) {
+        try {
+
+            PreparedStatement insertData = connection.prepareStatement(
+                    "INSERT INTO tasks (user_id,taskName,status,description,priority,date_created,due_date) VALUES(?,?,?,?,?,?,?)");
+            insertData.setInt(1, task.getUserID());
+            insertData.setString(2, task.getTask());
+            insertData.setBoolean(3, task.getStatus());
+            insertData.setString(4, task.getDescription());
+            insertData.setString(5, task.getPriority());
+            insertData.setDate(6, task.getDatecreated());
+            insertData.setDate(7, task.getDueDate());
+            insertData.execute();
+        }
+        catch (SQLException sqlexc){System.err.println(sqlexc);}
+    }
 
     public void update(Task task) {
         try {
-            PreparedStatement updateAccount = connection.prepareStatement(
-                    "UPDATE tasks SET taskName = ?, status = ?, description = ?, priority = ?, due_date = ? WHERE id = ?"
+            PreparedStatement updateData = connection.prepareStatement(
+                    "UPDATE tasks SET user_id = ?, task_name = ?, status = ?, " +
+                            "description = ?, priority = ?, due_date = ? " +
+                            "WHERE id = ?"
             );
-            updateAccount.setString(1, task.getTask());
-            updateAccount.setBoolean(2, task.getStatus());
-            updateAccount.setString(3, task.getDescription());
-            updateAccount.setString(4, task.getPriority());
-            updateAccount.setDate(5, task.getDueDate());
-            updateAccount.setInt(6, task.getID());
-            updateAccount.execute();
+            updateData.setInt(1, task.getUserID());
+            updateData.setString(2, task.getTask());
+            updateData.setBoolean(3,task.getStatus());
+            updateData.setString(4, task.getDescription());
+            updateData.setString(5, task.getPriority());
+            updateData.setDate(6, task.getDueDate());
+            updateData.setInt(7, task.getID());
+            updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
+
     public void delete(int id) {
         try {
-            PreparedStatement deleteAccount = connection.prepareStatement("DELETE FROM tasks WHERE id = ?");
-            deleteAccount.setInt(1, id);
-            deleteAccount.execute();
+            PreparedStatement delete = connection.prepareStatement(
+                    "DELETE FROM tasks WHERE id = ?");
+            delete.setInt(1, id);
+            delete.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
     public List<Task> getAll() {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            Statement getAll = connection.createStatement();
+            ResultSet rs = getAll.executeQuery("SELECT * FROM tasks");
+            while (rs.next()) {
+                tasks.add(
+                        new Task(
+                                rs.getInt("id"),
+                                rs.getInt("user_id"),
+                                rs.getString("taskName"),
+                                rs.getBoolean("status"),
+                                rs.getString("description"),
+                                rs.getString("priority"),
+                                getLocalDateOrNull(rs.getDate("date_created")),
+                                getLocalDateOrNull(rs.getDate("due_date"))
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return tasks;
+    }
+
+    public List<Task> getUncomplete(int id) {
         List<Task> taskList = new ArrayList<>();
         try {
             if (!connection.isClosed()) { // Check if connection is still open
                 Statement getAll = connection.createStatement();
-                ResultSet rs = getAll.executeQuery("SELECT * FROM tasks");
+                PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
                 while (rs.next()) {
                     Task task = new Task(
+                            rs.getInt("id"),
+                            rs.getInt("user_id"),
                             rs.getString("taskName"),
+                            rs.getBoolean("status"),
                             rs.getString("description"),
                             rs.getString("priority"),
-                            getLocalDateOrNull(rs.getDate("due_date"))
-
-                    );
-                    task.setId(rs.getInt("id"));
-                    task.setStatus(rs.getBoolean("status"));
-                    task.setDatecreated(rs.getDate("date_created"));
-
-                    taskList.add(task);
-                }
-            } else {
-                System.out.println("Database connection is closed.");
-            }
-        } catch (SQLException ex) {
-            System.out.println("An error occurred while getting all tasks:");
-            ex.printStackTrace();
-        }
-        return taskList;
-    }
-
-    public List<Task> getUncomplet() {
-        List<Task> taskList = new ArrayList<>();
-        try {
-            if (!connection.isClosed()) { // Check if connection is still open
-                PreparedStatement getTask = connection.prepareStatement("SELECT * FROM tasks WHERE status = ?");
-                getTask.setBoolean(1, false);
-                ResultSet rs = getTask.executeQuery();
-                while (rs.next()) {
-                    Task task = new Task(
-
-                            rs.getString("taskName"),
-                            rs.getString("description"),
-                            rs.getString("priority"),
+                            getLocalDateOrNull(rs.getDate("date_created")),
                             getLocalDateOrNull(rs.getDate("due_date"))
 
                     );
@@ -153,9 +158,13 @@ public class ToDoDAO {
             ResultSet rs = getAccount.executeQuery();
             if (rs.next()) {
                 Task task = new Task(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
                         rs.getString("taskName"),
+                        rs.getBoolean("status"),
                         rs.getString("description"),
                         rs.getString("priority"),
+                        getLocalDateOrNull(rs.getDate("date_created")),
                         getLocalDateOrNull(rs.getDate("due_date"))
                 );
                 task.setId(rs.getInt("id"));
