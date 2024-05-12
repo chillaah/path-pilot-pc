@@ -84,20 +84,29 @@ public class AustraliaController {
         stage.setScene(scene);
     }
     public void onBeginButtonClick() throws IOException {
-        if(sendWarningConfirmation()) {
-            String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
-            Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
-            Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 1);
-            toUpdate.setStatus("Exploring");
-            explorationDAO.update(explorationExpl);
-            explorationDAO.update(toUpdate);
-            Stage stage = (Stage) beginButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 700, 400);
-            stage.setScene(scene);
+        int userID = SessionManager.getLoggedInUserId();
+        if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
+            if (sendWarningConfirmation()) {
+                beginMethod();
+            } else {
+                System.out.println("do nothing");
+            }
         }
-        else{System.out.println("do nothing");}
+        else{beginMethod();}
+    }
+    private void beginMethod() throws IOException{
+        int userID = SessionManager.getLoggedInUserId();
+        String currExpl = explorationDAO.getCurrentExploring(userID);
+        Exploration explorationExpl = new Exploration(userID, getIDbyCName(currExpl), "Explored", false, false);
+        Exploration toUpdate = explorationDAO.getByUserIdCountryId(userID, 1);
+        toUpdate.setStatus("Exploring");
+        explorationDAO.update(explorationExpl);
+        explorationDAO.update(toUpdate);
+        Stage stage = (Stage) beginButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 400);
+        stage.setScene(scene);
     }
 
     private boolean sendWarningConfirmation() {

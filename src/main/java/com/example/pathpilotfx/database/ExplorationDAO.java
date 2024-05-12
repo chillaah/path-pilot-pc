@@ -106,7 +106,7 @@ public class ExplorationDAO {
     }
 
     public String getCurrentExploring(int id) {
-        String countryName = null;
+        String countryName = "";
         try {
             PreparedStatement currExploring = connection.prepareStatement(
                     "SELECT c.country_name " +
@@ -120,6 +120,10 @@ public class ExplorationDAO {
             }
         } catch (SQLException ex) {
             System.err.println(ex);
+        }
+        catch (Exception exception){return "Not currently exploring any";}
+        if (countryName == "") {
+            return "";
         }
         return countryName;
     }

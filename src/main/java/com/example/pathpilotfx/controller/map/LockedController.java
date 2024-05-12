@@ -58,7 +58,7 @@ public class LockedController {
 
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("navigation-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
