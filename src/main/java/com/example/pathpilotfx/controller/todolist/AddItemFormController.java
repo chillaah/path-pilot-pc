@@ -1,6 +1,7 @@
 // AddItemFormController.java
 package com.example.pathpilotfx.controller.todolist;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
@@ -115,8 +116,8 @@ public class AddItemFormController {
                 toDoDAO.update(editedTask); // Update the task in the database
             }else{
                 // insert new task into DB
-                Task newTask = new Task(taskField.getText(), descriptionField.getText(), priorityOptions.getValue(), dateButton.getValue());
-                toDoDAO.insertTask(newTask);
+                Task newTask = new Task(taskField.getText(), SessionManager.getLoggedInUserId(), descriptionField.getText(), priorityOptions.getValue(), dateButton.getValue());
+                toDoDAO.insert(newTask);
 
             }
 
