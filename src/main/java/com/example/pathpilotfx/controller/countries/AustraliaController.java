@@ -114,14 +114,14 @@ public class AustraliaController {
     }
 
     public void onUnlockButtonClick() throws IOException {
-            Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 1);
-            toUpdate.setLocked(false);
-            explorationDAO.update(toUpdate);
-            Stage stage = (Stage) unlockButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 700, 400);
-            stage.setScene(scene);
+        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 1);
+        toUpdate.setLocked(false);
+        explorationDAO.update(toUpdate);
+        Stage stage = (Stage) unlockButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 400);
+        stage.setScene(scene);
 
     }
     public void onCancelButtonClick() throws IOException {
