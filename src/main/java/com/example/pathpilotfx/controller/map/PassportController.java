@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.controller.map;
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.authentication.SessionManager;
+import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.model.Exploration;
 import javafx.collections.FXCollections;
@@ -26,13 +28,28 @@ public class PassportController {
     public ListView countryListView;
     @FXML
     private Button backButton;
+    @FXML
+    private Button viewButton;
+    private CountryDAO countryDAO;
+    private Object newVal;
+    public PassportController() {
+        // Initialize the countryDAO object
+        this.countryDAO = new CountryDAO();
+    }
 
     public void initialize() {
-        ObservableList<String> countries = FXCollections.observableArrayList(
-                "Australia");
-
+        ObservableList<String> countries = FXCollections.observableArrayList(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
+        System.out.println(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
         countryListView.setItems(countries);
+        countryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            newVal = newValue;
+            System.out.println("Selected item: " + newValue);
+            viewButton.setVisible(true);
+        });
+
     }
+
 
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
@@ -43,5 +60,23 @@ public class PassportController {
 
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
+    }
+    public void onViewButtonClick() throws IOException {
+        Stage stage = (Stage) viewButton.getScene().getWindow();
+        if(newVal.toString().equals("Sri Lanka")){
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("srilanka-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 700, 400);
+            stage.setScene(scene);
+        }
+        else
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(newVal.toString().toLowerCase() + "-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 700, 400);
+            stage.setScene(scene);
+        }
+
+
     }
 }
