@@ -137,6 +137,22 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+    public int countExplored(int userID) {
+        int count = 0;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE status = 'Explored' AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return count;
+    }
 
     public void close() {
         try {
