@@ -126,12 +126,6 @@ public class ExplorationDAO {
         return explorationData;
     }
 
-    public Exploration getByCountryId(int countryID) {
-        try {
-            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE country_id = ?");
-            explorationData.setInt(1, countryID);
-
-
     public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
             PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
