@@ -3,8 +3,7 @@ import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ExplorationDAO {
     private Connection connection;
@@ -152,6 +151,32 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
         return count;
+    }
+    public  List<String> getNextDestination(int id) {
+        String countryName = "";
+        int countryExp = 0;
+        List<String> destination = new ArrayList<>();
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT c.country_name, c.required_exp " +
+                            "FROM exploration e LEFT JOIN country c " +
+                            "ON e.country_id = c.country_id " +
+                            "WHERE e.lockedStatus = 1 AND e.user_id = ?" +
+                            "ORDER BY c.required_exp ASC LIMIT 1");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                countryName = resultSet.getString("country_name");
+                countryExp = resultSet.getInt("required_exp");
+                destination.add(countryName);
+                destination.add(String.valueOf(countryExp));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        catch (Exception exception){return null;}
+
+        return destination;
     }
 
     public void close() {

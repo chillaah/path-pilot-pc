@@ -76,5 +76,15 @@
              <Font name="System Bold" size="40.0" />
          </font>
       </Label>
+      <Label fx:id="currentDestination" layoutX="14.0" layoutY="161.0" prefHeight="110.0" prefWidth="159.0" text="Current destination:&#10;placeholder&#10;Current exp:&#10;placeholder" textAlignment="JUSTIFY">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="nextDestination" layoutX="379.0" layoutY="155.0" prefHeight="128.0" prefWidth="159.0" text="Next destination: &#10;placeholder&#10;Remaining exp:&#10;placeholder" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

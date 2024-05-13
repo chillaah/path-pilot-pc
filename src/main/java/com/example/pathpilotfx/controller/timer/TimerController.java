@@ -1,30 +1,27 @@
 package com.example.pathpilotfx.controller.timer;
 
-import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.controller.todolist.AddItemFormController;
+import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.PomodoroDAO;
+import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
+import com.example.pathpilotfx.model.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.List;
 
 
 public class TimerController {
@@ -50,7 +47,10 @@ public class TimerController {
 
     @FXML
     private Label taskPopUpLabel1;
-
+    @FXML
+    private Label currentDestination;
+    @FXML
+    private Label nextDestination;
 
     @FXML
     private Button crossButton;
@@ -62,6 +62,13 @@ public class TimerController {
 
     //establish connection with the timer
     PomodoroDAO timer = new PomodoroDAO();
+    ExplorationDAO explorationDAO = new ExplorationDAO();
+    UserDAO userDAO = new UserDAO();
+    private int userID = SessionManager.getLoggedInUserId();
+    private User user = userDAO.getByUserId(userID);
+
+    List<String> destination = explorationDAO.getNextDestination(userID);
+    private Integer expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
 
     @FXML
     public void initialize(){
@@ -80,6 +87,13 @@ public class TimerController {
         crossButton.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             isCrossButtonPressed = false; // Set the flag to false when the crossButton is released
         });
+        currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
+        + "\n" + "Current exp: \n" + user.getExp());
+        if (destination != null) {
+            nextDestination.setVisible(true);
+            nextDestination.setText("Next destination: \n" +
+                    destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
+        }
     }
     @FXML
     protected void onStartButtonClick() {
