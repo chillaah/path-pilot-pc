@@ -82,37 +82,49 @@ public class ProfileController {
         initializePrioritiesData();
     }
     private void initializePrioritiesData() {
-        System.out.println(toDoDAO.getPriorityCountsByUserId(SessionManager.getLoggedInUserId()));
-        ObservableList<PieChart.Data> prioritiesData = toDoDAO.getPriorityCountsByUserId(userID);
-        priorities.setData(prioritiesData);
-        priorities.setLabelLineLength(10);
+        if(!toDoDAO.getAll().isEmpty()) {
+            System.out.println(toDoDAO.getPriorityCountsByUserId(SessionManager.getLoggedInUserId()));
+            ObservableList<PieChart.Data> prioritiesData = toDoDAO.getPriorityCountsByUserId(userID);
+            priorities.setData(prioritiesData);
+            priorities.setLabelLineLength(10);
+        }
     }
     public void onEditButtonClick() throws IOException {
 
     }
     public String getMostCommonMonthByUserId(int userId) {
-        List<Date> dueDates = toDoDAO.getDueDatesByUserId(userId);
-        Map<Integer, Integer> monthCounts = new HashMap<>();
-        int maxCount = 0;
-        int mostCommonMonth = 0;
+        try {
+            List<Date> dueDates = toDoDAO.getDueDatesByUserId(userId);
+            System.out.println("duedates:" + dueDates);
+            if (dueDates != null) {
+                Map<Integer, Integer> monthCounts = new HashMap<>();
+                int maxCount = 0;
+                int mostCommonMonth = 0;
 
-        // Count occurrences of each month. getordefault is for the null dates
-        for (Date dueDate : dueDates) {
-            LocalDate localDueDate = dueDate.toLocalDate();
-            int month = localDueDate.getMonthValue();
-            monthCounts.put(month, monthCounts.getOrDefault(month, 0) + 1);
-        }
+                // Count occurrences of each month. getordefault is for the null dates
+                for (Date dueDate : dueDates) {
+                    LocalDate localDueDate = dueDate.toLocalDate();
+                    int month = localDueDate.getMonthValue();
+                    monthCounts.put(month, monthCounts.getOrDefault(month, 0) + 1);
+                }
 
-        // Find the month with the highest occurrence count
-        for (int month : monthCounts.keySet()) {
-            int count = monthCounts.get(month);
-            if (count > maxCount) {
-                mostCommonMonth = month;
-                maxCount = count;
+                // Find the month with the highest occurrence count
+                for (int month : monthCounts.keySet()) {
+                    int count = monthCounts.get(month);
+                    if (count > maxCount) {
+                        mostCommonMonth = month;
+                        maxCount = count;
+                    }
+                }
+
+                // Return the most common month using unnecessary values for the year and day
+                return LocalDate.of(1, mostCommonMonth, 1).getMonth().toString();
             }
+            return "no task due dates";
         }
-
-        // Return the most common month using unnecessary values for the year and day
-        return LocalDate.of(1, mostCommonMonth, 1).getMonth().toString();
+        catch(Exception exception){System.out.println("no due dates");};
+        return "none";
     }
+
+
 }
