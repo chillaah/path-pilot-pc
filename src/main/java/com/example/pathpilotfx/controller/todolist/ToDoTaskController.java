@@ -1,6 +1,7 @@
 // ToDoTaskController.java
 package com.example.pathpilotfx.controller.todolist;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 
@@ -40,20 +41,25 @@ public class ToDoTaskController implements TaskChangeListener {
     private VBox CompletedTask;
 
     @FXML
-//    private JFXButton addTaskButton;
     private Button addTaskButton;
 
     private TaskController child;
     private List<Task> taskList;
     private List<Task> CompletedList = new ArrayList<>();
 
+    /**
+     * Initializes the to-do task controller.
+     * Fetches existing tasks from the database and displays them.
+     * If no tasks exist, loads the add item form.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     void initialize() throws IOException {
 
         //intialise DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        taskList = toDoDAO.getUncomplet();
+        taskList = toDoDAO.getUncomplete(SessionManager.getLoggedInUserId());
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));
@@ -66,10 +72,12 @@ public class ToDoTaskController implements TaskChangeListener {
             }
         }
 
-        //toDoDOA.close();
-
     }
 
+    /**
+     * Adds a task to the task page.
+     * @param task The task to add.
+     */
     private void addTask(Task task) {
         // create a task using todo(task).fxml
         try {
@@ -99,6 +107,13 @@ public class ToDoTaskController implements TaskChangeListener {
         }
 
     }
+
+    /**
+     * Edits a task.
+     * Loads addItemForm.fxml and preloads fields with task details.
+     * @param task The task to edit.
+     * @throws IOException If an I/O error occurs.
+     */
     private void editTask(Task task) throws IOException {
         // Load addItemForm.fxml and preload fields with task details
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItemForm).fxml"));
@@ -112,7 +127,11 @@ public class ToDoTaskController implements TaskChangeListener {
 
     }
 
-
+    /**
+     * Handles the action when the "Add Task" button is clicked.
+     * @param event The action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     void addTaskAction(ActionEvent event) throws IOException {
         // Load addItemForm.fxml and preload fields with task details
@@ -121,7 +140,11 @@ public class ToDoTaskController implements TaskChangeListener {
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
-
+    /**
+     * Called when a task change event occurs.
+     * Reloads the updated task page.
+     * @param isSelected The new status of the task.
+     */
     @Override
     public void onTaskChange(boolean isSelected) {
         // reload updated task page

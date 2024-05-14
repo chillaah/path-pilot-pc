@@ -14,7 +14,9 @@ import java.io.Console;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class for managing individual tasks in the to-do list.
+ */
 public class TaskController {
     @FXML
     private ResourceBundle resources;
@@ -41,6 +43,9 @@ public class TaskController {
     private ToDoTaskController parent;
     private boolean isCompleted;
 
+    /**
+     * Initializes the task controller.
+     */
     @FXML
     void initialize() {
         // Set up an event handler for the checkbox to handle status change
@@ -52,6 +57,10 @@ public class TaskController {
 
         });
     }
+
+    /**
+     * Handles the change in status of the task when the checkbox is clicked.
+     */
     @FXML
     void handleStatusChange() {
         // changes the value of the checkbox when clicked
@@ -65,6 +74,10 @@ public class TaskController {
         notifyTaskChangeListener(task.getStatus());
     }
 
+    /**
+     * Sets the task associated with this controller.
+     * @param task The task to set.
+     */
     public void setTask(Task task) {
         this.task = task;
         taskNameField.setText(task.getTask());
@@ -72,18 +85,22 @@ public class TaskController {
         checkboxField.setSelected(task.getStatus());
     }
 
+    /**
+     * Sets the task change listener.
+     * @param listener The task change listener.
+     */
     public void setTaskChangeListener(TaskChangeListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Notifies the task change listener about the change in task status.
+     * If the listener is not null, invokes the onTaskChange method of the listener interface.
+     * @param isSelected The new status of the task.
+     */
     private void notifyTaskChangeListener(boolean isSelected) {
         if (listener != null) {
             listener.onTaskChange(isSelected);
         }
     }
-
-
-//    //public Task getTask(){
-//        return this.task;
-//    }
 }

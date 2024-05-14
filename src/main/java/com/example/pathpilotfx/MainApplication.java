@@ -35,9 +35,13 @@ public class MainApplication extends Application {
     public static void main(String[] args) {
         // clears all database entries
 
-//        db.deleteAllUsers();
-//        db2.deleteAllExplorations();
 
+//      clears all database entries
+//          db.deleteAllUsers();
+
+//        db2.deleteAllExplorations();
+//        ExplorationDAO explorationDAO = new ExplorationDAO();
+//        explorationDAO.deleteAllExplorations();
         launch();
     }
 }

@@ -1,16 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.profile.ProfileController">
    <children>
-      <Label layoutX="251.0" layoutY="173.0" text="Profile">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
+      <MenuBar VBox.vgrow="NEVER" />
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="profileLabel" layoutX="120.0" layoutY="13.0" prefHeight="34.0" prefWidth="199.0" text="Username's profile">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <HBox layoutX="23.0" layoutY="192.0" prefHeight="193.0" prefWidth="575.0">
+               <children>
+                  <PieChart fx:id="priorities" legendSide="RIGHT" prefHeight="193.0" prefWidth="224.0" title="Priorities visualised" />
+                  <PieChart prefHeight="193.0" prefWidth="267.0" title="Work duration vs Break duration" />
+               </children>
+            </HBox>
+            <VBox layoutX="50.0" layoutY="62.0" prefHeight="126.0" prefWidth="222.0">
+               <children>
+                  <Label fx:id="email" text="Email:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="exp" text="EXP:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="creationDate" text="Creation Date:&#10;" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="262.0" layoutY="56.0" prefHeight="135.0" prefWidth="284.0">
+               <children>
+                  <Label fx:id="tasksCompleted" text="Tasks completed:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="avgTimer" text="Average timer duration:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="busiestMonth" text="Most busy month:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="longestTimer" text="Longest timer duration:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="numExploredCountries" text="Number of explored countries:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button fx:id="editButton" layoutX="451.0" layoutY="21.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit profile" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>

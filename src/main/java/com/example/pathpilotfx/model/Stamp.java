@@ -1,6 +1,9 @@
 package com.example.pathpilotfx.model;
 
 import java.sql.Blob;
+/**
+ Class that initialises Stamp Object
+ **/
 
 public class Stamp {
     private int stampID;

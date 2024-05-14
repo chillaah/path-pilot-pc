@@ -5,6 +5,7 @@ package com.example.pathpilotfx.controller.authentication;
 import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.PomodoroDAO;
+import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.User;
@@ -30,7 +31,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 //import com.example.pathpilotfx.HomeController.*;
 
-
+/**
+ * Controller for handling user authentication and account creation.
+ */
 public class AuthenticationController {
 
     private final int authVal = getAuthType();
@@ -46,8 +49,9 @@ public class AuthenticationController {
     public Label statusLabel;
 //    public Label headerMsg;
 
-
-
+    /**
+     * Initializes the controller.
+     */
     @FXML
     public void initialize() {
 
@@ -59,6 +63,11 @@ public class AuthenticationController {
 //        }
     }
 
+    /**
+     * Handles the event when the Confirm button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onConfirmButtonClick() throws IOException {
 
@@ -85,67 +94,82 @@ public class AuthenticationController {
             clearFields();
             statusLabel.setText("Email not found");
         } else {
+            UserDAO userDAO = new UserDAO();
             // link to landing page
+            SessionManager.setLoggedInUserId(userDAO.getIdByEmail(email));
             authSuccess();
         }
     }
+
+    /**
+     * Handles the event when the Create Account button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onCreateAccountButtonClick() throws IOException {
 
-            String email = emailTextField.getText();
-            String password = passwordTextField.getText();
-            System.out.println(authVal);
-            System.out.println(email + password);
-            // create account logic
-            // add sanity checks to email and pw
-            // if email not right clear both field
-            if (email.isEmpty() || password.isEmpty())
-            {
-                statusLabel.setText("Empty email/password");
-            }
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        System.out.println(authVal);
+        System.out.println(email + password);
+        // create account logic
+        // add sanity checks to email and pw
+        // if email not right clear both field
+        if (email.isEmpty() || password.isEmpty())
+        {
+            statusLabel.setText("Empty email/password");
+        }
 
-            else if (!isValid(email, regexE))
-            {
-                clearFields();
-                statusLabel.setText("Invalid email format");
-            }
+        else if (!isValid(email, regexE))
+        {
+            clearFields();
+            statusLabel.setText("Invalid email format");
+        }
 
-            else if (db.isEmailAvailable(email))
-            {
-                clearFields();
-                statusLabel.setText("Email already in use");
-            }
-            // if password not right clear pw field only
-            // At least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
-            else if (!isValid(password, regexP))
-            {
-                passwordTextField.clear();
-                statusLabel.setText("Invalid password format");
-            }
-            // else auth user
-            else
-            {
-                LocalDateTime ldt = LocalDateTime.now();
-                Timestamp date = Timestamp.valueOf(ldt);
-                int lastId = db.getLatestUser(); lastId++;
+        else if (db.isEmailAvailable(email))
+        {
+            clearFields();
+            statusLabel.setText("Email already in use");
+        }
+        // if password not right clear pw field only
+        // At least 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character
+        else if (!isValid(password, regexP))
+        {
+            passwordTextField.clear();
+            statusLabel.setText("Invalid password format");
+        }
+        // else auth user
+        else
+        {
+            LocalDateTime ldt = LocalDateTime.now();
+            Timestamp date = Timestamp.valueOf(ldt);
 
-                String hashedPassword = hashPassword(password);
-                User newUser = new User(lastId, "username", email, hashedPassword, date, 1);
-                db.insert(newUser);
+            String hashedPassword = hashPassword(password);
+            User newUser = new User("username", email, hashedPassword, date, 0);
+            db.insert(newUser);
+            int userId = db.getIdByEmail(email);
 
-                ExplorationDAO explorationDAO = new ExplorationDAO();
-                Exploration exploration = new Exploration(lastId, 2, "Exploring", false, false);
-                explorationDAO.insert(exploration);
+            ExplorationDAO explorationDAO = new ExplorationDAO();
+            Exploration insertAU = new Exploration(userId, 1, "Exploring", false, false);
+            Exploration insertJP = new Exploration(userId,2, "Unexplored", true, false);
+            Exploration insertFR = new Exploration(userId,3, "Unexplored", true, false);
+            Exploration insertSL = new Exploration(userId,4, "Unexplored", true, false);
+            explorationDAO.insert(insertAU);
+            explorationDAO.insert(insertJP);
+            explorationDAO.insert(insertFR);
+            explorationDAO.insert(insertSL);
 
-                //Curate new user timer settings
-                PomodoroDAO pomodoroDAO = new PomodoroDAO();
-                Pomodoro pomodoro = new Pomodoro();
-                pomodoroDAO.insert(pomodoro);
+            //Curate new user timer settings
+            PomodoroDAO pomodoroDAO = new PomodoroDAO();
+            Pomodoro pomodoro = new Pomodoro();
+            pomodoroDAO.insert(pomodoro);
 
-                System.out.println(newUser);
-                // link to landing page
-                authSuccess();
-            }
+            System.out.println(newUser);
+            // link to landing page
+            SessionManager.setLoggedInUserId(userId);
+            authSuccess();
+        }
 
     }
 
@@ -154,6 +178,9 @@ public class AuthenticationController {
 //        clearFields();
 //    }
 
+    /**
+     * Clears the input fields.
+     */
     public void clearFields() {
         emailTextField.clear();
         passwordTextField.clear();
@@ -168,6 +195,11 @@ public class AuthenticationController {
 //        stage.setScene(scene);
 //    }
 
+    /**
+     * Redirects to the landing page upon successful authentication or account creation.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     protected void authSuccess() throws IOException {
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();
@@ -178,6 +210,13 @@ public class AuthenticationController {
         stage.setScene(scene);
     }
 
+    /**
+     * Checks if the given string matches the specified regular expression pattern.
+     *
+     * @param EP      The string to be validated.
+     * @param regexEP The regular expression pattern.
+     * @return true if the string matches the pattern, false otherwise.
+     */
     public boolean isValid(String EP, String regexEP) {
 
         // Compile the regex pattern

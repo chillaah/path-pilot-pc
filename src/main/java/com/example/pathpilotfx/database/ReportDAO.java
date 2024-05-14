@@ -4,6 +4,9 @@ import com.example.pathpilotfx.model.Report;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ Class for Report Data Access Object for SQLite queries
+ **/
 public class ReportDAO {
     private Connection connection;
 
@@ -11,7 +14,9 @@ public class ReportDAO {
         connection = DatabaseConnection.getInstance();
     }
 
-
+    /**
+     Method that inserts report data
+     **/
     public void insert(Report report) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -25,7 +30,9 @@ public class ReportDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
-
+    /**
+     Method that updates report data
+     **/
     public void update(Report report) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -41,6 +48,10 @@ public class ReportDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that deletes specific report data
+     @param id the report id
+     **/
 
     public void deleteReport(int id) {
         try {
@@ -51,6 +62,10 @@ public class ReportDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that gets all report data
+     @return Arraylist of reports
+     **/
 
     public List<Report> getAll() {
         List<Report> reports = new ArrayList<>();
@@ -73,6 +88,10 @@ public class ReportDAO {
         }
         return reports;
     }
+    /**
+     Method that gets all report data for a report id
+     @return Report instance
+     **/
 
     public Report getByReportId(int reportID) {
         try {
@@ -93,7 +112,9 @@ public class ReportDAO {
         }
         return null;
     }
-
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();

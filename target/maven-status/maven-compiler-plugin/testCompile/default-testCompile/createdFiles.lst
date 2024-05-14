@@ -1,0 +1,7 @@
+com\example\pathpilotfx\model\PasswordHashTest.class
+com\example\pathpilotfx\model\MockToDoDAOTest.class
+com\example\pathpilotfx\model\PomodoroTest.class
+com\example\pathpilotfx\model\TaskTest.class
+com\example\pathpilotfx\model\UserTest.class
+com\example\pathpilotfx\model\ExplorationTest.class
+com\example\pathpilotfx\database\CountryDAOTest.class

@@ -6,15 +6,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ Class for User Data Access Object for SQLite queries
+ **/
 public class UserDAO {
 
     private Connection connection;
 
+    /**
+     * Initializes a new instance of the UserDAO class.
+     */
     public UserDAO() {
         connection = DatabaseConnection.getInstance();
     }
 
+    /**
+     * Creates the 'user' table if it does not exist.
+     */
     public void createTable() {
 
         Statement statement = null;
@@ -59,53 +67,51 @@ public class UserDAO {
 //        return false; // Return false if there was an error or no result was found
 //    }
 
+    /**
+     Method that inserts user data
+     @param user the user instance with the data
+     **/
     public void insert(User user) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO user (user_id, username, email, password, creation_date, exp) VALUES(?,?,?,?,?,?)");
-            insertData.setInt(1, user.getUserID());
-            insertData.setString(2, user.getUsername());
-            insertData.setString(3, user.getEmail());
-            insertData.setString(4, user.getPassword());
-            insertData.setTimestamp(5, user.getCreationDate());
-            insertData.setInt(6, user.getExp());
+                    "INSERT INTO user (username, email, password, creation_date, exp) VALUES(?,?,?,?,?)");
+            insertData.setString(1, user.getUsername());
+            insertData.setString(2, user.getEmail());
+            insertData.setString(3, user.getPassword());
+            insertData.setTimestamp(4, user.getCreationDate());
+            insertData.setInt(5, user.getExp());
             insertData.execute();
         } catch (SQLException sqlexc) {
             System.err.println(sqlexc);
         }
     }
 
+    /**
+     Method that updates user data
+     @param user the user instance with the updated data
+     **/
     public void update(User user) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET user_id = ?, username = ?, " +
-                            "email = ?, password = ?, creation_date = ?, " +
-                            "exp = ?"
+                    "UPDATE user SET username = ?, email = ?, password = ?, creation_date = ?, exp = ? WHERE user_id = ?"
             );
-            updateData.setInt(1, user.getUserID());
-            updateData.setString(2, user.getUsername());
-            updateData.setString(3, user.getEmail());
-            updateData.setString(4, user.getPassword());
-            updateData.setTimestamp(5, user.getCreationDate());
-            updateData.setInt(6, user.getExp());
-            updateData.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
-    public void UpdateEXP(int userID, int exp) {
-        try {
-            PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET exp = ? WHERE user_id = ?"
-            );
-            updateData.setInt(1, exp);
-            updateData.setInt(2, userID);
+            updateData.setString(1, user.getUsername());
+            updateData.setString(2, user.getEmail());
+            updateData.setString(3, user.getPassword());
+            updateData.setTimestamp(4, user.getCreationDate());
+            updateData.setInt(5, user.getExp());
+            updateData.setInt(6, user.getUserID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
+    /**
+     * Deletes a specific user's data based on the user ID.
+     *
+     * @param id The ID of the user to be deleted.
+     */
     public void deleteUser(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM user WHERE user_id = ?");
@@ -116,6 +122,9 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Deletes all user data from the database.
+     */
     public void deleteAllUsers() {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM user");
@@ -125,6 +134,10 @@ public class UserDAO {
         }
     }
 
+    /**
+     Method that gets all user data
+     @return a list with all user data
+     **/
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try {
@@ -147,9 +160,16 @@ public class UserDAO {
         }
         return users;
     }
-//to get the exp,you first get a user based on their ID and then using the returned user,
+    //to get the exp,you first get a user based on their ID and then using the returned user,
     // you can call the class getters e.g getExp() or getRequiredExp(). Concatenating them
     //can help with the exp / requiredexp part of the passport.
+
+    /**
+     * Retrieves user data for a specific user based on the user ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return The user instance containing the retrieved data.
+     */
     public User getByUserId(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
@@ -171,7 +191,34 @@ public class UserDAO {
         return null;
     }
 
-    public User getLatestID(int id) {
+    /**
+     * Retrieves the ID of a user based on their email.
+     *
+     * @param email The email of the user.
+     * @return The ID of the user.
+     */
+    public int getIdByEmail(String email) {
+        try {
+            PreparedStatement getUser = connection.prepareStatement(
+                    "SELECT user_id FROM user WHERE email = ?");
+            getUser.setString(1, email);
+            ResultSet rs = getUser.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return 0;
+    }
+
+    /**
+     * Retrieves the latest user's data from the database.
+     *
+     * @param id The ID of the user.
+     * @return The user instance containing the latest data.
+     */
+    public User getLatestUserData(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user order by DESC");
             getUser.setInt(1, id);
@@ -192,6 +239,11 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Retrieves the ID of the latest user from the database.
+     *
+     * @return The ID of the latest user.
+     */
     public int getLatestUser() {
         try {
             PreparedStatement getUserID = connection.prepareStatement(
@@ -206,6 +258,9 @@ public class UserDAO {
         return 0;
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void close() {
         try {
             connection.close();
@@ -214,6 +269,12 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Checks if an email is available (i.e., not already in use) in the database.
+     *
+     * @param email The email to check.
+     * @return True if the email is available; false otherwise.
+     */
     public boolean isEmailAvailable(String email) {
 
         boolean available = false;
@@ -238,6 +299,12 @@ public class UserDAO {
         return available;
     }
 
+    /**
+     * Retrieves the hashed password associated with a given email from the database.
+     *
+     * @param email The email associated with the password.
+     * @return The hashed password.
+     */
     public String getStoredHashedPassword(String email) {
 
         try (PreparedStatement stmt = connection.prepareStatement("SELECT password FROM user WHERE email = ?")) {

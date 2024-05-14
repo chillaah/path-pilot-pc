@@ -1,37 +1,36 @@
 package com.example.pathpilotfx.controller.timer;
 
-import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.controller.todolist.AddItemFormController;
+import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.PomodoroDAO;
+import com.example.pathpilotfx.database.UserDAO;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
+import com.example.pathpilotfx.model.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.List;
 
-
+/**
+ * Controller class for managing the timer functionality.
+ */
 public class TimerController {
     @FXML
     private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
     @FXML
-    private Timeline timerTimeline; //
+    private Timeline timerTimeline;
 
     @FXML
     private Label timerDisplay; // timer display
@@ -50,7 +49,10 @@ public class TimerController {
 
     @FXML
     private Label taskPopUpLabel1;
-
+    @FXML
+    private Label currentDestination;
+    @FXML
+    private Label nextDestination;
 
     @FXML
     private Button crossButton;
@@ -62,12 +64,20 @@ public class TimerController {
 
     //establish connection with the timer
     PomodoroDAO timer = new PomodoroDAO();
+    ExplorationDAO explorationDAO = new ExplorationDAO();
+    UserDAO userDAO = new UserDAO();
+    private int userID = SessionManager.getLoggedInUserId();
+    private User user = userDAO.getByUserId(userID);
 
+    List<String> destination = explorationDAO.getNextDestination(userID);
+    private Integer expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
+
+    /**
+     * Initializes the timer controller.
+     */
     @FXML
     public void initialize(){
         taskPopUp.setVisible(taskMode); // visibility of the task pop-up based on task mode
-
-
 
         setupTimer();
         // Add event handler for mouse click on the cross button
@@ -80,13 +90,29 @@ public class TimerController {
         crossButton.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             isCrossButtonPressed = false; // Set the flag to false when the crossButton is released
         });
+        currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
+        + "\n" + "Current exp: \n" + user.getExp());
+        if (destination != null) {
+            nextDestination.setVisible(true);
+            nextDestination.setText("Next destination: \n" +
+                    destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
+        }
     }
+
+    /**
+     * Starts the timer.
+     */
     @FXML
     protected void onStartButtonClick() {
         timerTimeline.play();
 
     }
 
+    /**
+     * Opens the settings page for the timer.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onSettingsButtonClick() throws IOException {
         //loads the respective settings page
@@ -98,6 +124,10 @@ public class TimerController {
         TimerSettingsController timersettingscontroller = loader.getController();
         timersettingscontroller.preloadFields(sessionTimer);
     }
+
+    /**
+     * Stops the timer.
+     */
     @FXML
     protected void onStopButtonClick() {
         timerTimeline.stop();
@@ -105,13 +135,19 @@ public class TimerController {
         timerDisplay.setText(sessionTimer.getDisplay());
     }
 
+    /**
+     * Toggles between timer types.
+     */
     @FXML
     protected void onTypeButtonClick(){
 
         handleRestTimer();
-    } // toggles between timer type
+    }
 
-    private void showPopup() { // Pop up that asks if the focus task has been completed
+    /**
+     * Shows a popup asking if the focus task has been completed.
+     */
+    private void showPopup() {
         try {
             // load respective screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/TaskTimer.fxml"));
@@ -133,7 +169,9 @@ public class TimerController {
         }
     }
 
-    // sets up the timer
+    /**
+     * Sets up the timer.
+     */
     public void setupTimer() {
         //initialise the timer with default values
         if (this.sessionTimer == null){
@@ -157,13 +195,16 @@ public class TimerController {
     public void setTimerAfterSettings(Pomodoro timer){
         this.sessionTimer = timer;
         timerDisplay.setText(sessionTimer.getDisplay());
-//        setupTimer();
-//        initialize();
+
 
 
     }
 
-    // Updates the timer by decreasing the remaining seconds, setting the display text accordingly
+    /**
+     * Updates the timer by decreasing the remaining seconds, setting the display text accordingly.
+     *
+     * @param event the event triggering the timer update.
+     */
     private void updateTimerDisplay(ActionEvent event) {
         sessionTimer.decreaseSeconds();
         timerDisplay.setText(sessionTimer.getDisplay());
@@ -177,7 +218,9 @@ public class TimerController {
         }
     }
 
-    // Toggles timer type and resets the timer
+    /**
+     * Toggles the timer type between focus and break and resets the timer accordingly.
+     */
     public void handleRestTimer() {
         timerTimeline.stop();
         timerType.setText(sessionTimer.toggleType());

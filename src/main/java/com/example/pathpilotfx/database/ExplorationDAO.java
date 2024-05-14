@@ -1,10 +1,12 @@
 package com.example.pathpilotfx.database;
 import com.example.pathpilotfx.model.Exploration;
+import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
+/**
+ Class for Exploration Data Access Object for SQLite queries
+ **/
 public class ExplorationDAO {
     private Connection connection;
 
@@ -12,15 +14,20 @@ public class ExplorationDAO {
         connection = DatabaseConnection.getInstance();
     }
 
- //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
+    //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
     //ExplorationDAO explorationdao = new ExplorationDAO
     //explorationdao.insert(exploration)
+    /**
+     Method that inserts exploration data
+     **/
 
     public void insert(Exploration exploration) {
+        UserDAO userDAO = new UserDAO();
         try {
+            int userId = userDAO.getLatestUser();
             PreparedStatement insertData = connection.prepareStatement(
                     "INSERT INTO exploration VALUES(?,?,?,?,?)");
-            insertData.setInt(1, exploration.getUserID());
+            insertData.setInt(1, userId);
             insertData.setInt(2, exploration.getCountryID());
             insertData.setString(3, exploration.getStatus());
             insertData.setBoolean(4, exploration.isLocked());
@@ -29,26 +36,30 @@ public class ExplorationDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
+    /**
+     Method that updates the exploration data
+     **/
 
     public void update(Exploration exploration) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE exploration SET user_id = ?, " +
-                            "country_id = ?, status = ?, lockedStatus = ?, " +
-                            "favourited = ? WHERE country_id = ?"
+                    "UPDATE exploration SET status = ?, lockedStatus = ?, favourited = ? WHERE user_id = ? AND country_id = ?"
             );
-            updateData.setInt(1, exploration.getUserID());
-            updateData.setInt(2, exploration.getCountryID());
-            updateData.setString(3, exploration.getStatus());
-            updateData.setBoolean(4, exploration.isLocked());
-            updateData.setBoolean(5, exploration.isFavourited());
+            updateData.setString(1, exploration.getStatus());
+            updateData.setBoolean(2, exploration.isLocked());
+            updateData.setBoolean(3, exploration.isFavourited());
+            updateData.setInt(4, exploration.getUserID());
+            updateData.setInt(5, exploration.getCountryID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
-    public void deleteCountryData(int id) {
+    /**
+     Method that deletes the exploration data
+     **/
+    public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration WHERE country_id = ?");
             delete.setInt(1, id);
@@ -57,7 +68,9 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
-
+    /**
+     Method that gets all exploration data
+     **/
     public List<Exploration> getAll() {
         List<Exploration> explorationData = new ArrayList<>();
         try {
@@ -80,56 +93,15 @@ public class ExplorationDAO {
         return explorationData;
     }
 
-    public List<Exploration> getAllLocked() {
-        List<Exploration> explorationData = new ArrayList<>();
-        try {
-            Statement getAll = connection.createStatement();
-            ResultSet rs = getAll.executeQuery(
-                    "SELECT * FROM exploration where lockedStatus = 1");
-            while (rs.next()) {
-                explorationData.add(
-                        new Exploration(
-                                rs.getInt("user_id"),
-                                rs.getInt("country_id"),
-                                rs.getString("status"),
-                                rs.getBoolean("lockedStatus"),
-                                rs.getBoolean("favourited")
-                        )
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return explorationData;
-    }
 
-    public List<Exploration> getAllUnlocked() {
-        List<Exploration> explorationData = new ArrayList<>();
+    /**
+     Method that gets specific country exploration data
+     **/
+    public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
-            Statement getAll = connection.createStatement();
-            ResultSet rs = getAll.executeQuery(
-                    "SELECT * FROM exploration where lockedStatus = 0");
-            while (rs.next()) {
-                explorationData.add(
-                        new Exploration(
-                                rs.getInt("user_id"),
-                                rs.getInt("country_id"),
-                                rs.getString("status"),
-                                rs.getBoolean("lockedStatus"),
-                                rs.getBoolean("favourited")
-                        )
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return explorationData;
-    }
-
-    public Exploration getByCountryId(int countryID) {
-        try {
-            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE country_id = ?");
-            explorationData.setInt(1, countryID);
+            PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
+            explorationData.setInt(1, userID);
+            explorationData.setInt(2, countryID);
             ResultSet rs = explorationData.executeQuery();
             if (rs.next()) {
                 return new Exploration(
@@ -145,9 +117,12 @@ public class ExplorationDAO {
         }
         return null;
     }
-
+    /**
+     Method that gets the country the user is currently exploring
+     @return returns the countryName
+     **/
     public String getCurrentExploring(int id) {
-        String countryName = null;
+        String countryName = "";
         try {
             PreparedStatement currExploring = connection.prepareStatement(
                     "SELECT c.country_name " +
@@ -162,6 +137,7 @@ public class ExplorationDAO {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
+        catch (Exception exception){return "";}
         return countryName;
     }
 
@@ -174,7 +150,61 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that counts the number of explored countries.
+     @param userID the userID
+     @return the count of explored countries
+     **/
+    public int countExplored(int userID) {
+        int count = 0;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE status = 'Explored' AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return count;
+    }
+    /**
+     Method that gets the first locked destination with the lowest exp
+     @return Returns a list of the country name and the required exp
+     @param id the userID
+     **/
+    public  List<String> getNextDestination(int id) {
+        String countryName = "";
+        int countryExp = 0;
+        List<String> destination = new ArrayList<>();
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT c.country_name, c.required_exp " +
+                            "FROM exploration e LEFT JOIN country c " +
+                            "ON e.country_id = c.country_id " +
+                            "WHERE e.lockedStatus = 1 AND e.user_id = ?" +
+                            "ORDER BY c.required_exp ASC LIMIT 1");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                countryName = resultSet.getString("country_name");
+                countryExp = resultSet.getInt("required_exp");
+                destination.add(countryName);
+                destination.add(String.valueOf(countryExp));
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        catch (Exception exception){return null;}
 
+        return destination;
+    }
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();
