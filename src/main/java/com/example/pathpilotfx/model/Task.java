@@ -101,7 +101,6 @@ public class Task {
     /**
      * Retrieves the Task of the task.
      *
-     * @return The Task of the task.
      */
     public void setTask(String task) {
         this.task = task;
@@ -119,7 +118,6 @@ public class Task {
     /**
      * Retrieves the status of the task.
      *
-     * @return The status of the task.
      */
     public void setStatus(boolean status) {
         this.status = status;
