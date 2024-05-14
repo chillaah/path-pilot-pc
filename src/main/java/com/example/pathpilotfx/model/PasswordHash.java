@@ -6,9 +6,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import static com.example.pathpilotfx.MainApplication.db;
 
-
+/**
+ * This class provides methods for authenticating users and hashing passwords.
+ */
 public class PasswordHash {
 
+    /**
+     * Authenticates a user by comparing the provided password with the stored hashed password.
+     *
+     * @param email            The email of the user.
+     * @param providedPassword The password provided by the user.
+     * @return true if the provided password matches the stored hashed password, false otherwise.
+     */
     public static boolean authenticateUser(String email, String providedPassword) {
         // Retrieve the hashed password from the database
         String storedHashedPassword = db.getStoredHashedPassword(email);
@@ -25,6 +34,13 @@ public class PasswordHash {
         assert hashedPassword != null;
         return hashedPassword.equals(storedHashedPassword);
     }
+
+    /**
+     * Hashes the given password using the SHA-256 algorithm.
+     *
+     * @param password The password to be hashed.
+     * @return The hashed password in hexadecimal format.
+     */
     public static String hashPassword(String password) {
         try {
             // Create MessageDigest instance for SHA-256
