@@ -12,6 +12,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+/**
+ * Controller class for managing the task timer functionality.
+ */
 public class TaskTimerController {
 
     @FXML
@@ -32,6 +35,10 @@ public class TaskTimerController {
     private Task task;
     public boolean timer_finish = false; // flag to determine if this screen has been loaded because timer has finished
 
+    /**
+     * Initializes the task timer controller.
+     * Sets the task label if a task is available.
+     */
     @FXML
     void initialize(){
         // setting the task label if a task is available
@@ -81,7 +88,10 @@ public class TaskTimerController {
     }
 
 
-
+    /**
+     * Action handler for not completing the task.
+     * Navigates back to the timer view or starts the rest timer, depending on the timer finish flag.
+     */
     public void setTaskComplete(Task task) {
         this.task = task;
     }

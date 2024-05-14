@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the side bar navigation.
+ */
 public class SideBarController implements Initializable {
 
     @FXML
@@ -41,17 +44,35 @@ public class SideBarController implements Initializable {
 
     @FXML
     private AnchorPane slider;
+
+    /**
+     * Initializes the side bar navigation.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slider.setTranslateX(-150);
         loadPage("timer-view.fxml"); //Default page when application is loaded
     }
 
+    /**
+     * Loads the home page when the home icon is clicked.
+     *
+     * @param event The mouse event triggering the home action.
+     */
     @FXML
     private void home(MouseEvent event){
         loadPage("timer-view.fxml");
     }
 
+    /**
+     * Loads the to-do list page when the to-do icon is clicked.
+     * If there are no tasks, loads the page for adding tasks; otherwise, loads the page for viewing existing tasks.
+     *
+     * @param event The mouse event triggering the to-do action.
+     */
     @FXML
     private void todo(MouseEvent event){
         //establish a connection with the database
@@ -66,16 +87,31 @@ public class SideBarController implements Initializable {
         }
     }
 
+    /**
+     * Loads the map page when the map icon is clicked.
+     *
+     * @param event The mouse event triggering the map action.
+     */
     @FXML
     private void map(MouseEvent event){
         loadPage("map-view.fxml");
     }
 
+    /**
+     * Loads the profile page when the profile icon is clicked.
+     *
+     * @param event The mouse event triggering the profile action.
+     */
     @FXML
     private void profile(MouseEvent event){
         loadPage("profile.fxml");
     }
 
+    /**
+     * Opens the side menu when the menu icon is clicked.
+     *
+     * @param event The mouse event triggering the menu action.
+     */
     @FXML
     private void menu(MouseEvent event) {
         TranslateTransition slide = new TranslateTransition();
@@ -92,6 +128,11 @@ public class SideBarController implements Initializable {
         });
     }
 
+    /**
+     * Closes the side menu when the close menu icon is clicked.
+     *
+     * @param event The mouse event triggering the close action.
+     */
     @FXML
     private void menuClose(MouseEvent event) {
         TranslateTransition slide = new TranslateTransition();
@@ -108,6 +149,11 @@ public class SideBarController implements Initializable {
         });
     }
 
+    /**
+     * Loads the specified FXML page into the center of the border pane.
+     *
+     * @param page The name of the FXML page to load.
+     */
     public void loadPage(String page){
         Parent root = null;
 
@@ -128,8 +174,6 @@ public class SideBarController implements Initializable {
         bp.setCenter(root);
         BorderPane.setAlignment(root, Pos.CENTER);
         //System.out.println(root.idProperty());
-
     }
-
 }
 

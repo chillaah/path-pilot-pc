@@ -23,6 +23,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controller class for the form used to add or edit tasks in the to-do list.
+ */
 public class AddItemFormController {
     @FXML
     private ImageView cancelTaskButton;
@@ -52,18 +55,20 @@ public class AddItemFormController {
     private JFXButton deleteTaskButton;
 
     private Task task;
-
     private boolean editMode = false;
     private Task editedTask;
+
+    /**
+     * Initializes the controller.
+     * @throws SQLException If an SQL exception occurs.
+     */
     @FXML
     void initialize() throws SQLException {
-
         // delete button hidden when adding a task
         if(!editMode){
             deleteTaskButton.setVisible(false);
             startTimerButton.setVisible(false);
         }
-
 
         // Initialize ToDoDOA
         ToDoDAO toDoDAO = new ToDoDAO();
@@ -118,7 +123,6 @@ public class AddItemFormController {
                 // insert new task into DB
                 Task newTask = new Task(taskField.getText(), SessionManager.getLoggedInUserId(), descriptionField.getText(), priorityOptions.getValue(), dateButton.getValue());
                 toDoDAO.insert(newTask);
-
             }
 
             try {
@@ -135,7 +139,6 @@ public class AddItemFormController {
 
 
     }
-
 
 
     @FXML
@@ -157,7 +160,10 @@ public class AddItemFormController {
 
     }
 
-    // Preloads the fields in the todo(addItemForm).fxml with the selected task to edit
+    /**
+     * Preloads the fields in the todo(addItemForm).fxml with the selected task to edit.
+     * @param task The task to edit.
+     */
     public void preloadFields(Task task){
 
         this.task = task;
@@ -172,7 +178,11 @@ public class AddItemFormController {
 
     }
 
-    // sets todo(addItemForm) to edit mode when task is being edited
+    /**
+     * Sets todo(addItemForm) to edit mode when a task is being edited.
+     * @param editMode True if in edit mode, false otherwise.
+     * @param editedTask The task being edited.
+     */
     public void setEditMode(boolean editMode, Task editedTask) {
         this.editMode = editMode;
         this.editedTask = editedTask;

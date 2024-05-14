@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for adding items to the to-do list.
+ */
 public class AddItemController {
     @FXML
     private ResourceBundle resources;
@@ -28,11 +31,14 @@ public class AddItemController {
     @FXML
     private AnchorPane rootAnchorPane;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize() {
-        // intialises the todo(addItem).fxml
+        // Initializes the todo(addItem).fxml
 
-        // when add button is pressed
+        // Adds an event handler for the add button
         addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             System.out.println("Added Clicked!");
             try {
