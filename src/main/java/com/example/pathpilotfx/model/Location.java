@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.model;
-
+/**
+ Class that initialises Location Object
+ **/
 public class Location {
     private int locationID;
     private int countryID;

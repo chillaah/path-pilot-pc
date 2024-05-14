@@ -18,8 +18,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
+/**
+ Controller for Sri Lanka's country view after selecting in Map
+ **/
 
-public class SriLankaController {
+public class SriLankaController implements ICountry{
     @FXML
     private Button backButton;
     @FXML
@@ -106,6 +109,7 @@ public class SriLankaController {
         }
         else{beginMethod();}
     }
+
     private boolean sendWarningConfirmation() {
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -118,6 +122,7 @@ public class SriLankaController {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+
     public void onUnlockButtonClick() throws IOException {
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("Sri Lanka")) {
             Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 4);
@@ -130,6 +135,7 @@ public class SriLankaController {
             stage.setScene(scene);
         }
     }
+
     public void onCancelButtonClick() throws IOException {
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 4);
         toUpdate.setStatus("Unexplored");
@@ -140,6 +146,7 @@ public class SriLankaController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+
     public int getIDbyCName(String CName){
         int ID = switch (CName) {
             case "Australia" -> 1;

@@ -4,7 +4,9 @@ import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
 import java.util.*;
-
+/**
+ Class for Exploration Data Access Object for SQLite queries
+ **/
 public class ExplorationDAO {
     private Connection connection;
 
@@ -15,6 +17,9 @@ public class ExplorationDAO {
     //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
     //ExplorationDAO explorationdao = new ExplorationDAO
     //explorationdao.insert(exploration)
+    /**
+     Method that inserts exploration data
+     **/
 
     public void insert(Exploration exploration) {
         UserDAO userDAO = new UserDAO();
@@ -31,6 +36,9 @@ public class ExplorationDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
+    /**
+     Method that updates the exploration data
+     **/
 
     public void update(Exploration exploration) {
         try {
@@ -48,8 +56,10 @@ public class ExplorationDAO {
         }
     }
 
-
-    public void deleteCountryData(int id) {
+    /**
+     Method that deletes the exploration data
+     **/
+    public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration WHERE country_id = ?");
             delete.setInt(1, id);
@@ -58,7 +68,9 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
-
+    /**
+     Method that gets all exploration data
+     **/
     public List<Exploration> getAll() {
         List<Exploration> explorationData = new ArrayList<>();
         try {
@@ -82,7 +94,9 @@ public class ExplorationDAO {
     }
 
 
-
+    /**
+     Method that gets specific country exploration data
+     **/
     public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
             PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
@@ -103,7 +117,10 @@ public class ExplorationDAO {
         }
         return null;
     }
-
+    /**
+     Method that gets the country the user is currently exploring
+     @return returns the countryName
+     **/
     public String getCurrentExploring(int id) {
         String countryName = "";
         try {
@@ -120,10 +137,7 @@ public class ExplorationDAO {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-        catch (Exception exception){return "Not currently exploring any";}
-        if (countryName == "") {
-            return "";
-        }
+        catch (Exception exception){return "";}
         return countryName;
     }
 
@@ -136,6 +150,11 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that counts the number of explored countries.
+     @param userID the userID
+     @return the count of explored countries
+     **/
     public int countExplored(int userID) {
         int count = 0;
         try {
@@ -152,6 +171,11 @@ public class ExplorationDAO {
         }
         return count;
     }
+    /**
+     Method that gets the first locked destination with the lowest exp
+     @return Returns a list of the country name and the required exp
+     @param id the userID
+     **/
     public  List<String> getNextDestination(int id) {
         String countryName = "";
         int countryExp = 0;
@@ -178,7 +202,9 @@ public class ExplorationDAO {
 
         return destination;
     }
-
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();

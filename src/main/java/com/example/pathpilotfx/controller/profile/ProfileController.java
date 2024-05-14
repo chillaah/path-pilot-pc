@@ -28,7 +28,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ Class that Controls the profile/dashboard view
+ **/
 public class ProfileController {
     @FXML
     private Label profileLabel;
@@ -67,7 +69,9 @@ public class ProfileController {
 
 
 
-
+    /**
+     Method to add values to all visible data and dashboard
+     **/
     public void initialize() {
         User user = userDao.getByUserId(userID);
         profileLabel.setText(user.getUsername() + "'s profile");
@@ -81,6 +85,9 @@ public class ProfileController {
         busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }
+    /**
+     Method that initialises the priorities pie chart
+     **/
     private void initializePrioritiesData() {
         if(!toDoDAO.getAll().isEmpty()) {
             System.out.println(toDoDAO.getPriorityCountsByUserId(SessionManager.getLoggedInUserId()));
@@ -89,9 +96,16 @@ public class ProfileController {
             priorities.setLabelLineLength(10);
         }
     }
+    /**
+     Method that implements edit button
+     **/
     public void onEditButtonClick() throws IOException {
 
     }
+    /**
+     Method to get a count for most common month by userID.
+     @return only one of the months.
+     **/
     public String getMostCommonMonthByUserId(int userId) {
         try {
             List<Date> dueDates = toDoDAO.getDueDatesByUserId(userId);

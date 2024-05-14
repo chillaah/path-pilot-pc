@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.model;
-
+/**
+ Class that initialises Exploration Object
+ **/
 public class Exploration {
     private int userID;
     private int countryID;

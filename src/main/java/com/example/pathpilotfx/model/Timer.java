@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.model;
-
+/**
+ Class that initialises Timer Object
+ **/
 public class Timer {
     private int userID;
     private int timerID;

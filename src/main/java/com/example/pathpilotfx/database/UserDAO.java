@@ -6,7 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ Class for User Data Access Object for SQLite queries
+ **/
 public class UserDAO {
 
     private Connection connection;
@@ -58,7 +60,10 @@ public class UserDAO {
 //        }
 //        return false; // Return false if there was an error or no result was found
 //    }
-
+    /**
+     Method that inserts user data
+     @param user the user instance with the data
+     **/
     public void insert(User user) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -75,7 +80,10 @@ public class UserDAO {
     }
 
 
-
+    /**
+     Method that updates user data
+     @param user the user instance with the updated data
+     **/
     public void update(User user) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -92,19 +100,9 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
-
-    public void UpdateEXP(int userID, int exp) {
-        try {
-            PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET exp = ? WHERE user_id = ?"
-            );
-            updateData.setInt(1, exp);
-            updateData.setInt(2, userID);
-            updateData.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
+    /**
+     Method that deletes specific user data based on user id
+     **/
 
     public void deleteUser(int id) {
         try {
@@ -124,6 +122,10 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that gets all user data
+     @return a list with all user data
+     **/
 
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -150,6 +152,9 @@ public class UserDAO {
     //to get the exp,you first get a user based on their ID and then using the returned user,
     // you can call the class getters e.g getExp() or getRequiredExp(). Concatenating them
     //can help with the exp / requiredexp part of the passport.
+    /**
+     Method that gets specific user data
+     **/
     public User getByUserId(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
@@ -170,6 +175,10 @@ public class UserDAO {
         }
         return null;
     }
+    /**
+     Method that gets specific user data based on the user's email
+     **/
+
     public int getIdByEmail(String email) {
         try {
             PreparedStatement getUser = connection.prepareStatement(
@@ -184,8 +193,11 @@ public class UserDAO {
         }
         return 0;
     }
+    /**
+     Method that gets the latest user's data.
+     **/
 
-    public User getLatestID(int id) {
+    public User getLatestUserData(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user order by DESC");
             getUser.setInt(1, id);
@@ -205,6 +217,9 @@ public class UserDAO {
         }
         return null;
     }
+    /**
+     Method that gets the ID for the latest user
+     **/
 
     public int getLatestUser() {
         try {
@@ -219,6 +234,9 @@ public class UserDAO {
         }
         return 0;
     }
+    /**
+     Method that closes the database connection
+     **/
 
     public void close() {
         try {
@@ -227,6 +245,10 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that gets whether an email is in use
+     @return true if the email is available, false if it is not.
+     **/
 
     public boolean isEmailAvailable(String email) {
 
@@ -251,7 +273,9 @@ public class UserDAO {
 
         return available;
     }
-
+    /**
+     Method that gets the stored hashed password
+     **/
     public String getStoredHashedPassword(String email) {
 
         try (PreparedStatement stmt = connection.prepareStatement("SELECT password FROM user WHERE email = ?")) {

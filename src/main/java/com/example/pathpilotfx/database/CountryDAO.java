@@ -7,7 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+/**
+ Class for Country for SQLite queries
+ **/
 public class CountryDAO {
     private Connection connection;
 
@@ -15,7 +17,9 @@ public class CountryDAO {
         connection = DatabaseConnection.getInstance();
     }
 
-
+    /**
+     Method that inserts the country data
+     **/
     public void insert(Country country) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -31,7 +35,9 @@ public class CountryDAO {
         }
     }
 
-
+    /**
+     Method that updates the country data
+     **/
     public void update(Country country) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -50,8 +56,10 @@ public class CountryDAO {
         }
     }
 
-
-    public void deleteSession(int id) {
+    /**
+     Method that deletes the country data
+     **/
+    public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement(
                     "DELETE FROM country WHERE country_id = ?");
@@ -61,7 +69,9 @@ public class CountryDAO {
             System.err.println(ex);
         }
     }
-
+    /**
+     Method that gets all the country data
+     **/
     public List<Country> getAll() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -82,6 +92,10 @@ public class CountryDAO {
         }
         return countries;
     }
+    /**
+     Method that gets all the country data for a given country id
+     @param countryID the country ID
+     **/
 
     public Country getByCountryId(int countryID) {
         try {
@@ -102,6 +116,11 @@ public class CountryDAO {
         }
         return null;
     }
+    /**
+     Method that gets locked country names by user id
+     using joined data from exploration and country
+     @param userId the user id
+     **/
     public List<String> getLockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -121,6 +140,11 @@ public class CountryDAO {
         return lockedCountryNames;
     }
 
+    /**
+     Method that gets unlocked country names by user id
+     using joined data from exploration and country
+     @param userId the user id
+     **/
     public List<String> getUnlockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -139,7 +163,9 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
-
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();

@@ -1,5 +1,8 @@
 package com.example.pathpilotfx.model;
 
+/**
+ Class that initialises Country Object
+ **/
 public class Country {
     private int countryID;
     private String countryName;
