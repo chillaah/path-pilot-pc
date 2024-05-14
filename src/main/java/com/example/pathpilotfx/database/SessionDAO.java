@@ -5,18 +5,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
- Class for Session Data Access Object for SQLite queries
- **/
+ * Class representing a Session Data Access Object for SQLite queries.
+ */
 public class SessionDAO {
     private Connection connection;
 
+    /**
+     * Constructs a SessionDAO object and initializes the database connection.
+     */
     public SessionDAO() {
         connection = DatabaseConnection.getInstance();
     }
 
     /**
-     Method that inserts session data
-     **/
+     * Inserts session data into the database.
+     *
+     * @param session The session object to be inserted.
+     */
     public void insert(Session session) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -30,10 +35,12 @@ public class SessionDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
-    /**
-     Method that updates session data
-     **/
 
+    /**
+     * Updates session data in the database.
+     *
+     * @param session The session object to be updated.
+     */
     public void update(Session session) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -50,10 +57,12 @@ public class SessionDAO {
             System.err.println(ex);
         }
     }
-    /**
-     Method that deletes session data
-     **/
 
+    /**
+     * Deletes session data from the database.
+     *
+     * @param id The ID of the session to be deleted.
+     */
     public void deleteSession(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM session WHERE session_id = ?");
@@ -63,10 +72,12 @@ public class SessionDAO {
             System.err.println(ex);
         }
     }
-    /**
-     Method that gets all session data
-     **/
 
+    /**
+     * Retrieves all session data from the database.
+     *
+     * @return A list of Session objects containing all session data.
+     */
     public List<Session> getAll() {
         List<Session> sessions = new ArrayList<>();
         try {
@@ -88,11 +99,13 @@ public class SessionDAO {
         }
         return sessions;
     }
-    /**
-     Method that gets all Session data for a report id
-     @return Session instance
-     **/
 
+    /**
+     * Retrieves session data from the database based on the session ID.
+     *
+     * @param sessionID The ID of the session to retrieve.
+     * @return The Session object corresponding to the session ID.
+     */
     public Session getBySessionId(int sessionID) {
         try {
             PreparedStatement getSession = connection.prepareStatement("SELECT * FROM session WHERE session_id = ?");
@@ -112,9 +125,10 @@ public class SessionDAO {
         }
         return null;
     }
+
     /**
-     Method that closes the database connection
-     **/
+     * Closes the database connection.
+     */
     public void close() {
         try {
             connection.close();

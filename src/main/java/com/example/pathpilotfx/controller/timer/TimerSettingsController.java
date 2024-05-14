@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+/**
+ * Controller class for managing timer settings.
+ */
 public class TimerSettingsController {
     @FXML
     private AnchorPane rootAnchorPane;
@@ -30,13 +33,22 @@ public class TimerSettingsController {
     private Label breakLengthError;
 
     private Pomodoro timer; // This keeps the instance of the timer in the app
-
     PomodoroDAO pomodoroDAO = new PomodoroDAO();
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize(){
 
     }
+
+    /**
+     * Event handler for the confirm button click.
+     * Validates the input, updates timer settings, and reloads the timer settings page.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     protected void onConfirmButtonClick () throws IOException {
         boolean passedValidation = true;
@@ -62,24 +74,37 @@ public class TimerSettingsController {
             this.timer.setRest(newRestLength);
             pomodoroDAO.update(timer);
 
-
             loadTimerSettings();
 
         }
 
     }
 
+    /**
+     * Event handler for the reset button click.
+     * Preloads the timer settings with the current timer instance.
+     */
     @FXML
     protected void onResetButtonClick(){
         preloadFields(this.timer);
     }
 
+    /**
+     * Event handler for the cancel button click.
+     * Loads the timer settings page.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     protected void onCancelButtonClick() throws IOException {
         loadTimerSettings();
     }
 
-
+    /**
+     * Loads the timer settings page.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private  void loadTimerSettings() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/timer-view.fxml"));
         Parent timerSettings = loader.load();
@@ -92,7 +117,11 @@ public class TimerSettingsController {
         AnchorPane timerSettingContent = new AnchorPane(timerSettings);
         rootAnchorPane.getChildren().setAll(timerSettingContent);
     }
-    // Preloads the fields in the timerSettings.fxml current timer instance
+    /**
+     * Preloads the fields in the timerSettings.fxml with the current timer instance.
+     *
+     * @param timer The current timer instance.
+     */
     public void preloadFields(Pomodoro timer){
         this.timer = timer;
         workLength.setText(String.valueOf(timer.getWork()));
