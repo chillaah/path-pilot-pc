@@ -12,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Controller class for the passport location view.
+ */
 public class PassportLocationController {
 
     @FXML
@@ -31,13 +34,19 @@ public class PassportLocationController {
 
     private Country country;
 
-
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize() {
 
-
     }
 
+    /**
+     * Sets the country information and updates the view.
+     *
+     * @param country The country for which the passport location is being displayed.
+     */
     public void setCountry(Country country) {
         this.country = country;
         locationLabel.setText(country.getCountryName());
@@ -53,6 +62,5 @@ public class PassportLocationController {
 
         Image passport = new Image(String.valueOf(imageUrl));
         locationStamp.setImage(passport);
-
     }
 }

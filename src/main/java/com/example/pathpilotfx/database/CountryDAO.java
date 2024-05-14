@@ -13,13 +13,18 @@ import java.util.Locale;
 public class CountryDAO {
     private Connection connection;
 
+    /**
+     * Constructs a new ToDoDAO object and initializes the database connection.
+     */
     public CountryDAO() {
         connection = DatabaseConnection.getInstance();
     }
 
     /**
-     Method that inserts the country data
-     **/
+     * Inserts country data into the database.
+     *
+     * @param country The Country object containing the data to be inserted.
+     */
     public void insert(Country country) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -36,8 +41,10 @@ public class CountryDAO {
     }
 
     /**
-     Method that updates the country data
-     **/
+     * Updates country data in the database.
+     *
+     * @param country The Country object containing the updated data.
+     */
     public void update(Country country) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -57,8 +64,10 @@ public class CountryDAO {
     }
 
     /**
-     Method that deletes the country data
-     **/
+     * Deletes country data from the database.
+     *
+     * @param id The ID of the country to be deleted.
+     */
     public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement(
@@ -69,9 +78,12 @@ public class CountryDAO {
             System.err.println(ex);
         }
     }
+
     /**
-     Method that gets all the country data
-     **/
+     * Retrieves all country data from the database.
+     *
+     * @return A list of Country objects containing all country data.
+     */
     public List<Country> getAll() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -92,11 +104,13 @@ public class CountryDAO {
         }
         return countries;
     }
-    /**
-     Method that gets all the country data for a given country id
-     @param countryID the country ID
-     **/
 
+    /**
+     * Retrieves country data for a specific country ID from the database.
+     *
+     * @param countryID The ID of the country.
+     * @return A Country object containing the data for the specified country ID.
+     */
     public Country getByCountryId(int countryID) {
         try {
             PreparedStatement getCountry = connection.prepareStatement(
@@ -116,11 +130,13 @@ public class CountryDAO {
         }
         return null;
     }
+
     /**
-     Method that gets locked country names by user id
-     using joined data from exploration and country
-     @param userId the user id
-     **/
+     * Retrieves the names of locked countries for a specific user ID.
+     *
+     * @param userId The ID of the user.
+     * @return A list of locked country names.
+     */
     public List<String> getLockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -141,10 +157,11 @@ public class CountryDAO {
     }
 
     /**
-     Method that gets unlocked country names by user id
-     using joined data from exploration and country
-     @param userId the user id
-     **/
+     * Retrieves the names of unlocked countries for a specific user ID.
+     *
+     * @param userId The ID of the user.
+     * @return A list of unlocked country names.
+     */
     public List<String> getUnlockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -163,9 +180,10 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
+
     /**
-     Method that closes the database connection
-     **/
+     * Closes the database connection.
+     */
     public void close() {
         try {
             connection.close();

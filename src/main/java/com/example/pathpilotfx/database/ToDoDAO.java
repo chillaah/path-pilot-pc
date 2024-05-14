@@ -9,13 +9,25 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Class for handling database operations related to ToDo tasks.
+ */
 public class ToDoDAO {
     private Connection connection;
 
+    /**
+     * Constructs a new ToDoDAO object and initializes the database connection.
+     */
     public ToDoDAO(){
         connection = DatabaseConnection.getInstance();
     }
 
+    /**
+     * Creates the task table in the database if it doesn't already exist.
+     *
+     * @throws SQLException If an SQL exception occurs.
+     */
     public void createTaskTable() throws SQLException {
         try{
             //need to add user_id to the database as well
@@ -40,6 +52,11 @@ public class ToDoDAO {
 
     //TO UPDATE
 
+    /**
+     * Inserts a task into the database.
+     *
+     * @param task The Task object to be inserted.
+     */
     public void insert(Task task) {
         try {
 
@@ -57,6 +74,11 @@ public class ToDoDAO {
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
 
+    /**
+     * Updates a task in the database.
+     *
+     * @param task The Task object containing the updated data.
+     */
     public void update(Task task) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -77,7 +99,11 @@ public class ToDoDAO {
         }
     }
 
-
+    /**
+     * Deletes a task from the database.
+     *
+     * @param id The ID of the task to be deleted.
+     */
     public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement(
@@ -89,6 +115,11 @@ public class ToDoDAO {
         }
     }
 
+    /**
+     * Retrieves all tasks from the database.
+     *
+     * @return A list of Task objects containing all tasks.
+     */
     public List<Task> getAll() {
         List<Task> tasks = new ArrayList<>();
         try {
@@ -114,6 +145,12 @@ public class ToDoDAO {
         return tasks;
     }
 
+    /**
+     * Retrieves uncompleted tasks for a specific user from the database.
+     *
+     * @param id The ID of the user.
+     * @return A list of Task objects containing uncompleted tasks for the specified user.
+     */
     public List<Task> getUncomplete(int id) {
         List<Task> taskList = new ArrayList<>();
         try {
@@ -150,10 +187,22 @@ public class ToDoDAO {
         return taskList;
     }
 
+    /**
+     * Converts a java.sql.Date object to a LocalDate object, or returns null if the input date is null.
+     *
+     * @param date The java.sql.Date object to convert.
+     * @return A LocalDate object corresponding to the input date, or null if the input date is null.
+     */
     private LocalDate getLocalDateOrNull(Date date) {
         return date != null ? date.toLocalDate() : null;
     }
 
+    /**
+     * Retrieves a task by its ID from the database.
+     *
+     * @param id The ID of the task to retrieve.
+     * @return The Task object corresponding to the specified ID, or null if no task is found.
+     */
     public Task getById(int id) {
         try {
             PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
@@ -181,6 +230,12 @@ public class ToDoDAO {
         return null;
     }
 
+    /**
+     * Retrieves due dates of tasks for a specific user from the database.
+     *
+     * @param userId The ID of the user.
+     * @return A list of due dates of tasks for the specified user.
+     */
     public List<Date> getDueDatesByUserId(int userId) {
         List<Date> tasks = new ArrayList<>();
         try {
@@ -197,6 +252,13 @@ public class ToDoDAO {
         }
         return tasks;
     }
+
+    /**
+     * Retrieves the counts of tasks based on priority for a specific user from the database.
+     *
+     * @param userId The ID of the user.
+     * @return An ObservableList of PieChart.Data objects containing priority counts for the specified user.
+     */
     public ObservableList<PieChart.Data> getPriorityCountsByUserId(int userId) {
         ObservableList<PieChart.Data> priorities = FXCollections.observableArrayList();
         try {
@@ -216,6 +278,12 @@ public class ToDoDAO {
         return priorities;
     }
 
+    /**
+     * Retrieves the total count of tasks for a specific user from the database.
+     *
+     * @param userID The ID of the user.
+     * @return The total count of tasks for the specified user.
+     */
     public int getTaskIDCount(int userID) {
         try {
             PreparedStatement getAccount = connection.prepareStatement("SELECT count(id) AS count FROM tasks WHERE user_id = ?");
@@ -230,6 +298,9 @@ public class ToDoDAO {
         return 0;
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void close() {
         try {
             if (connection != null){
@@ -239,5 +310,4 @@ public class ToDoDAO {
             ex.printStackTrace();
         }
     }
-
 }

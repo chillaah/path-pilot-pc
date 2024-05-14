@@ -6,14 +6,25 @@ import com.example.pathpilotfx.model.Timer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Class for handling Pomodoro database operations.
+ */
 public class PomodoroDAO {
     private Connection connection;
 
+    /**
+     * Constructs a new ToDoDAO object and initializes the database connection.
+     */
     public PomodoroDAO() {
         connection = DatabaseConnection.getInstance();
     }
 
-
+    /**
+     * Inserts Pomodoro data into the database.
+     *
+     * @param timer The Pomodoro object containing the data to be inserted.
+     */
     public void insert(Pomodoro timer) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -26,6 +37,11 @@ public class PomodoroDAO {
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
 
+    /**
+     * Updates Pomodoro data in the database.
+     *
+     * @param timer The Pomodoro object containing the updated data.
+     */
     public void update(Pomodoro timer) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -40,6 +56,11 @@ public class PomodoroDAO {
         }
     }
 
+    /**
+     * Deletes Pomodoro data from the database.
+     *
+     * @param userId The ID of the user whose Pomodoro data is to be deleted.
+     */
     public void deleteTimer(int userId) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM timer WHERE user_id = ?");
@@ -50,6 +71,11 @@ public class PomodoroDAO {
         }
     }
 
+    /**
+     * Retrieves all Pomodoro data from the database.
+     *
+     * @return A list of Pomodoro objects containing all Pomodoro data.
+     */
     public List<Pomodoro> getAll() {
         List<Pomodoro> timers = new ArrayList<>();
         try {
@@ -69,6 +95,12 @@ public class PomodoroDAO {
         return timers;
     }
 
+    /**
+     * Retrieves Pomodoro data for a specific user from the database.
+     *
+     * @param userId The ID of the user.
+     * @return A Pomodoro object containing the data for the specified user.
+     */
     public Pomodoro getTimerByUser(int userId) {
         try {
             PreparedStatement getTimer = connection.prepareStatement("SELECT * FROM timer WHERE user_id = ?");
@@ -86,6 +118,9 @@ public class PomodoroDAO {
         return null;
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void close() {
         try {
             connection.close();
