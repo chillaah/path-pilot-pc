@@ -1,4 +1,4 @@
 --patch-module
-com.example.authentication=_
+com.example.pathpilotfx=_
 --add-reads
-com.example.authentication=ALL-UNNAMED
+com.example.pathpilotfx=ALL-UNNAMED
