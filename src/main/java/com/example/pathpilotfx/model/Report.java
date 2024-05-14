@@ -1,5 +1,8 @@
 package com.example.pathpilotfx.model;
 
+/**
+ Class that initialises Report Object
+ **/
 public class Report {
     private int reportID;
     private int reporterID;

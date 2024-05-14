@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.net.URL;
-
+/**
+ Class that controls the passport view
+ **/
 public class PassportController {
 
     @FXML
@@ -36,7 +38,9 @@ public class PassportController {
         // Initialize the countryDAO object
         this.countryDAO = new CountryDAO();
     }
-
+    /**
+     Method that implements the observable list and view button visibility
+     **/
     public void initialize() {
         ObservableList<String> countries = FXCollections.observableArrayList(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
         System.out.println(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
@@ -50,7 +54,9 @@ public class PassportController {
 
     }
 
-
+    /**
+     Method that implements the back button
+     **/
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
@@ -61,6 +67,9 @@ public class PassportController {
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
     }
+    /**
+     Method that implements the view button to go to country views based on item selection
+     **/
     public void onViewButtonClick() throws IOException {
         Stage stage = (Stage) viewButton.getScene().getWindow();
         if(newVal.toString().equals("Sri Lanka")){

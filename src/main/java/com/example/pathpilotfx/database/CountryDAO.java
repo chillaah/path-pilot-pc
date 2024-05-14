@@ -6,7 +6,10 @@ import com.example.pathpilotfx.model.Exploration;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Locale;
+/**
+ Class for Country for SQLite queries
+ **/
 public class CountryDAO {
     private Connection connection;
 
@@ -14,36 +17,49 @@ public class CountryDAO {
         connection = DatabaseConnection.getInstance();
     }
 
-
+    /**
+     Method that inserts the country data
+     **/
     public void insert(Country country) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO country (country_name, required_exp) VALUES (?, ?)");
-            insertData.setString(1, country.getCountryName());
+                    "INSERT INTO country (country_name,required_exp,country_details,stamp_name,bg_name) VALUES(?,?,?,?,?)");
+            insertData.setString(1, country.getCountryDetails());
             insertData.setInt(2, country.getRequiredEXP());
+            insertData.setString(3, country.getCountryDetails());
+            insertData.setString(4, country.getStampImage());
+            insertData.setString(5, country.getBgImage());
             insertData.execute();
         } catch (SQLException sqlexc) {
             System.err.println(sqlexc);
         }
     }
 
-
+    /**
+     Method that updates the country data
+     **/
     public void update(Country country) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE country SET country_name = ?, required_exp = ? WHERE country_id = ?"
+                    "UPDATE country SET country_name = ?, required_exp = ?, country_details = ?, stamp_name = ?, bg_name = ?" +
+                            " WHERE country_id = ?"
             );
             updateData.setString(1, country.getCountryName());
             updateData.setInt(2, country.getRequiredEXP());
-            updateData.setInt(3, country.getCountryID());
+            updateData.setString(3, country.getCountryDetails());
+            updateData.setString(4, country.getStampImage());
+            updateData.setString(5,country.getBgImage());
+            updateData.setInt(6, country.getCountryID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
     }
 
-
-    public void deleteSession(int id) {
+    /**
+     Method that deletes the country data
+     **/
+    public void delete(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement(
                     "DELETE FROM country WHERE country_id = ?");
@@ -53,7 +69,9 @@ public class CountryDAO {
             System.err.println(ex);
         }
     }
-
+    /**
+     Method that gets all the country data
+     **/
     public List<Country> getAll() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -62,9 +80,10 @@ public class CountryDAO {
             while (rs.next()) {
                 countries.add(
                         new Country(
-                                rs.getInt("country_id"),
                                 rs.getString("country_name"),
-                                rs.getInt("required_exp")
+                                rs.getInt("required_exp"),
+                                rs.getString("stamp_name"),
+                                rs.getString("bg_name")
                         )
                 );
             }
@@ -73,6 +92,10 @@ public class CountryDAO {
         }
         return countries;
     }
+    /**
+     Method that gets all the country data for a given country id
+     @param countryID the country ID
+     **/
 
     public Country getByCountryId(int countryID) {
         try {
@@ -82,9 +105,10 @@ public class CountryDAO {
             ResultSet rs = getCountry.executeQuery();
             if (rs.next()) {
                 return new Country(
-                        rs.getInt("country_id"),
                         rs.getString("country_name"),
-                        rs.getInt("required_exp")
+                        rs.getInt("required_exp"),
+                        rs.getString("stamp_name"),
+                        rs.getString("bg_name")
                 );
             }
         } catch (SQLException ex) {
@@ -92,6 +116,11 @@ public class CountryDAO {
         }
         return null;
     }
+    /**
+     Method that gets locked country names by user id
+     using joined data from exploration and country
+     @param userId the user id
+     **/
     public List<String> getLockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -111,6 +140,11 @@ public class CountryDAO {
         return lockedCountryNames;
     }
 
+    /**
+     Method that gets unlocked country names by user id
+     using joined data from exploration and country
+     @param userId the user id
+     **/
     public List<String> getUnlockedCountryNamesByUserId(int userId) {
         List<String> lockedCountryNames = new ArrayList<>();
         try {
@@ -129,7 +163,9 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
-
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();

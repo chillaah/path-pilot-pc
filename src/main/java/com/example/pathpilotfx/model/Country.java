@@ -1,14 +1,24 @@
 package com.example.pathpilotfx.model;
 
+/**
+ Class that initialises Country Object
+ **/
 public class Country {
     private int countryID;
     private String countryName;
     private int requiredEXP;
 
-    public Country(int countryID, String countryName, int requiredEXP) {
-        this.countryID = countryID;
+    private String countryDetails;
+
+    private String stampImage;
+
+    private String bgImage;
+
+    public Country(String countryName, int requiredEXP, String stampImage, String bgImage) {
         this.countryName = countryName;
         this.requiredEXP = requiredEXP;
+        this.stampImage = stampImage;
+        this.bgImage = bgImage;
     }
 
     public int getCountryID() {
@@ -35,6 +45,29 @@ public class Country {
         this.requiredEXP = requiredEXP;
     }
 
+    public String getCountryDetails() {
+        return countryDetails;
+    }
+
+    public void setCountryDetails(String countryDetails) {
+        this.countryDetails = countryDetails;
+    }
+
+    public String getStampImage() {
+        return stampImage;
+    }
+
+    public void setStampImage(String stampImage) {
+        this.stampImage = stampImage;
+    }
+
+    public String getBgImage() {
+        return bgImage;
+    }
+
+    public void setBgImage(String bgImage) {
+        this.bgImage = bgImage;
+    }
     @Override
     public String toString() {
         return "Country{" +

@@ -20,8 +20,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
-
-public class AustraliaController {
+/**
+Controller for Australia's country view after selecting in Map
+ **/
+public class AustraliaController implements ICountry {
     @FXML
     private Button backButton;
     @FXML
@@ -83,6 +85,7 @@ public class AustraliaController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+
     public void onBeginButtonClick() throws IOException {
         int userID = SessionManager.getLoggedInUserId();
         if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
@@ -94,6 +97,7 @@ public class AustraliaController {
         }
         else{beginMethod();}
     }
+
     private void beginMethod() throws IOException{
         int userID = SessionManager.getLoggedInUserId();
         String currExpl = explorationDAO.getCurrentExploring(userID);
@@ -133,6 +137,7 @@ public class AustraliaController {
         stage.setScene(scene);
 
     }
+
     public void onCancelButtonClick() throws IOException {
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 1);
         toUpdate.setStatus("Unexplored");
@@ -143,6 +148,7 @@ public class AustraliaController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+
     public int getIDbyCName(String CName){
         int ID = switch (CName) {
             case "Australia" -> 1;

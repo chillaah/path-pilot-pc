@@ -18,8 +18,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
-
-public class JapanController {
+/**
+ Controller for Japan's country view after selecting in Map
+ **/
+public class JapanController implements ICountry{
     @FXML
     private Button backButton;
     @FXML
@@ -80,6 +82,7 @@ public class JapanController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+
      void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
@@ -93,6 +96,7 @@ public class JapanController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+
     public void onBeginButtonClick() throws IOException {
         int userID = SessionManager.getLoggedInUserId();
         if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {

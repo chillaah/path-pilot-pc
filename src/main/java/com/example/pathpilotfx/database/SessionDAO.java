@@ -4,6 +4,9 @@ import com.example.pathpilotfx.model.Session;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ Class for Session Data Access Object for SQLite queries
+ **/
 public class SessionDAO {
     private Connection connection;
 
@@ -11,7 +14,9 @@ public class SessionDAO {
         connection = DatabaseConnection.getInstance();
     }
 
-
+    /**
+     Method that inserts session data
+     **/
     public void insert(Session session) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
@@ -25,6 +30,9 @@ public class SessionDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
+    /**
+     Method that updates session data
+     **/
 
     public void update(Session session) {
         try {
@@ -42,6 +50,9 @@ public class SessionDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that deletes session data
+     **/
 
     public void deleteSession(int id) {
         try {
@@ -52,6 +63,9 @@ public class SessionDAO {
             System.err.println(ex);
         }
     }
+    /**
+     Method that gets all session data
+     **/
 
     public List<Session> getAll() {
         List<Session> sessions = new ArrayList<>();
@@ -74,6 +88,10 @@ public class SessionDAO {
         }
         return sessions;
     }
+    /**
+     Method that gets all Session data for a report id
+     @return Session instance
+     **/
 
     public Session getBySessionId(int sessionID) {
         try {
@@ -94,7 +112,9 @@ public class SessionDAO {
         }
         return null;
     }
-
+    /**
+     Method that closes the database connection
+     **/
     public void close() {
         try {
             connection.close();

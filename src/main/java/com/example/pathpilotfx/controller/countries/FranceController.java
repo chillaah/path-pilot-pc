@@ -18,8 +18,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
-
-public class FranceController {
+/**
+ Controller for France's country view after selecting in Map
+ **/
+public class FranceController implements ICountry{
     @FXML
     private Button backButton;
     @FXML
@@ -73,7 +75,9 @@ public class FranceController {
             beginButton.setDisable(true);
         }
     }
-
+    /**
+     Method to implement back button to map view
+     **/
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
@@ -81,6 +85,9 @@ public class FranceController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+    /**
+     Method to implement begin button, which changes the database currently exploring.
+     **/
     private void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
@@ -94,6 +101,9 @@ public class FranceController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+    /**
+     Method to send warning for continuation on clicking begin button
+     **/
     public void onBeginButtonClick() throws IOException {
         int userID = SessionManager.getLoggedInUserId();
         if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
@@ -105,6 +115,10 @@ public class FranceController {
         }
         else{beginMethod();}
     }
+    /**
+     Method to apply all disable and enable logic for buttons
+     @return boolean for if the OK button was pressed.
+     **/
     private boolean sendWarningConfirmation() {
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -117,6 +131,9 @@ public class FranceController {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+    /**
+     Method to implement unlock button, setting the country as unlocked.
+     **/
     public void onUnlockButtonClick() throws IOException {
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("France")) {
             Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 3);
@@ -129,6 +146,9 @@ public class FranceController {
             stage.setScene(scene);
         }
     }
+    /**
+     Method to implement cancel button, setting the country as Unexplored.
+     **/
     public void onCancelButtonClick() throws IOException {
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 3);
         toUpdate.setStatus("Unexplored");
@@ -139,6 +159,10 @@ public class FranceController {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+    /**
+     Method to get the countryID from countryName
+     @param CName the countryName
+     **/
     public int getIDbyCName(String CName){
         int ID = switch (CName) {
             case "Australia" -> 1;

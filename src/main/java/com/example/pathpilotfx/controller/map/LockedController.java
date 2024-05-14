@@ -22,7 +22,9 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ Class that controls the locked countries view
+ **/
 public class LockedController {
 
     @FXML
@@ -39,7 +41,9 @@ public class LockedController {
         // Initialize the countryDAO object
         this.countryDAO = new CountryDAO();
     }
-
+    /**
+     Method that implements the observable list and view button visibility
+     **/
     public void initialize() {
         if (countryDAO != null) {
             ObservableList<String> countries = FXCollections.observableArrayList(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
@@ -55,7 +59,9 @@ public class LockedController {
             System.out.println("countryDAO is null.");
         }
     }
-
+    /**
+     Method that implements the back button
+     **/
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
@@ -66,6 +72,9 @@ public class LockedController {
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
     }
+    /**
+     Method that implements the view button to go to country views based on item selection
+     **/
     public void onViewButtonClick() throws IOException {
         Stage stage = (Stage) viewButton.getScene().getWindow();
         if(newVal.toString().equals("Sri Lanka")){
