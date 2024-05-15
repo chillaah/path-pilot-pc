@@ -13,10 +13,16 @@ public class UserDAO {
 
     private Connection connection;
 
+    /**
+     * Initializes a new instance of the UserDAO class.
+     */
     public UserDAO() {
         connection = DatabaseConnection.getInstance();
     }
 
+    /**
+     * Creates the 'user' table if it does not exist.
+     */
     public void createTable() {
 
         Statement statement = null;
@@ -60,6 +66,7 @@ public class UserDAO {
 //        }
 //        return false; // Return false if there was an error or no result was found
 //    }
+
     /**
      Method that inserts user data
      @param user the user instance with the data
@@ -78,7 +85,6 @@ public class UserDAO {
             System.err.println(sqlexc);
         }
     }
-
 
     /**
      Method that updates user data
@@ -100,10 +106,12 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
-    /**
-     Method that deletes specific user data based on user id
-     **/
 
+    /**
+     * Deletes a specific user's data based on the user ID.
+     *
+     * @param id The ID of the user to be deleted.
+     */
     public void deleteUser(int id) {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM user WHERE user_id = ?");
@@ -114,6 +122,9 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Deletes all user data from the database.
+     */
     public void deleteAllUsers() {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM user");
@@ -122,11 +133,11 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
+
     /**
      Method that gets all user data
      @return a list with all user data
      **/
-
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try {
@@ -152,9 +163,13 @@ public class UserDAO {
     //to get the exp,you first get a user based on their ID and then using the returned user,
     // you can call the class getters e.g getExp() or getRequiredExp(). Concatenating them
     //can help with the exp / requiredexp part of the passport.
+
     /**
-     Method that gets specific user data
-     **/
+     * Retrieves user data for a specific user based on the user ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return The user instance containing the retrieved data.
+     */
     public User getByUserId(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
@@ -175,10 +190,13 @@ public class UserDAO {
         }
         return null;
     }
-    /**
-     Method that gets specific user data based on the user's email
-     **/
 
+    /**
+     * Retrieves the ID of a user based on their email.
+     *
+     * @param email The email of the user.
+     * @return The ID of the user.
+     */
     public int getIdByEmail(String email) {
         try {
             PreparedStatement getUser = connection.prepareStatement(
@@ -193,10 +211,13 @@ public class UserDAO {
         }
         return 0;
     }
-    /**
-     Method that gets the latest user's data.
-     **/
 
+    /**
+     * Retrieves the latest user's data from the database.
+     *
+     * @param id The ID of the user.
+     * @return The user instance containing the latest data.
+     */
     public User getLatestUserData(int id) {
         try {
             PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user order by DESC");
@@ -217,10 +238,12 @@ public class UserDAO {
         }
         return null;
     }
-    /**
-     Method that gets the ID for the latest user
-     **/
 
+    /**
+     * Retrieves the ID of the latest user from the database.
+     *
+     * @return The ID of the latest user.
+     */
     public int getLatestUser() {
         try {
             PreparedStatement getUserID = connection.prepareStatement(
@@ -234,10 +257,10 @@ public class UserDAO {
         }
         return 0;
     }
-    /**
-     Method that closes the database connection
-     **/
 
+    /**
+     * Closes the database connection.
+     */
     public void close() {
         try {
             connection.close();
@@ -245,11 +268,13 @@ public class UserDAO {
             System.err.println(ex);
         }
     }
-    /**
-     Method that gets whether an email is in use
-     @return true if the email is available, false if it is not.
-     **/
 
+    /**
+     * Checks if an email is available (i.e., not already in use) in the database.
+     *
+     * @param email The email to check.
+     * @return True if the email is available; false otherwise.
+     */
     public boolean isEmailAvailable(String email) {
 
         boolean available = false;
@@ -273,9 +298,13 @@ public class UserDAO {
 
         return available;
     }
+
     /**
-     Method that gets the stored hashed password
-     **/
+     * Retrieves the hashed password associated with a given email from the database.
+     *
+     * @param email The email associated with the password.
+     * @return The hashed password.
+     */
     public String getStoredHashedPassword(String email) {
 
         try (PreparedStatement stmt = connection.prepareStatement("SELECT password FROM user WHERE email = ?")) {

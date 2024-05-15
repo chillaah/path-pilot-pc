@@ -34,10 +34,15 @@ public class PassportController {
     private Button viewButton;
     private CountryDAO countryDAO;
     private Object newVal;
+
+    /**
+     * Initializes a new instance of the PassportController class.
+     */
     public PassportController() {
         // Initialize the countryDAO object
         this.countryDAO = new CountryDAO();
     }
+
     /**
      Method that implements the observable list and view button visibility
      **/
@@ -55,8 +60,10 @@ public class PassportController {
     }
 
     /**
-     Method that implements the back button
-     **/
+     * Handles the back button click event to return to the map view.
+     *
+     * @throws IOException If an error occurs while loading the map view.
+     */
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
@@ -67,9 +74,12 @@ public class PassportController {
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
     }
+
     /**
-     Method that implements the view button to go to country views based on item selection
-     **/
+     * Handles the view button click event to navigate to country views based on item selection.
+     *
+     * @throws IOException If an error occurs while loading the country view.
+     */
     public void onViewButtonClick() throws IOException {
         Stage stage = (Stage) viewButton.getScene().getWindow();
         if(newVal.toString().equals("Sri Lanka")){
@@ -85,7 +95,5 @@ public class PassportController {
             Scene scene = new Scene(root, 700, 400);
             stage.setScene(scene);
         }
-
-
     }
 }

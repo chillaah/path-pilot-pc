@@ -22,6 +22,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controller class for the passport view.
+ */
 public class PassportViewController {
 
     @FXML
@@ -47,6 +50,10 @@ public class PassportViewController {
     private List<List<Country>> splitCountries = splitList(countryList,6);
 
     private int sublist_no = 0;
+
+    /**
+     * Initializes the passport view.
+     */
     @FXML
     void initialize() {
 
@@ -76,6 +83,13 @@ public class PassportViewController {
 
     }
 
+    /**
+     * Adds a country to the passport grid.
+     *
+     * @param country     The country to add.
+     * @param columnIndex The column index.
+     * @param rowIndex    The row index.
+     */
     private void addCountry(Country country, int columnIndex, int rowIndex) {
         // create a task using todo(task).fxml
         try {
@@ -98,18 +112,35 @@ public class PassportViewController {
 
     }
 
+    /**
+     * Handles the next button click event.
+     *
+     * @param event The action event.
+     */
     @FXML
     void next(ActionEvent event) {
         sublist_no++;
         initialize();
     }
 
+    /**
+     * Handles the previous button click event.
+     *
+     * @param event The action event.
+     */
     @FXML
     void previous(ActionEvent event) {
         sublist_no--;
         initialize();
     }
 
+    /**
+     * Splits a list into sublists of a specified size.
+     *
+     * @param countries   The list of countries to split.
+     * @param sublistSize The size of each sublist.
+     * @return The list of sublists.
+     */
     public static List<List<Country>> splitList(List<Country> countries, int sublistSize){
         List<List<Country>> sublists = new ArrayList<>();
 
@@ -124,6 +155,11 @@ public class PassportViewController {
         return sublists;
     }
 
+    /**
+     * Displays the passport grid based on the current sublist.
+     *
+     * @param sublist The index of the current sublist.
+     */
     private void displayPassport(int sublist){
         passportGrid.getChildren().clear();
         if (!countryList.isEmpty()){
@@ -141,6 +177,5 @@ public class PassportViewController {
             }
         }
     }
-
 }
 

@@ -59,15 +59,17 @@ public class ProfileController {
     private ExplorationDAO explorationDAO;
     private ToDoDAO toDoDAO;
     private UserDAO userDao;
+    int userID = SessionManager.getLoggedInUserId();
+
+    /**
+     * Constructor for ProfileController.
+     */
     public ProfileController() {
         this.explorationDAO = new ExplorationDAO();
         this.toDoDAO = new ToDoDAO();
         this.userDao = new UserDAO();
 
     }
-    int userID = SessionManager.getLoggedInUserId();
-
-
 
     /**
      Method to add values to all visible data and dashboard
@@ -85,6 +87,7 @@ public class ProfileController {
         busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }
+
     /**
      Method that initialises the priorities pie chart
      **/
@@ -96,16 +99,22 @@ public class ProfileController {
             priorities.setLabelLineLength(10);
         }
     }
+
     /**
-     Method that implements edit button
-     **/
+     * Handles the event when the Edit button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void onEditButtonClick() throws IOException {
 
     }
+
     /**
-     Method to get a count for most common month by userID.
-     @return only one of the months.
-     **/
+     * Retrieves the most common month by user ID.
+     *
+     * @param userId The user ID.
+     * @return The most common month.
+     */
     public String getMostCommonMonthByUserId(int userId) {
         try {
             List<Date> dueDates = toDoDAO.getDueDatesByUserId(userId);
@@ -139,6 +148,4 @@ public class ProfileController {
         catch(Exception exception){System.out.println("no due dates");};
         return "none";
     }
-
-
 }

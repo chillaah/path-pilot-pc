@@ -31,7 +31,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 //import com.example.pathpilotfx.HomeController.*;
 
-
+/**
+ * Controller for handling user authentication and account creation.
+ */
 public class AuthenticationController {
 
     private final int authVal = getAuthType();
@@ -47,8 +49,9 @@ public class AuthenticationController {
     public Label statusLabel;
 //    public Label headerMsg;
 
-
-
+    /**
+     * Initializes the controller.
+     */
     @FXML
     public void initialize() {
 
@@ -60,6 +63,11 @@ public class AuthenticationController {
 //        }
     }
 
+    /**
+     * Handles the event when the Confirm button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onConfirmButtonClick() throws IOException {
 
@@ -92,6 +100,12 @@ public class AuthenticationController {
             authSuccess();
         }
     }
+
+    /**
+     * Handles the event when the Create Account button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onCreateAccountButtonClick() throws IOException {
 
@@ -164,6 +178,9 @@ public class AuthenticationController {
 //        clearFields();
 //    }
 
+    /**
+     * Clears the input fields.
+     */
     public void clearFields() {
         emailTextField.clear();
         passwordTextField.clear();
@@ -178,6 +195,11 @@ public class AuthenticationController {
 //        stage.setScene(scene);
 //    }
 
+    /**
+     * Redirects to the landing page upon successful authentication or account creation.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     protected void authSuccess() throws IOException {
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();
@@ -188,6 +210,13 @@ public class AuthenticationController {
         stage.setScene(scene);
     }
 
+    /**
+     * Checks if the given string matches the specified regular expression pattern.
+     *
+     * @param EP      The string to be validated.
+     * @param regexEP The regular expression pattern.
+     * @return true if the string matches the pattern, false otherwise.
+     */
     public boolean isValid(String EP, String regexEP) {
 
         // Compile the regex pattern

@@ -37,6 +37,9 @@ public class LockedController {
 
     private CountryDAO countryDAO;
 
+    /**
+     * Constructor for LockedController.
+     */
     public LockedController() {
         // Initialize the countryDAO object
         this.countryDAO = new CountryDAO();
@@ -59,9 +62,12 @@ public class LockedController {
             System.out.println("countryDAO is null.");
         }
     }
+
     /**
-     Method that implements the back button
-     **/
+     * Handles the event when the Back button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("map-view.fxml"));
@@ -72,9 +78,12 @@ public class LockedController {
 //        SideBarController sbc = new SideBarController();
 //        sbc.loadPage("map-view.fxml");
     }
+
     /**
-     Method that implements the view button to go to country views based on item selection
-     **/
+     * Handles the event when the View button is clicked to navigate to the selected country view.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void onViewButtonClick() throws IOException {
         Stage stage = (Stage) viewButton.getScene().getWindow();
         if(newVal.toString().equals("Sri Lanka")){
@@ -90,7 +99,5 @@ public class LockedController {
             Scene scene = new Scene(root, 700, 400);
             stage.setScene(scene);
         }
-
-
     }
 }

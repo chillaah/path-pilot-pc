@@ -18,7 +18,9 @@ import java.util.ResourceBundle;
 
 import static com.example.pathpilotfx.MainApplication.db;
 
-
+/**
+ * Controller for managing the map view.
+ */
 public class MapController {
 
     public Button passportButton;
@@ -28,6 +30,11 @@ public class MapController {
     @FXML
     private AnchorPane rootAnchorPane;
 
+    /**
+     * Handles the event when the Passport button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     protected void onPassportSelect() throws IOException {
         Stage stage = (Stage) passportButton.getScene().getWindow();
@@ -40,6 +47,11 @@ public class MapController {
 //        stage.setScene(scene);
     }
 
+    /**
+     * Handles the event when the Locked button is clicked.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     public void onLockedSelect() throws IOException {
         Stage stage = (Stage) lockedButton.getScene().getWindow();

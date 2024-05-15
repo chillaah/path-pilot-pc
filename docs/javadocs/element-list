@@ -1,0 +1,11 @@
+module:com.example.pathpilotfx
+com.example.pathpilotfx
+com.example.pathpilotfx.controller.authentication
+com.example.pathpilotfx.controller.countries
+com.example.pathpilotfx.controller.map
+com.example.pathpilotfx.controller.navigation
+com.example.pathpilotfx.controller.profile
+com.example.pathpilotfx.controller.timer
+com.example.pathpilotfx.controller.todolist
+com.example.pathpilotfx.database
+com.example.pathpilotfx.model
