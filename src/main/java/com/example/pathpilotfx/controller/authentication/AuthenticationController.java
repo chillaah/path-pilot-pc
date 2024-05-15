@@ -137,7 +137,7 @@ public class AuthenticationController {
                 Timestamp date = Timestamp.valueOf(ldt);
 
                 String hashedPassword = hashPassword(password);
-                User newUser = new User("username", email, hashedPassword, date, 0);
+                User newUser = new User("username", email, hashedPassword, date, 100);
                 db.insert(newUser);
                 int userId = db.getIdByEmail(email);
 

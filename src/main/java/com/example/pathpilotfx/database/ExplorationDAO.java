@@ -121,7 +121,9 @@ public class ExplorationDAO {
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-        return countryName;
+        if (countryName != null){return countryName;}
+        else {return "Australia";}
+
     }
 
 
