@@ -45,12 +45,6 @@ public abstract interface ICountry {
 
     }
     /**
-     Method to implement cancel button, setting the country as Unexplored.
-     **/
-    private void onCancelButtonClick() {
-
-    }
-    /**
      Method to get the countryID from countryName
      @param CName the countryName
      **/
