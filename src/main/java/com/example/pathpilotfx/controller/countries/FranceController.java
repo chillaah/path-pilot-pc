@@ -28,8 +28,6 @@ public class FranceController implements ICountry{
     private Button beginButton;
     @FXML
     private Button unlockButton;
-    @FXML
-    private Button cancelButton;
     private ExplorationDAO explorationDAO;
     private CountryDAO countryDAO;
     private UserDAO userDAO;
@@ -45,15 +43,6 @@ public class FranceController implements ICountry{
         //all buttons are enabled by default
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
-        //set cancel exploration button as disabled if there are no currently exploring
-        if (explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()) == null){
-            cancelButton.setDisable(true);
-        }
-        //set cancel exploration button as disabled if current exploration is not France
-        else if (!explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()).equals("France")){
-            cancelButton.setDisable(true);
-        }
-        else {cancelButton.setDisable(false);}
 
         //set unlock button as disabled if it is locked and not enough exp
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("France")
@@ -146,19 +135,7 @@ public class FranceController implements ICountry{
             stage.setScene(scene);
         }
     }
-    /**
-     Method to implement cancel button, setting the country as Unexplored.
-     **/
-    public void onCancelButtonClick() throws IOException {
-        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 3);
-        toUpdate.setStatus("Unexplored");
-        explorationDAO.update(toUpdate);
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("france-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 400);
-        stage.setScene(scene);
-    }
+
     /**
      Method to get the countryID from countryName
      @param CName the countryName

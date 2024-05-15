@@ -28,8 +28,6 @@ public class JapanController implements ICountry{
     private Button beginButton;
     @FXML
     private Button unlockButton;
-    @FXML
-    private Button cancelButton;
     private ExplorationDAO explorationDAO;
     private CountryDAO countryDAO;
     private UserDAO userDAO;
@@ -44,15 +42,6 @@ public class JapanController implements ICountry{
         //all buttons are enabled by default
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
-        //set cancel exploration button as disabled if there are no currently exploring
-        if (explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()) == null){
-            cancelButton.setDisable(true);
-        }
-        //set cancel exploration button as disabled if current exploration is not Japan
-        else if (!explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()).equals("Japan")){
-            cancelButton.setDisable(true);
-        }
-        else {cancelButton.setDisable(false);}
 
         //set unlock button as disabled if it is already unlocked or not enough exp
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains("Japan")
@@ -132,16 +121,6 @@ public class JapanController implements ICountry{
             stage.setScene(scene);
         }
         else{System.out.println("already unlocked");}
-    }
-    public void onCancelButtonClick() throws IOException {
-        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
-        toUpdate.setStatus("Unexplored");
-        explorationDAO.update(toUpdate);
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("japan-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 400);
-        stage.setScene(scene);
     }
     public int getIDbyCName(String CName){
         int ID = switch (CName) {

@@ -30,7 +30,6 @@
             <children>
                 <Button fx:id="beginButton" mnemonicParsing="false" text="Begin Exploration" onAction="#onBeginButtonClick"/>
                 <Button fx:id="unlockButton" mnemonicParsing="false" text="Unlock Country" onAction="#onUnlockButtonClick" disable="true"/>
-                <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel Exploration" onAction="#onCancelButtonClick"/>
             </children>
             <padding>
                 <Insets right="20.0" />

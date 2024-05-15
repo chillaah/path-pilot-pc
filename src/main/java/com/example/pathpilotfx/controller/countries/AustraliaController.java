@@ -30,8 +30,6 @@ public class AustraliaController implements ICountry {
     private Button beginButton;
     @FXML
     private Button unlockButton;
-    @FXML
-    private Button cancelButton;
     private ExplorationDAO explorationDAO;
     private CountryDAO countryDAO;
     private UserDAO userDAO;
@@ -50,15 +48,6 @@ public class AustraliaController implements ICountry {
         System.out.println("currentexp =" + user.getExp());
         System.out.println("currently exploring" + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
         System.out.println(countryDAO.getUnlockedCountryNamesByUserId(SessionManager.getLoggedInUserId()));
-        //set cancel exploration button as disabled if there are no currently exploring
-        if (explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()) == null){
-            cancelButton.setDisable(true);
-        }
-        //set cancel exploration button as disabled if current exploration is not Australia
-        else if (!explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()).equals("Australia")){
-            cancelButton.setDisable(true);
-        }
-        else {cancelButton.setDisable(false);}
 
         //set unlock button as disabled if it is already unlocked and the user has enough exp
         // (even though Australia is unlocked by default, and it should be impossible to get negative exp)
@@ -138,16 +127,6 @@ public class AustraliaController implements ICountry {
 
     }
 
-    public void onCancelButtonClick() throws IOException {
-        Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 1);
-        toUpdate.setStatus("Unexplored");
-        explorationDAO.update(toUpdate);
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("australia-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 700, 400);
-        stage.setScene(scene);
-    }
 
     public int getIDbyCName(String CName){
         int ID = switch (CName) {
