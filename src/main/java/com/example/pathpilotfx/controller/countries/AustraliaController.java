@@ -98,7 +98,7 @@ public class AustraliaController implements ICountry {
         else{beginMethod();}
     }
 
-    private void beginMethod() throws IOException{
+    public void beginMethod() throws IOException{
         int userID = SessionManager.getLoggedInUserId();
         String currExpl = explorationDAO.getCurrentExploring(userID);
         Exploration explorationExpl = new Exploration(userID, getIDbyCName(currExpl), "Explored", false, false);

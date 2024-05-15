@@ -83,7 +83,7 @@ public class JapanController implements ICountry{
         stage.setScene(scene);
     }
 
-     void beginMethod() throws IOException{
+    public void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 2);
