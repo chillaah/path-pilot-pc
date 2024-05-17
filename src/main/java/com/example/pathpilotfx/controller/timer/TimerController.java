@@ -93,10 +93,10 @@ public class TimerController {
         currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
         + "\n" + "Current exp: \n" + user.getExp());
         if (destination != null) {
-//            nextDestination.setVisible(true); UNCOMMENT THIS
+            nextDestination.setVisible(true);
             nextDestination.setText("Next destination: \n" +
                     destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
-//                    destination.get(0) + "\n" + "Needed exp: \n");
+
         }
     }
 
