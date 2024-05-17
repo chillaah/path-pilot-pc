@@ -72,6 +72,7 @@ public class TimerSettingsController {
             int newRestLength = Integer.parseInt(breakLength.getText());
             this.timer.setWork(newWorkLength);
             this.timer.setRest(newRestLength);
+            System.out.println("W "+ newWorkLength);
             pomodoroDAO.update(timer);
 
             loadTimerSettings();

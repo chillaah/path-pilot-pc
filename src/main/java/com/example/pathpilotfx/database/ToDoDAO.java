@@ -82,7 +82,7 @@ public class ToDoDAO {
     public void update(Task task) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE tasks SET user_id = ?, task_name = ?, status = ?, " +
+                    "UPDATE tasks SET user_id = ?, taskName = ?, status = ?, " +
                             "description = ?, priority = ?, due_date = ? " +
                             "WHERE id = ?"
             );

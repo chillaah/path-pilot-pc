@@ -150,6 +150,9 @@ public class AuthenticationController {
             db.insert(newUser);
             int userId = db.getIdByEmail(email);
 
+            // link to landing page
+            SessionManager.setLoggedInUserId(userId);
+
             ExplorationDAO explorationDAO = new ExplorationDAO();
             Exploration insertAU = new Exploration(userId, 1, "Exploring", false, false);
             Exploration insertJP = new Exploration(userId,2, "Unexplored", true, false);
@@ -166,8 +169,7 @@ public class AuthenticationController {
             pomodoroDAO.insert(pomodoro);
 
             System.out.println(newUser);
-            // link to landing page
-            SessionManager.setLoggedInUserId(userId);
+
             authSuccess();
         }
 

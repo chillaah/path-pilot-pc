@@ -49,6 +49,7 @@ public class PomodoroDAO {
             );
             updateData.setInt(1, timer.getRest());
             updateData.setInt(2, timer.getWork());
+            System.out.println(SessionManager.getLoggedInUserId());
             updateData.setInt(3, SessionManager.getLoggedInUserId());
             updateData.execute();
         } catch (SQLException ex) {

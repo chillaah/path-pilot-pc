@@ -76,7 +76,7 @@
              <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="currentDestination" layoutX="14.0" layoutY="161.0" prefHeight="110.0" prefWidth="159.0" text="Current destination:&#10;placeholder&#10;Current exp:&#10;placeholder" textAlignment="JUSTIFY">
+      <Label fx:id="currentDestination" visible="false" layoutX="14.0" layoutY="161.0" prefHeight="110.0" prefWidth="159.0" text="Current destination:&#10;placeholder&#10;Current exp:&#10;placeholder" textAlignment="JUSTIFY">
          <font>
             <Font size="14.0" />
          </font>
