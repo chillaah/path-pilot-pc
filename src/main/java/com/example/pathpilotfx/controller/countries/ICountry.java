@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.controller.countries;
 
+import java.io.IOException;
+
 /**
  Interface for country view implementation
  **/
@@ -11,18 +13,16 @@ public abstract interface ICountry {
     void initialize();
 
     /**
-     Method to implement back button to map view
+     * Method to implement back button to map view
      **/
-    private void onBackButtonClick() {
+    default void onBackButtonClick() throws IOException {
 
     }
     /**
      Method to implement begin button, which changes the database currently exploring.
      **/
 
-    private void beginMethod() {
-
-    }
+    void beginMethod() throws IOException;
     /**
      Method to send warning for continuation on clicking begin button
      **/

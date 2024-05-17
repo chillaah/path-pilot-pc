@@ -85,7 +85,7 @@ public class SriLankaController implements ICountry{
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
-    private void beginMethod() throws IOException{
+    public void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 4);

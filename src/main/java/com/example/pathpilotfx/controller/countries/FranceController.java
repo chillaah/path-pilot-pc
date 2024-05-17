@@ -88,7 +88,7 @@ public class FranceController implements ICountry{
     /**
      Method to implement begin button, which changes the database currently exploring.
      **/
-    private void beginMethod() throws IOException{
+    public void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
         Exploration toUpdate = explorationDAO.getByUserIdCountryId(SessionManager.getLoggedInUserId(), 3);
