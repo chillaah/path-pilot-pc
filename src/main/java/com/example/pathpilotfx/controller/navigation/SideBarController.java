@@ -36,15 +36,6 @@ public class SideBarController implements Initializable {
     @FXML
     private AnchorPane ap;
 
-    @FXML
-    private ImageView menu;
-
-    @FXML
-    private ImageView menuClose;
-
-    @FXML
-    private AnchorPane slider;
-
     /**
      * Initializes the side bar navigation.
      *
@@ -53,7 +44,6 @@ public class SideBarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        slider.setTranslateX(-150);
         loadPage("timer-view.fxml"); //Default page when application is loaded
     }
 
@@ -107,47 +97,7 @@ public class SideBarController implements Initializable {
         loadPage("profile.fxml");
     }
 
-    /**
-     * Opens the side menu when the menu icon is clicked.
-     *
-     * @param event The mouse event triggering the menu action.
-     */
-    @FXML
-    private void menu(MouseEvent event) {
-        TranslateTransition slide = new TranslateTransition();
-        slide.setDuration(Duration.seconds(0.4));
-        slide.setNode(slider);
-        slide.setToX(0);
-        slide.play();
 
-        slider.setTranslateX(-150);
-
-        slide.setOnFinished((ActionEvent e)-> {
-            menu.setVisible(false);
-            menuClose.setVisible(true);
-        });
-    }
-
-    /**
-     * Closes the side menu when the close menu icon is clicked.
-     *
-     * @param event The mouse event triggering the close action.
-     */
-    @FXML
-    private void menuClose(MouseEvent event) {
-        TranslateTransition slide = new TranslateTransition();
-        slide.setDuration(Duration.seconds(0.4));
-        slide.setNode(slider);
-        slide.setToX(-150);
-        slide.play();
-
-        slider.setTranslateX(0);
-
-        slide.setOnFinished((ActionEvent e)-> {
-            menu.setVisible(true);
-            menuClose.setVisible(false);
-        });
-    }
 
     /**
      * Loads the specified FXML page into the center of the border pane.

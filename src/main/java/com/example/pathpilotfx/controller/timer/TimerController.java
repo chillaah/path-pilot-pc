@@ -28,6 +28,11 @@ import java.util.List;
  */
 public class TimerController {
     @FXML
+    private Button stopButton;
+    @FXML
+    private Button startButton;
+
+    @FXML
     private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
     @FXML
     private Timeline timerTimeline;
@@ -47,8 +52,8 @@ public class TimerController {
     @FXML
     private Label taskPopUpLabel; // task name or details in taskPopUp label
 
-    @FXML
-    private Label taskPopUpLabel1;
+//    @FXML
+//    private Label taskPopUpLabel1;
     @FXML
     private Label currentDestination;
     @FXML
@@ -106,6 +111,8 @@ public class TimerController {
     @FXML
     protected void onStartButtonClick() {
         timerTimeline.play();
+        startButton.setVisible(false);
+        stopButton.setVisible(true);
 
     }
 
@@ -134,6 +141,8 @@ public class TimerController {
         timerTimeline.stop();
         sessionTimer.resetTimer();
         timerDisplay.setText(sessionTimer.getDisplay());
+        startButton.setVisible(true);
+        stopButton.setVisible(false);
     }
 
     /**
@@ -143,6 +152,8 @@ public class TimerController {
     protected void onTypeButtonClick(){
 
         handleRestTimer();
+        startButton.setVisible(true);
+        stopButton.setVisible(false);
     }
 
     /**
@@ -240,8 +251,8 @@ public class TimerController {
         this.taskMode = taskMode;
         this.task = task;
         taskPopUp.setVisible(this.taskMode); // update the visibility
-        taskPopUpLabel.setText("Focus Task: " + this.task.getTask());
-        taskPopUpLabel1.setText(this.task.getDescription());
+        taskPopUpLabel.setText(this.task.getTask());
+//        taskPopUpLabel1.setText(this.task.getDescription());
 
     }
 

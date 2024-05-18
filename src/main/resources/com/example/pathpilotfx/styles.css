@@ -5,5 +5,5 @@
 .sideBarItem:hover {
     -fx-background-color: #264E77;
     -fx-border-color: #F9F5EE;
-    -fx-border-width: 0px 0px 0px 3px;
+    -fx-border-width: 0px 0px 3px 0px;
 }
