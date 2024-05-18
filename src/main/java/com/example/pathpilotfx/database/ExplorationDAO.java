@@ -141,7 +141,51 @@ public class ExplorationDAO {
         return countryName;
     }
 
+    /**
+     * Retrieves the first locked country ID for a specific user from the database.
+     *
+     * @param id the ID of the user whose locked country is to be retrieved
+     * @return the country ID of the first locked country for the specified user,
+     *         or -1 if no locked country is found or an error occurs
+     */
+    public int getFirstLockedCountry(int id) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT country_id " +
+                            "FROM exploration " +
+                            "WHERE lockedStatus = 1 AND user_id = ?");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("country_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
 
+    /**
+     * Unlocks a country for a specific user by updating the locked status in the database.
+     *
+     * @param userID the ID of the user who is unlocking the country
+     * @param countryID the ID of the country to be unlocked
+     */
+    public void unlockCountry(int userID, int countryID) {
+        try {
+            PreparedStatement unlock = connection.prepareStatement(
+                    "UPDATE exploration SET lockedStatus = 0 WHERE user_id = ? AND country_id = ?");
+            unlock.setInt(1, userID);
+            unlock.setInt(2, countryID);
+            unlock.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    /**
+     Method that deletes all exploration data
+     **/
     public void deleteAllExplorations() {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");

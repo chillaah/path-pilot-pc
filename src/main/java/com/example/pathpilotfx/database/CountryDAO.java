@@ -157,6 +157,27 @@ public class CountryDAO {
     }
 
     /**
+     * Retrieves the required experience points for a specific country ID.
+     *
+     * @param countryID The ID of the country.
+     * @return The required experience points for the specified country ID.
+     */
+    public int getRequiredExpByCountryId(int countryID) {
+        try {
+            PreparedStatement getRequiredExp = connection.prepareStatement(
+                    "SELECT required_exp FROM country WHERE country_id = ?");
+            getRequiredExp.setInt(1, countryID);
+            ResultSet rs = getRequiredExp.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("required_exp");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
+
+    /**
      * Retrieves the names of unlocked countries for a specific user ID.
      *
      * @param userId The ID of the user.

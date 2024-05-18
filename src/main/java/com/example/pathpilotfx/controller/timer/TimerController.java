@@ -1,6 +1,8 @@
 package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.controller.authentication.SessionManager;
+import com.example.pathpilotfx.controller.timer.TimerSettingsController;
+import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.PomodoroDAO;
 import com.example.pathpilotfx.database.UserDAO;
@@ -66,6 +68,7 @@ public class TimerController {
     PomodoroDAO timer = new PomodoroDAO();
     ExplorationDAO explorationDAO = new ExplorationDAO();
     UserDAO userDAO = new UserDAO();
+    CountryDAO countryDAO = new CountryDAO();
     private int userID = SessionManager.getLoggedInUserId();
     private User user = userDAO.getByUserId(userID);
 
@@ -211,6 +214,27 @@ public class TimerController {
         timerDisplay.setText(sessionTimer.getDisplay());
         //If the timer finishes or cross button is pressed
         if (sessionTimer.getSeconds() == 0 || isCrossButtonPressed) {
+            if (sessionTimer.getSeconds() == 0)
+            {
+                // get work duration
+                int userID = userDAO.getLatestUser();
+                int sessionExp = timer.getWorkDurationByUser(userID);
+                // increment with user table for respective user
+                userDAO.updateExp(userID, sessionExp);
+
+                while (true) {
+                    int nextCountryID = explorationDAO.getFirstLockedCountry(userID);
+                    int nextCountryExp = countryDAO.getRequiredExpByCountryId(nextCountryID);
+                    int userExp = userDAO.getExpByUserID(userID);
+
+                    if (userExp > nextCountryExp) {
+                        explorationDAO.unlockCountry(userID, nextCountryID);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
             timerTimeline.stop();
             // If a task is associated with the timer, shows popup
             if (task != null){showPopup();}

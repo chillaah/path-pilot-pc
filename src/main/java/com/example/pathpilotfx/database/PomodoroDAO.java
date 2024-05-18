@@ -120,6 +120,26 @@ public class PomodoroDAO {
     }
 
     /**
+     * Retrieves the work duration for a specific user from the database.
+     *
+     * @param userId the ID of the user whose work duration is to be retrieved
+     * @return the work duration for the specified user, or -1 if no record is found or an error occurs
+     */
+    public int getWorkDurationByUser(int userId) {
+        try {
+            PreparedStatement getTimer = connection.prepareStatement("SELECT * FROM timer WHERE user_id = ?");
+            getTimer.setInt(1, SessionManager.getLoggedInUserId());
+            ResultSet rs = getTimer.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("work_duration");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
+
+    /**
      * Closes the database connection.
      */
     public void close() {

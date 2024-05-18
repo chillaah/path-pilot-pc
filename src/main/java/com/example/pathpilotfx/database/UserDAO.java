@@ -108,6 +108,25 @@ public class UserDAO {
     }
 
     /**
+     * Updates the exp value for a specific user in the database.
+     *
+     * @param userId the ID of the user to update
+     * @param exp the new exp value
+     */
+    public void updateExp(int userId, int exp) {
+        try {
+            PreparedStatement updateData = connection.prepareStatement(
+                    "UPDATE user SET exp = exp + ? WHERE user_id = ?"
+            );
+            updateData.setInt(1, exp);
+            updateData.setInt(2, userId);
+            updateData.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    /**
      * Deletes a specific user's data based on the user ID.
      *
      * @param id The ID of the user to be deleted.
@@ -205,6 +224,26 @@ public class UserDAO {
             ResultSet rs = getUser.executeQuery();
             if (rs.next()) {
                 return rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return 0;
+    }
+
+    /**
+     * Retrieves the exp of a user based on their ID.
+     *
+     * @param id The ID of the user.
+     * @return The exp of the user.
+     */
+    public int getExpByUserID(int id) {
+        try {
+            PreparedStatement getUser = connection.prepareStatement("SELECT exp FROM user WHERE user_id = ?");
+            getUser.setInt(1, id);
+            ResultSet rs = getUser.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("exp");
             }
         } catch (SQLException ex) {
             System.err.println(ex);
