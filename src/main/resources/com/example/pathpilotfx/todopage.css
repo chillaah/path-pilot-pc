@@ -1,21 +1,22 @@
 .scrollPane {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
     -fx-background-radius: 30 30 30 30;
 }
 .task {
-    -fx-background-color: #ADD8E6;
-    -fx-background-radius: 15 15 15 15;
+    -fx-background-color: transparent;
+    -fx-background-radius: 30 30 30 30;
+    -fx-border-color: black;
+    -fx-border-radius: 30 30 30 30;
 }
 .taskPrio{
--fx-background-color: Coral;
+-fx-background-color: #193541;
 -fx-background-radius: 15 15 15 15;
-
 }
-.checkbox .box{
 
--fx-background-color: white;
--fx-border-radius:5px;
--fx-background-radius:5px;
+.checkbox .box{
+-fx-background-color:  #193541;
+-fx-border-radius:30px;
+-fx-background-radius:30px;
 
 }
 
@@ -41,4 +42,8 @@
 .timer {
 -fx-background-color: Gainsboro;
 -fx-background-radius:10 10 10 10 ;
+}
+
+.scroll-pane .viewport {
+       -fx-background-color: transparent;
 }

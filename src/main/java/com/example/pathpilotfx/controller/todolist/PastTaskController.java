@@ -23,7 +23,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 @SuppressWarnings("javaFxVersionMismatch")
-public class ToDoTaskController implements TaskChangeListener {
+public class PastTaskController implements TaskChangeListener{
 
     @FXML
     private AnchorPane rootAnchorPane;
@@ -54,7 +54,8 @@ public class ToDoTaskController implements TaskChangeListener {
         //intialise DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        taskList = toDoDAO.getUncomplete(SessionManager.getLoggedInUserId());
+        taskList = toDoDAO.getComplete(SessionManager.getLoggedInUserId());
+
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));
@@ -66,6 +67,8 @@ public class ToDoTaskController implements TaskChangeListener {
                 addTask(task);
             }
         }
+
+
 
         //toDoDOA.close();
 
@@ -113,25 +116,14 @@ public class ToDoTaskController implements TaskChangeListener {
 
     }
 
-
     @FXML
-    void addTaskAction(ActionEvent event) throws IOException {
+    void BackToMain(ActionEvent event) throws IOException {
         // Load addItemForm.fxml and preload fields with task details
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItemForm).fxml"));
-        AnchorPane addItemFormRoot = loader.load();
-        rootAnchorPane.getChildren().setAll(addItemFormRoot);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(taskPage).fxml"));
+        AnchorPane todoTaskPage = loader.load();
+        rootAnchorPane.getChildren().setAll(todoTaskPage);
     }
 
-    @FXML
-    void ViewPast() throws IOException {
-        // Load addItemForm.fxml and preload fields with task details
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(pastTask).fxml"));
-        AnchorPane addItemFormRoot = loader.load();
-        rootAnchorPane.getChildren().setAll(addItemFormRoot);
-    }
-
-
-    @Override
     public void onTaskChange(boolean isSelected) {
         // reload updated task page
         try {

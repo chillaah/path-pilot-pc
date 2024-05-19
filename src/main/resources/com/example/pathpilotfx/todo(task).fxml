@@ -19,9 +19,9 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="taskPrioField" layoutX="324.0" layoutY="16.0" prefHeight="29.0" prefWidth="89.0" styleClass="taskPrio" stylesheets="@todopage.css" text="Label" textAlignment="CENTER">
+      <Label fx:id="taskPrioField" layoutX="324.0" layoutY="16.0" prefHeight="29.0" prefWidth="89.0" styleClass="taskPrio" stylesheets="@todopage.css" text="MEDIUM" textAlignment="CENTER" textFill="#f8f8f8">
          <font>
-            <Font size="15.0" />
+            <Font size="17.0" />
          </font>
          <opaqueInsets>
             <Insets />

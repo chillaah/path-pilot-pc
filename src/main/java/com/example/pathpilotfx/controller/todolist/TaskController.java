@@ -5,12 +5,15 @@ import com.example.pathpilotfx.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
+import javafx.scene.paint.Color;
 
 import java.io.Console;
+import java.lang.runtime.SwitchBootstraps;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -68,8 +71,27 @@ public class TaskController {
     public void setTask(Task task) {
         this.task = task;
         taskNameField.setText(task.getTask());
-        taskPrioField.setText((task.getPriority()));
+
         checkboxField.setSelected(task.getStatus());
+        if(task.getPriority() != null){
+            taskPrioField.setText((task.getPriority()));
+            switch(task.getPriority()){
+                case "HIGH":
+                    taskPrioField.setTextFill(Color.color(1, 0, 0));
+                    break;
+                case "MEDIUM":
+                    taskPrioField.setTextFill(Color.color(1, 1, 0));
+                    break;
+                case  "LOW":
+                    taskPrioField.setTextFill(Color.color(0, 1, 0));
+                    break;
+                default:
+                    taskPrioField.setTextFill(Color.color(1, 0, 0));
+            }
+        }
+        else {
+            taskPrioField.setVisible(false);
+        }
     }
 
     public void setTaskChangeListener(TaskChangeListener listener) {
