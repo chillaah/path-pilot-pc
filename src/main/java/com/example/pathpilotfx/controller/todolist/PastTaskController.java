@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javafx.scene.control.Button;
 //import jfoenix.controls.JFXButton;
@@ -19,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -42,7 +44,7 @@ public class PastTaskController implements TaskChangeListener{
 
     @FXML
 //    private JFXButton addTaskButton;
-    private Button addTaskButton;
+    private Button BackButton;
 
     private TaskController child;
     private List<Task> taskList;
@@ -67,6 +69,8 @@ public class PastTaskController implements TaskChangeListener{
                 addTask(task);
             }
         }
+
+
 
 
 
@@ -118,10 +122,23 @@ public class PastTaskController implements TaskChangeListener{
 
     @FXML
     void BackToMain(ActionEvent event) throws IOException {
-        // Load addItemForm.fxml and preload fields with task details
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(taskPage).fxml"));
-        AnchorPane todoTaskPage = loader.load();
-        rootAnchorPane.getChildren().setAll(todoTaskPage);
+
+        ToDoDAO toDoDAO = new ToDoDAO();
+
+        try {
+            List<Task> taskList = toDoDAO.getAll();
+            AnchorPane formPane;
+            // loads appropriate page depending if tasks exist
+            if(taskList.isEmpty()){
+                formPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml")));
+            }
+            else{
+                formPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/todo(taskPage).fxml")));
+            }
+            rootAnchorPane.getChildren().setAll(formPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onTaskChange(boolean isSelected) {
@@ -134,4 +151,6 @@ public class PastTaskController implements TaskChangeListener{
             throw new RuntimeException(e);
         }
     }
+
+
 }

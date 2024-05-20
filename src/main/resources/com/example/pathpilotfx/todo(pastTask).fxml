@@ -8,16 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="test1" focusTraversable="false" prefHeight="355.0" prefWidth="700.0"
-            style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.pathpilotfx.controller.todolist.PastTaskController">
+<AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.PastTaskController">
     <children>
-        <Label layoutX="46.0" layoutY="16.0" prefHeight="24.0" prefWidth="189.0" text="Completed Tasks">
+        <Label layoutX="35.0" layoutY="10.0" prefHeight="30.0" prefWidth="189.0" styleClass="scrollPaneLabel" stylesheets="@todopage.css" text=" Completed Tasks" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="46.0" layoutY="46.0" prefHeight="290.0" prefWidth="643.0" styleClass="scrollPane" stylesheets="@todopage.css">
+        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="30.0" layoutY="46.0" prefHeight="290.0" prefWidth="640.0" styleClass="scrollPane" stylesheets="@todopage.css">
             <content>
                 <VBox fx:id="vBoxContainer" style="-fx-background-color: #FFFFFF00;">
 
@@ -36,6 +34,6 @@
                 <Insets />
             </opaqueInsets>
         </ScrollPane>
-        <JFXButton fx:id="back" layoutX="612.0" layoutY="16.0" onAction="#BackToMain" prefHeight="23.0" prefWidth="74.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="Back" textFill="WHITE" />
+      <JFXButton fx:id="back" layoutX="600.0" layoutY="10.0" onAction="#BackToMain" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="Back" textFill="WHITE" />
     </children>
 </AnchorPane>

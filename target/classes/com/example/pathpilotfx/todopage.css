@@ -7,6 +7,7 @@
     -fx-background-radius: 30 30 30 30;
     -fx-border-color: black;
     -fx-border-radius: 30 30 30 30;
+    -fx-alignment : center;
 }
 .taskPrio{
 -fx-background-color: #193541;
@@ -46,4 +47,9 @@
 
 .scroll-pane .viewport {
        -fx-background-color: transparent;
+}
+.scrollPaneLabel{
+    -fx-background-radius: 10 10 10 10;
+    -fx-font-color:white;
+    -fx-background-color:black;
 }

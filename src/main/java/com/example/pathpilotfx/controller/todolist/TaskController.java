@@ -37,6 +37,9 @@ public class TaskController {
     private Label taskPrioField;
 
     @FXML
+    private Label taskDueDate;
+
+    @FXML
     private Pane taskPane;
 
     private Task task;
@@ -73,24 +76,23 @@ public class TaskController {
         taskNameField.setText(task.getTask());
 
         checkboxField.setSelected(task.getStatus());
-        if(task.getPriority() != null){
-            taskPrioField.setText((task.getPriority()));
-            switch(task.getPriority()){
-                case "HIGH":
-                    taskPrioField.setTextFill(Color.color(1, 0, 0));
-                    break;
-                case "MEDIUM":
-                    taskPrioField.setTextFill(Color.color(1, 1, 0));
-                    break;
-                case  "LOW":
-                    taskPrioField.setTextFill(Color.color(0, 1, 0));
-                    break;
-                default:
-                    taskPrioField.setTextFill(Color.color(1, 0, 0));
-            }
+
+
+        if(task.getPriority() != null && task.getDueDate() == null ){
+            setPrio();
+            taskDueDate.setVisible(false);
+        }
+        else if(task.getPriority() != null && task.getDueDate() != null ) {
+            setPrio();
+            taskDueDate.setText((task.getDueDate()).toString());
+        }
+        else if(task.getPriority() == null && task.getDueDate() != null){
+            taskPrioField.setText((task.getDueDate()).toString());
+            taskDueDate.setVisible(false);
         }
         else {
             taskPrioField.setVisible(false);
+            taskDueDate.setVisible(false);
         }
     }
 
@@ -104,6 +106,22 @@ public class TaskController {
         }
     }
 
+    private void setPrio(){
+        taskPrioField.setText((task.getPriority()));
+        switch(task.getPriority()){
+            case "HIGH":
+                taskPrioField.setTextFill(Color.color(1, 0, 0));
+                break;
+            case "MEDIUM":
+                taskPrioField.setTextFill(Color.color(1, 1, 0));
+                break;
+            case  "LOW":
+                taskPrioField.setTextFill(Color.color(0, 1, 0));
+                break;
+            default:
+                taskPrioField.setTextFill(Color.color(1, 0, 0));
+        }
+    }
 
 //    //public Task getTask(){
 //        return this.task;
