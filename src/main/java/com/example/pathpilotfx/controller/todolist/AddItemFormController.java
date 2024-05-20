@@ -76,6 +76,8 @@ public class AddItemFormController {
 
         // Add priority options
         priorityOptions.getItems().addAll("HIGH", "MEDIUM", "LOW");
+        // Defaults to medium
+        priorityOptions.getSelectionModel().select("MEDIUM");
 
         // Disable past dates in the DatePicker
         dateButton.setDayCellFactory(picker -> new DateCell() {
