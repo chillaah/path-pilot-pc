@@ -2,10 +2,7 @@ package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.timer.TimerSettingsController;
-import com.example.pathpilotfx.database.CountryDAO;
-import com.example.pathpilotfx.database.ExplorationDAO;
-import com.example.pathpilotfx.database.PomodoroDAO;
-import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
@@ -217,7 +214,7 @@ public class TimerController {
             if (sessionTimer.getSeconds() == 0)
             {
                 // get work duration
-                int userID = userDAO.getLatestUser();
+                int userID = SessionManager.getLoggedInUserId();
                 int sessionExp = timer.getWorkDurationByUser(userID);
                 // increment with user table for respective user
                 userDAO.updateExp(userID, sessionExp);
