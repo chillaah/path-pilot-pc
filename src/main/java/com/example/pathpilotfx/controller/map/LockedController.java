@@ -86,18 +86,18 @@ public class LockedController {
      */
     public void onViewButtonClick() throws IOException {
         Stage stage = (Stage) viewButton.getScene().getWindow();
-        if(newVal.toString().equals("Sri Lanka")){
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("srilanka-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 700, 400);
-            stage.setScene(scene);
-        }
-        else
-        {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(newVal.toString().toLowerCase() + "-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 700, 400);
-            stage.setScene(scene);
-        }
+//        if(newVal.toString().equals("Sri Lanka")){
+//            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("srilanka-view.fxml"));
+//            Parent root = fxmlLoader.load();
+//            Scene scene = new Scene(root, 700, 400);
+//            stage.setScene(scene);
+//        }
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("testmix.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 700, 400);
+        stage.setScene(scene);
+
     }
 }
