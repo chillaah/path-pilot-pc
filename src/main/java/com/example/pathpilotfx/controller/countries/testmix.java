@@ -15,18 +15,21 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
-
+/**
+ Controller for all countries view after selecting in Map
+ **/
 public class testmix {
     @FXML
     private Button backButton;
     @FXML
     private Button beginButton;
     @FXML
-    private Image image;
+    private ImageView image;
     private ExplorationDAO explorationDAO;
     private CountryDAO countryDAO;
     private UserDAO userDAO;
@@ -44,10 +47,13 @@ public class testmix {
         this.countryDAO = new CountryDAO();
         this.userDAO = new UserDAO();
     }
-
+    /**
+     Method to disable the begin button and initialise the image
+     **/
     public void initialize(){
         //all buttons are enabled by default
-
+        //Image image = new Image(countryDao.getStampByCID())
+        //image.setImage(image);
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
         System.out.println("currently exploring" + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
@@ -63,6 +69,9 @@ public class testmix {
         }
         else{beginButton.setDisable(false);}
     }
+    /**
+     Method to implement back button to map view
+     **/
 
     public void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
@@ -71,6 +80,9 @@ public class testmix {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+    /**
+     Method to implement begin button, which changes the database currently exploring.
+     **/
     public void beginMethod() throws IOException{
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Exploration explorationExpl = new Exploration(SessionManager.getLoggedInUserId(),getIDbyCName(currExpl),"Explored", false, false);
@@ -84,6 +96,9 @@ public class testmix {
         Scene scene = new Scene(root, 700, 400);
         stage.setScene(scene);
     }
+    /**
+     Method to call warning confirmation and beginMethod
+     **/
     public void onBeginButtonClick() throws IOException {
         int userID = SessionManager.getLoggedInUserId();
         if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
@@ -95,6 +110,9 @@ public class testmix {
         }
         else{beginMethod();}
     }
+    /**
+     Method to send warning for continuation on clicking begin button
+     **/
     private boolean sendWarningConfirmation() {
         String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -107,7 +125,10 @@ public class testmix {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
-
+    /**
+     Method to get the countryID from countryName
+     @param CName the countryName
+     **/
     public int getIDbyCName(String CName){
         int ID = switch (CName) {
             case "Australia" -> 1;

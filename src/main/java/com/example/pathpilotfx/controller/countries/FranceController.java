@@ -90,9 +90,6 @@
 //        Scene scene = new Scene(root, 700, 400);
 //        stage.setScene(scene);
 //    }
-//    /**
-//     Method to send warning for continuation on clicking begin button
-//     **/
 //    public void onBeginButtonClick() throws IOException {
 //        int userID = SessionManager.getLoggedInUserId();
 //        if(!explorationDAO.getCurrentExploring(userID).isEmpty()) {
@@ -104,10 +101,7 @@
 //        }
 //        else{beginMethod();}
 //    }
-//    /**
-//     Method to apply all disable and enable logic for buttons
-//     @return boolean for if the OK button was pressed.
-//     **/
+//
 //    private boolean sendWarningConfirmation() {
 //        String currExpl = explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId());
 //        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
