@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -24,6 +25,8 @@ import java.util.Optional;
  Controller for all countries view after selecting in Map
  **/
 public class testmix {
+    @FXML
+    private Label titleLabel;
     @FXML
     private Button backButton;
     @FXML
@@ -54,6 +57,7 @@ public class testmix {
         //all buttons are enabled by default
         ImageView image = new ImageView(countryDAO.getStampByCID(getIDbyCName(CountryName))+ ".png");
         image.setImage(image.getImage());
+        titleLabel.setText(CountryName);
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
         System.out.println("currently exploring" + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));

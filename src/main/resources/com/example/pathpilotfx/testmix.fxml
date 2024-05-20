@@ -16,14 +16,14 @@
             fx:controller="com.example.pathpilotfx.controller.countries.testmix"
             prefHeight="400.0" prefWidth="600.0">
     <children>
-        <Label layoutX="245.0" layoutY="14.0" text="CountryName">
+        <Label layoutX="245.0" layoutY="14.0" text="CountryName" fx:id="titleLabel">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <ImageView fitHeight="181.0" fitWidth="215.0" layoutX="26.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="image" fitHeight="181.0" fitWidth="215.0" layoutX="26.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@assets/australia-stamp.png" fx:id="image"/>
+                <Image url="@assets/australia-stamp.png"/>
             </image>
         </ImageView>
         <HBox alignment="CENTER" spacing="25" layoutX="11.0" layoutY="325.0" prefHeight="61.0" prefWidth="577.0">
