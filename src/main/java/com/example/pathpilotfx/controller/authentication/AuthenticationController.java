@@ -155,10 +155,18 @@ public class AuthenticationController {
             Exploration insertJP = new Exploration(userId,2, "Unexplored", true, false);
             Exploration insertFR = new Exploration(userId,3, "Unexplored", true, false);
             Exploration insertSL = new Exploration(userId,4, "Unexplored", true, false);
+            Exploration insertIN = new Exploration(userId,5, "Unexplored", true, false);
+            Exploration insertSW = new Exploration(userId,6, "Unexplored", true, false);
+            Exploration insertUSA = new Exploration(userId,7, "Unexplored", true, false);
+            Exploration insertCA = new Exploration(userId,8, "Unexplored", true, false);
             explorationDAO.insert(insertAU);
             explorationDAO.insert(insertJP);
             explorationDAO.insert(insertFR);
             explorationDAO.insert(insertSL);
+            explorationDAO.insert(insertIN);
+            explorationDAO.insert(insertSW);
+            explorationDAO.insert(insertUSA);
+            explorationDAO.insert(insertCA);
 
             //Curate new user timer settings
             PomodoroDAO pomodoroDAO = new PomodoroDAO();

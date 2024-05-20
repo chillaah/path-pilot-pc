@@ -52,8 +52,8 @@ public class testmix {
      **/
     public void initialize(){
         //all buttons are enabled by default
-        //Image image = new Image(countryDao.getStampByCID())
-        //image.setImage(image);
+        ImageView image = new ImageView(countryDAO.getStampByCID(getIDbyCName(CountryName))+ ".png");
+        image.setImage(image.getImage());
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
         System.out.println("currently exploring" + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
@@ -135,6 +135,10 @@ public class testmix {
             case "Japan" -> 2;
             case "France" -> 3;
             case "Sri Lanka" -> 4;
+            case "India" -> 5;
+            case "Switzerland" -> 6;
+            case "USA" -> 7;
+            case "Canada" -> 8;
             default -> 0;
         };
         return ID;

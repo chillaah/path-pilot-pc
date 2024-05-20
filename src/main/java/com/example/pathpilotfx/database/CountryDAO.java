@@ -180,6 +180,21 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
+    public String getStampByCID(int countryID) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT stamp_name from Country where country_id = ?");
+            statement.setInt(1, countryID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("stamp_name");
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
 
     /**
      * Closes the database connection.
