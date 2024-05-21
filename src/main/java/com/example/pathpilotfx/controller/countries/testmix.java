@@ -75,7 +75,8 @@ public class testmix {
         titleLabel.setText(CountryName);
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
-        System.out.println("currently exploring" + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
+        System.out.println("currently exploring " + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
+        System.out.println("currently selected " + CountryName);
 
 
         //set begin exploration button as disabled if currently exploring
@@ -86,7 +87,6 @@ public class testmix {
         if(countryDAO.getLockedCountryNamesByUserId(SessionManager.getLoggedInUserId()).contains(CountryName)){
             beginButton.setDisable(true);
         }
-        else{beginButton.setDisable(false);}
     }
     /**
      Method to implement back button to map view
