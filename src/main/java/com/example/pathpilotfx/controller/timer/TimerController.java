@@ -6,6 +6,7 @@ import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -104,6 +105,11 @@ public class TimerController {
 
         }
         countryBackgroundImage();
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), rootAnchorPane);  // Adjust duration as desired
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
     }
 
     private void countryBackgroundImage() {
