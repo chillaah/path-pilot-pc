@@ -161,7 +161,7 @@ public class testmix {
             case "Australia" -> 1;
             case "Japan" -> 2;
             case "France" -> 3;
-            case "Sri Lanka" -> 4;
+            case "SriLanka" -> 4;
             case "India" -> 5;
             case "Switzerland" -> 6;
             case "USA" -> 7;

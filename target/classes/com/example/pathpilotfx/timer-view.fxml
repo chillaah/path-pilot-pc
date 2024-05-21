@@ -7,7 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
+
+<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0"
+            style="-fx-background-image: url('@assets/Australia-BG.jpg'); -fx-background-size: cover;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
    <children>
       <AnchorPane fx:id="taskPopUp" layoutX="197.0" layoutY="14.0" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: #193541; -fx-background-radius: 5px;">
          <children>

@@ -16,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import java.io.IOException;
@@ -103,6 +103,16 @@ public class TimerController {
                 destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
 
         }
+        countryBackgroundImage();
+    }
+
+    private void countryBackgroundImage() {
+        int userId = SessionManager.getLoggedInUserId();
+        String countryName = explorationDAO.getCurrentExploring(userId);
+        System.out.println("The country name is " + countryName);
+        String backgroundImagePath = getClass().getResource("/com/example/pathpilotfx/assets/" + countryName + "-BG.jpg").toExternalForm();
+        System.out.println("Path is " + backgroundImagePath);
+        rootAnchorPane.setStyle("-fx-background-image: url('" + backgroundImagePath + "'); -fx-background-size: cover;");
     }
 
     /**
