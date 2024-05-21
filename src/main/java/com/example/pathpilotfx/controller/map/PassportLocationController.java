@@ -40,7 +40,7 @@ public class PassportLocationController {
     private boolean isSelected = false;
 
     private PassportViewController passportViewController;
-
+    private LockedController lockedController;
     /**
      * Initializes the controller.
      */
@@ -55,6 +55,7 @@ public class PassportLocationController {
      * @param country The country for which the passport location is being displayed.
      */
     public void setCountry(Country country) {
+        System.out.println("Country Name: "+ country.getCountryName() + " , Locked:" + country.isLocked());
         if(!country.isLocked()){
             greyPane.setVisible(false);
         }
@@ -83,6 +84,10 @@ public class PassportLocationController {
         this.passportViewController = passportViewController;
     }
 
+    public void setLockedController(LockedController lockedController) {
+        this.lockedController = lockedController;
+    }
+
     /**
      * Handles the mouse click event to select the country.
      *
@@ -90,7 +95,13 @@ public class PassportLocationController {
      */
     @FXML
     void selectCountry(MouseEvent event) {
-        passportViewController.updateSelectedCountry(country);
+        if (passportViewController != null){
+            passportViewController.updateSelectedCountry(country);
+        }
+        else{
+            lockedController.updateSelectedCountry(country);
+        }
+
     }
 
     /**

@@ -78,6 +78,7 @@
                </children>
             </VBox>
             <Button fx:id="editButton" layoutX="451.0" layoutY="21.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit profile" />
+            <Button fx:id="logoutButton" layoutX="540.0" layoutY="21.0" mnemonicParsing="false" onAction="#logoutButton" text="Log Out" />
          </children>
       </AnchorPane>
    </children>

@@ -77,11 +77,20 @@ public class MapController {
      */
     @FXML
     public void onLockedSelect() throws IOException {
-        Stage stage = (Stage) lockedButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("locked-locs.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-//        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        stage.setScene(scene);
+//        Stage stage = (Stage) lockedButton.getScene().getWindow();
+//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("lockedlocation-view.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
+////        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+//        stage.setScene(scene);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/lockedlocation-view.fxml"));
+            AnchorPane lockedLocView = loader.load();
+            rootAnchorPane.getChildren().setAll(lockedLocView);
+
+        } catch(IOException e){
+            System.out.println("LockedLocation View has not been found");
+            throw new RuntimeException(e);
+        }
     }
 
 //    ExplorationDAO explorationDAO = new ExplorationDAO();
