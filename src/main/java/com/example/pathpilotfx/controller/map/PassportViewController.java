@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.pathpilotfx.controller.countries.SelectedCountry;
 import com.example.pathpilotfx.controller.todolist.TaskController;
 import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
@@ -254,6 +255,17 @@ public class PassportViewController {
      */
     @FXML
     void view(ActionEvent event) {
+        SelectedCountry.setSelectedCountry(selectedCountry);
+        System.out.println(SelectedCountry.getSelectedCountry());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/testmix.fxml"));
+            AnchorPane countryView = loader.load();
+            rootAnchorPane.getChildren().setAll(countryView);
+
+        } catch(IOException e){
+            System.out.println("countryView has not been found");
+            throw new RuntimeException(e);
+        }
 
     }
 

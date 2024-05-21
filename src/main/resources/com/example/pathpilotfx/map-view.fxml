@@ -42,45 +42,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="355.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.MapController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.MapController">
    <children>
-      <MenuBar VBox.vgrow="NEVER" />
-      <AnchorPane fx:id="rootAnchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <VBox layoutX="300.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <VBox layoutX="300.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <VBox />
-                  <Button fx:id="passportButton" mnemonicParsing="false" onAction="#onPassportSelect" prefHeight="40.0" prefWidth="200.0" text="Passport">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
-                  <Button fx:id="lockedButton" mnemonicParsing="false" onAction="#onLockedSelect" prefHeight="40.0" prefWidth="200.0" text="Locked Locations" translateY="20.0" />
-               </children>
-            </VBox>
-            <!--        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">-->
-            <!--          <font>-->
-            <!--            <Font size="18.0" />-->
-            <!--          </font>-->
-            <!--        </Label>-->
-            <Label layoutX="25.0" layoutY="9.0" text="Good Onya!">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <!--          <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
-            <!--                     preserveRatio="true" />-->
-            <!--              <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
-            <!--                         preserveRatio="true">-->
-            <!--                  <Image url="assets/australia-stamp.png"/>-->
-            <!--              </ImageView>-->
-            <VBox layoutX="419.0" layoutY="30.0" />
-            <ImageView fx:id="stamp" fitHeight="256.0" fitWidth="208.0" layoutX="25.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@assets/australia-stamp.png" />
-               </image>
-            </ImageView>
+            <VBox />
+            <Button fx:id="passportButton" mnemonicParsing="false" onAction="#onPassportSelect" prefHeight="40.0" prefWidth="200.0" text="Passport">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="lockedButton" mnemonicParsing="false" onAction="#onLockedSelect" prefHeight="40.0" prefWidth="200.0" text="Locked Locations" translateY="20.0" />
          </children>
-      </AnchorPane>
+      </VBox>
+      <!--        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">-->
+      <!--          <font>-->
+      <!--            <Font size="18.0" />-->
+      <!--          </font>-->
+      <!--        </Label>-->
+      <Label layoutX="25.0" layoutY="9.0" text="Good Onya!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <!--          <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
+      <!--                     preserveRatio="true" />-->
+      <!--              <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
+      <!--                         preserveRatio="true">-->
+      <!--                  <Image url="assets/australia-stamp.png"/>-->
+      <!--              </ImageView>-->
+      <VBox layoutX="419.0" layoutY="30.0" />
+      <ImageView fx:id="stamp" fitHeight="256.0" fitWidth="208.0" layoutX="25.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/australia-stamp.png" />
+         </image>
+      </ImageView>
    </children>
-</VBox>
+</AnchorPane>
+

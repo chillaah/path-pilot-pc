@@ -1,7 +1,10 @@
 package com.example.pathpilotfx.controller.map;
 
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.authentication.SessionManager;
+import com.example.pathpilotfx.controller.countries.SelectedCountry;
 import com.example.pathpilotfx.database.ExplorationDAO;
+import com.example.pathpilotfx.model.Country;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +33,26 @@ public class MapController {
     @FXML
     private AnchorPane rootAnchorPane;
 
+    @FXML
+    private ImageView stamp;
+
+
+    @FXML
+    void initialize() {
+        ExplorationDAO explorationDAO = new ExplorationDAO();
+        Country currentCountry = explorationDAO.getCountryCurrent(SessionManager.getLoggedInUserId());
+
+        String fileName = currentCountry.getStampImage() +".png";
+
+        String relativeImagePath = "/com/example/pathpilotfx/assets/" + fileName;
+        System.out.println("stamp: "+ relativeImagePath);
+
+        URL imageUrl = getClass().getResource(relativeImagePath);
+        System.out.println("stamp: "+ String.valueOf(imageUrl));
+
+        Image image = new Image(String.valueOf(imageUrl));
+        stamp.setImage(image);
+    }
     /**
      * Handles the event when the Passport button is clicked.
      *
