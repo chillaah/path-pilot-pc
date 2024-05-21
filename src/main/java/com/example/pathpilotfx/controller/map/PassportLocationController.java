@@ -9,8 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 /**
  * Controller class for the passport location view.
@@ -32,7 +33,13 @@ public class PassportLocationController {
     @FXML
     private ImageView locationStamp;
 
+    @FXML
+    private Pane greyPane;
+
     private Country country;
+    private boolean isSelected = false;
+
+    private PassportViewController passportViewController;
 
     /**
      * Initializes the controller.
@@ -48,6 +55,9 @@ public class PassportLocationController {
      * @param country The country for which the passport location is being displayed.
      */
     public void setCountry(Country country) {
+        if(!country.isLocked()){
+            greyPane.setVisible(false);
+        }
         this.country = country;
         locationLabel.setText(country.getCountryName());
 
@@ -63,4 +73,47 @@ public class PassportLocationController {
         Image passport = new Image(String.valueOf(imageUrl));
         locationStamp.setImage(passport);
     }
+
+    /**
+     * Sets the PassportViewController instance.
+     *
+     * @param passportViewController The PassportViewController instance to set.
+     */
+    public void setPassportViewController(PassportViewController passportViewController) {
+        this.passportViewController = passportViewController;
+    }
+
+    /**
+     * Handles the mouse click event to select the country.
+     *
+     * @param event The mouse event.
+     */
+    @FXML
+    void selectCountry(MouseEvent event) {
+        passportViewController.updateSelectedCountry(country);
+    }
+
+    /**
+     * Applies the border to indicate selection.
+     */
+    public void applyBorder() {
+        // Set border for the selected country
+        Border border = new Border(new BorderStroke(
+                Color.BLACK, // Border color
+                BorderStrokeStyle.SOLID, // Border style
+                CornerRadii.EMPTY, // Corner radii
+                new BorderWidths(5) // Border widths (thickness)
+        ));
+        locationPane.setBorder(border);
+    }
+
+    /**
+     * Removes the border to indicate deselection.
+     */
+    public void removeBorder() {
+        // If already selected, remove border
+        locationPane.setBorder(null);
+    }
 }
+
+

@@ -92,6 +92,7 @@ public class CountryDAO {
             while (rs.next()) {
                 countries.add(
                         new Country(
+                                rs.getInt("country_id"),
                                 rs.getString("country_name"),
                                 rs.getInt("required_exp"),
                                 rs.getString("stamp_name"),
