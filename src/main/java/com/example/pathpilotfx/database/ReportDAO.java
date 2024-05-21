@@ -20,12 +20,11 @@ public class ReportDAO {
     public void insert(Report report) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO report VALUES(?,?,?,?,?)");
-            insertData.setInt(1, report.getReportID());
-            insertData.setInt(2, report.getReporterID());
-            insertData.setString(3, report.getCategory());
-            insertData.setString(4, report.getDetails());
-            insertData.setString(5, report.getPriority());
+                    "INSERT INTO report VALUES(?,?,?,?)");
+            insertData.setInt(1, report.getReporterID());
+            insertData.setString(2, report.getCategory());
+            insertData.setString(3, report.getDetails());
+            insertData.setString(4, report.getPriority());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -36,13 +35,12 @@ public class ReportDAO {
     public void update(Report report) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE report SET report_id = ?, reporter_id = ?, category = ?, details = ?, priority = ? WHERE id = ?"
+                    "UPDATE report SET category = ?, details = ?, priority = ? WHERE report_id = ?"
             );
-            updateData.setInt(1, report.getReportID());
-            updateData.setInt(2, report.getReporterID());
-            updateData.setString(3, report.getCategory());
-            updateData.setString(4, report.getDetails());
-            updateData.setString(5, report.getPriority());
+            updateData.setString(1, report.getCategory());
+            updateData.setString(2, report.getDetails());
+            updateData.setString(3, report.getPriority());
+            updateData.setInt(4, report.getReportID());
             updateData.execute();
         } catch (SQLException ex) {
             System.err.println(ex);

@@ -1,7 +1,6 @@
 package com.example.pathpilotfx.database;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.model.Pomodoro;
-import com.example.pathpilotfx.model.Timer;
 
 import java.sql.*;
 import java.util.ArrayList;

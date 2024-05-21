@@ -169,14 +169,6 @@ public class ExplorationDAO {
     }
 
 
-    public void deleteAllExplorations() {
-        try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");
-            delete.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
     /**
      Method that counts the number of explored countries.
      @param userID the userID

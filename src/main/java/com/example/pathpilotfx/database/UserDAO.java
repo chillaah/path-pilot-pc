@@ -49,24 +49,6 @@ public class UserDAO {
         }
     }
 
-//    public boolean userExists(String email) throws SQLException {
-//        // SQL query to check if a user with the given email exists
-//        String query = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
-//
-//        try (
-//                PreparedStatement statement = connection.prepareStatement(query)
-//        ) {
-//            statement.setString(1, email);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    int count = resultSet.getInt("count");
-//                    return count > 0; // If count > 0, user exists; otherwise, user does not exist
-//                }
-//            }
-//        }
-//        return false; // Return false if there was an error or no result was found
-//    }
-
     /**
      Method that inserts user data
      @param user the user instance with the data
@@ -212,32 +194,6 @@ public class UserDAO {
         return 0;
     }
 
-    /**
-     * Retrieves the latest user's data from the database.
-     *
-     * @param id The ID of the user.
-     * @return The user instance containing the latest data.
-     */
-    public User getLatestUserData(int id) {
-        try {
-            PreparedStatement getUser = connection.prepareStatement("SELECT * FROM user order by DESC");
-            getUser.setInt(1, id);
-            ResultSet rs = getUser.executeQuery();
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getTimestamp("creation_date"),
-                        rs.getInt("exp")
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return null;
-    }
 
     /**
      * Retrieves the ID of the latest user from the database.

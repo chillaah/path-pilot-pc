@@ -93,27 +93,5 @@ public class MapController {
         }
     }
 
-//    ExplorationDAO explorationDAO = new ExplorationDAO();
-//    int lastId = db.getLatestUser();
-//    String currExpCountry = explorationDAO.getCurrentExploring(lastId);
-//
-//    @FXML
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        switch (currExpCountry) {
-//            case "Japan":
-//                stamp.setImage(new Image("@src/main/resources/com/example/pathpilotfx/assets/japan-stamp.png"));
-//                break;
-//            case "Sri Lanka":
-//                stamp.setImage(new Image("@src/main/resources/com/example/pathpilotfx/assets/srilanka-stamp.png"));
-//                break;
-//            case "France":
-//                stamp.setImage(new Image("@src/main/resources/com/example/pathpilotfx/assets/france-stamp.jpeg"));
-//                break;
-//            default:
-//                stamp.setImage(new Image("@src/main/resources/com/example/pathpilotfx/assets/australia-stamp.png"));
-//                break;
-//        }
-//    }
 
 }

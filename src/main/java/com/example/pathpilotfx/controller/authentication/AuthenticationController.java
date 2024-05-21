@@ -185,10 +185,6 @@ public class AuthenticationController {
 
     }
 
-//    @FXML
-//    protected void onClearButtonClick() {
-//        clearFields();
-//    }
 
     /**
      * Clears the input fields.
@@ -198,14 +194,6 @@ public class AuthenticationController {
         passwordTextField.clear();
     }
 
-//    @FXML
-//    protected void onBackButtonClick() throws IOException {
-//        Stage stage = (Stage) backButton.getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("auth-select.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-////        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-//        stage.setScene(scene);
-//    }
 
     /**
      * Redirects to the landing page upon successful authentication or account creation.
