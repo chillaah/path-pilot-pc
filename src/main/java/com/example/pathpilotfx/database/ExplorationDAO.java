@@ -1,4 +1,5 @@
 package com.example.pathpilotfx.database;
+import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 
@@ -194,6 +195,34 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+    
+    public Country getCountryCurrent(int userID){
+        Country country = null;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM country c LEFT JOIN exploration e " +
+                            "ON c.country_id = e.country_id " +
+                            "WHERE e.status = 'Exploring' AND e.user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet rs = currExploring.executeQuery();
+            if (rs.next()) {
+                country = new Country(
+                        rs.getString("country_name"),
+                        rs.getInt("required_exp"),
+                        rs.getString("stamp_name"),
+                        rs.getString("bg_name")
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+        return country;
+
+    }
+
+
     /**
      Method that counts the number of explored countries.
      @param userID the userID

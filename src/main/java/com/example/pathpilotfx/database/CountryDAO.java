@@ -1,5 +1,6 @@
 package com.example.pathpilotfx.database;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 
@@ -92,6 +93,7 @@ public class CountryDAO {
             while (rs.next()) {
                 countries.add(
                         new Country(
+                                rs.getInt("country_id"),
                                 rs.getString("country_name"),
                                 rs.getInt("required_exp"),
                                 rs.getString("stamp_name"),
@@ -104,6 +106,34 @@ public class CountryDAO {
         }
         return countries;
     }
+
+    public List<Country> getLocked() {
+        List<Country> countries = new ArrayList<>();
+        try {
+            Statement getAll = connection.createStatement();
+            PreparedStatement getLocked = connection.prepareStatement("SELECT * FROM country c " +
+                    "JOIN " + "exploration e ON e.country_id = c.country_id " +
+                    "WHERE e.user_id = ? AND e.lockedStatus = 1");
+            getLocked.setInt(1, SessionManager.getLoggedInUserId());
+            ResultSet rs = getLocked.executeQuery();
+            while (rs.next()) {
+                countries.add(
+                        new Country(
+                                rs.getInt("country_id"),
+                                rs.getString("country_name"),
+                                rs.getInt("required_exp"),
+                                rs.getString("stamp_name"),
+                                rs.getString("bg_name")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return countries;
+    }
+
+
 
     /**
      * Retrieves country data for a specific country ID from the database.
@@ -201,6 +231,8 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
+
+
 
     /**
      * Closes the database connection.

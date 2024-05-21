@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.countries.testmix">
+    <children>
+        <Label fx:id="titleLabel" layoutX="276.0" layoutY="14.0" text="CountryName">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="image" fitHeight="222.0" fitWidth="161.0" layoutX="26.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/australia-stamp.png" />
+            </image>
+        </ImageView>
+        <HBox alignment="CENTER" layoutX="61.0" layoutY="296.0" prefHeight="61.0" prefWidth="577.0" spacing="25">
+            <children>
+                <Button fx:id="beginButton" mnemonicParsing="false" onAction="#onBeginButtonClick" text="Begin Exploration" />
+            </children>
+            <padding>
+                <Insets right="20.0" />
+            </padding>
+        </HBox>
+        <Button fx:id="backButton" layoutX="26.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back to Map" />
+        <VBox layoutX="290.0" layoutY="63.0" prefHeight="241.0" prefWidth="297.0">
+            <children>
+                <Label text="Placeholder text" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

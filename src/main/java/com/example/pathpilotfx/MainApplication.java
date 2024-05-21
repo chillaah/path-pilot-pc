@@ -15,7 +15,6 @@ public class MainApplication extends Application {
     public static final double WIDTH = 700;
     public static final double HEIGHT = 400;
     public static UserDAO db = new UserDAO();
-    public static ExplorationDAO db2 = new ExplorationDAO();
 
     @Override
     public void start(Stage stage) throws IOException {

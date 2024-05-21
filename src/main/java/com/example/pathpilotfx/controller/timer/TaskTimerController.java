@@ -89,14 +89,6 @@ public class TaskTimerController {
 
 
     /**
-     * Action handler for not completing the task.
-     * Navigates back to the timer view or starts the rest timer, depending on the timer finish flag.
-     */
-    public void setTaskComplete(Task task) {
-        this.task = task;
-    }
-
-    /**
      * Sets the task for Task Timer screen.
      *
      * @param task The task for which the screen is being loaded.

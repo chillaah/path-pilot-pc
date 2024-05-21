@@ -3,9 +3,11 @@ package com.example.pathpilotfx.controller.authentication;
 //import com.example.pathpilotfx.HomeApplication;
 //import com.example.pathpilotfx.HomeController;
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.PomodoroDAO;
 import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.User;
@@ -20,6 +22,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,14 +158,20 @@ public class AuthenticationController {
             SessionManager.setLoggedInUserId(userId);
 
             ExplorationDAO explorationDAO = new ExplorationDAO();
-            Exploration insertAU = new Exploration(userId, 1, "Exploring", false, false);
-            Exploration insertJP = new Exploration(userId,2, "Unexplored", true, false);
-            Exploration insertFR = new Exploration(userId,3, "Unexplored", true, false);
-            Exploration insertSL = new Exploration(userId,4, "Unexplored", true, false);
-            explorationDAO.insert(insertAU);
-            explorationDAO.insert(insertJP);
-            explorationDAO.insert(insertFR);
-            explorationDAO.insert(insertSL);
+            CountryDAO countryDAO = new CountryDAO();
+            //get all countries
+            List<Country> countryList = countryDAO.getAll();
+
+            for(Country country: countryList){
+                String current_status = "Unexplored";
+                boolean is_locked = true;
+                if (Objects.equals(country.getCountryName(), "Australia")){
+                    current_status = "Exploring";
+                    is_locked = false;
+                }
+                Exploration exploration = new Exploration(userId, country.getCountryID(),current_status, is_locked, false);
+                explorationDAO.insert(exploration);
+            }
 
             //Curate new user timer settings
             PomodoroDAO pomodoroDAO = new PomodoroDAO();
@@ -175,10 +185,6 @@ public class AuthenticationController {
 
     }
 
-//    @FXML
-//    protected void onClearButtonClick() {
-//        clearFields();
-//    }
 
     /**
      * Clears the input fields.
@@ -188,14 +194,6 @@ public class AuthenticationController {
         passwordTextField.clear();
     }
 
-//    @FXML
-//    protected void onBackButtonClick() throws IOException {
-//        Stage stage = (Stage) backButton.getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("auth-select.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-////        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-//        stage.setScene(scene);
-//    }
 
     /**
      * Redirects to the landing page upon successful authentication or account creation.

@@ -49,24 +49,6 @@ public class UserDAO {
         }
     }
 
-//    public boolean userExists(String email) throws SQLException {
-//        // SQL query to check if a user with the given email exists
-//        String query = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
-//
-//        try (
-//                PreparedStatement statement = connection.prepareStatement(query)
-//        ) {
-//            statement.setString(1, email);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    int count = resultSet.getInt("count");
-//                    return count > 0; // If count > 0, user exists; otherwise, user does not exist
-//                }
-//            }
-//        }
-//        return false; // Return false if there was an error or no result was found
-//    }
-
     /**
      Method that inserts user data
      @param user the user instance with the data

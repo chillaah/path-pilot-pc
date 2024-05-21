@@ -4,20 +4,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.ToDoTaskController">
+<AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.ToDoTaskController">
    <children>
-      <Label layoutX="62.0" layoutY="16.0" prefHeight="24.0" prefWidth="189.0" text="Tasks to completed">
+      <Label layoutX="30.0" layoutY="10.0" prefHeight="24.0" prefWidth="189.0" text="Tasks">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="25.0" layoutY="46.0" prefHeight="340.0" prefWidth="506.0">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="30.0" layoutY="46.0" prefHeight="300.0" prefWidth="641.0">
          <content>
-            <VBox fx:id="vBoxContainer" prefHeight="339.0" prefWidth="504.0" style="-fx-background-color: #FFFFFF00;">
+            <VBox fx:id="vBoxContainer" prefHeight="300.0" prefWidth="625.0" style="-fx-background-color: #FFFFFF00;">
 
                <children>
                   <!-- This is where dynamically loaded taskV panes will be added -->
@@ -34,7 +36,27 @@
             <Insets />
          </opaqueInsets>
       </ScrollPane>
-      <JFXButton fx:id="addTaskButton" layoutX="431.0" layoutY="19.0" onAction="#addTaskAction" prefHeight="19.0" prefWidth="96.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="Add Task" textFill="WHITE" />
-      <JFXButton fx:id="addTaskButton1" layoutX="309.0" layoutY="17.0" onAction="#addTaskAction" prefHeight="11.0" prefWidth="118.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="View past task" textFill="WHITE" />
+      <JFXButton fx:id="addTaskButton" alignment="CENTER" layoutX="575.0" layoutY="8.0" onAction="#addTaskAction" prefHeight="30.0" prefWidth="96.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="ADD" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/addIconWhite.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <JFXButton fx:id="addTaskButton1" layoutX="448.0" layoutY="8.0" onAction="#addTaskAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #F9F5EE;" styleClass="scrollPane" stylesheets="@todopage.css" text="ARCHIVE" textFill="#193541">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/archiveIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
    </children>
 </AnchorPane>

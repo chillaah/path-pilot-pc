@@ -11,6 +11,7 @@ import com.example.pathpilotfx.model.User;
 import com.jfoenix.controls.JFXHamburger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -56,6 +57,8 @@ public class ProfileController {
     private PieChart priorities;
     @FXML
     private Button editButton;
+    @FXML
+    private Button logoutButton;
     private ExplorationDAO explorationDAO;
     private ToDoDAO toDoDAO;
     private UserDAO userDao;
@@ -107,6 +110,25 @@ public class ProfileController {
      */
     public void onEditButtonClick() throws IOException {
 
+    }
+
+    @FXML
+    void logoutButton(ActionEvent event) {
+        SessionManager.setLoggedInUserId(0);
+        // Get the current stage
+        Stage currentStage = (Stage) logoutButton.getScene().getWindow();
+
+        // Close the current stage
+        currentStage.close();
+
+        // Start a new instance of the MainApplication
+        MainApplication mainApp = new MainApplication();
+        try {
+            Stage newStage = new Stage();
+            mainApp.start(newStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
