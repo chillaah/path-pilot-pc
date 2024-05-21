@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.countries.SelectedCountry;
 import com.example.pathpilotfx.controller.todolist.TaskController;
 import com.example.pathpilotfx.database.CountryDAO;
@@ -57,10 +58,11 @@ public class PassportViewController {
     //used to fetch countries and create appropriate countryList (ordered and split)
     CountryDAO countries = new CountryDAO();
     ExplorationDAO user_countries = new ExplorationDAO();
-    private List<Country> countryList = countries.getAll();
-    private List<Exploration> user_countryList = user_countries.getAll();
-    private List<Country> sortedList = orderList(countryList,user_countryList);
-    private List<List<Country>> splitCountries = splitList(sortedList,6);
+    private List<Country> countryList;
+    private List<Exploration> user_countryList;
+    private List<Country> sortedList;
+    private List<List<Country>> splitCountries;
+
     private int sublist_no = 0;
 
     // below variables used to determine selected country
@@ -73,6 +75,12 @@ public class PassportViewController {
      */
     @FXML
     void initialize() {
+        countryList = countries.getAll();
+        user_countryList = user_countries.getAllbyUser(SessionManager.getLoggedInUserId());
+
+        sortedList = orderList(countryList,user_countryList);
+        splitCountries = splitList(sortedList,6);
+
         System.out.println("Sorted List:");
         for(Country country: sortedList){
             System.out.print(country + ", ");
@@ -198,7 +206,10 @@ public class PassportViewController {
                 country.setCurrent_loc(userCountry.getStatus().equals("Exploring"));
                 country.setLocked(userCountry.isLocked());
             }
+            System.out.println("Country Name: " + country.getCountryName()+ " ,Locked Status : "+country.isLocked());
         }
+
+
 
         //Sort the list based on current location, then unlocked, then locked
         List<Country> sortedCountries = countries.stream()

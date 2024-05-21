@@ -98,6 +98,32 @@ public class ExplorationDAO {
     /**
      Method that gets specific country exploration data
      **/
+    public List<Exploration> getAllbyUser(int user_ID) {
+        List<Exploration> explorationData = new ArrayList<>();
+        try {
+            PreparedStatement getAllStatement = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ?");
+            getAllStatement.setInt(1, user_ID);
+            ResultSet rs = getAllStatement.executeQuery();
+            while (rs.next()) {
+                explorationData.add(
+                        new Exploration(
+                                rs.getInt("user_id"),
+                                rs.getInt("country_id"),
+                                rs.getString("status"),
+                                rs.getBoolean("lockedStatus"),
+                                rs.getBoolean("favourited")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return explorationData;
+    }
+
+    /**
+     Method that gets  country exploration data for a specific user
+     **/
     public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
             PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
