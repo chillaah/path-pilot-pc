@@ -8,17 +8,17 @@ import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
-
 import java.io.IOException;
 import java.util.List;
 
@@ -204,12 +204,14 @@ public class TimerController {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Sets the timer after settings are changed.
+     *
+     * @param timer the timer object to set.
+     */
     public void setTimerAfterSettings(Pomodoro timer){
         this.sessionTimer = timer;
         timerDisplay.setText(sessionTimer.getDisplay());
-
-
-
     }
 
     /**
@@ -224,9 +226,13 @@ public class TimerController {
         if (sessionTimer.getSeconds() == 0 || isCrossButtonPressed) {
             if (sessionTimer.getSeconds() == 0)
             {
+                // notify the user that the session has finished
+                sessionFinishNotify();
+
                 // get work duration
                 int userID = SessionManager.getLoggedInUserId();
                 int sessionExp = timer.getWorkDurationByUser(userID);
+
                 // increment with user table for respective user
                 userDAO.updateExp(userID, sessionExp);
 
@@ -249,6 +255,19 @@ public class TimerController {
             // toggle timer type and reset timer
             else{handleRestTimer();}
         }
+    }
+
+    /**
+     * Notifies the user that the session has finished.
+     */
+    private void sessionFinishNotify() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Session Finished");
+            alert.setHeaderText("Session Finished");
+            alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
+            alert.showAndWait();
+        });
     }
 
     /**
@@ -276,7 +295,4 @@ public class TimerController {
 //        taskPopUpLabel1.setText(this.task.getDescription());
 
     }
-
-
-
 }
