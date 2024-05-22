@@ -161,6 +161,4 @@ public class ToDoTaskController implements TaskChangeListener {
         }
     }
 
-    public void ViewPast(ActionEvent actionEvent) {
-    }
 }
