@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.PastTaskController">
+    <children>
+        <Label layoutX="35.0" layoutY="10.0" prefHeight="30.0" prefWidth="189.0" styleClass="scrollPaneLabel" stylesheets="@todopage.css" text=" Completed Tasks" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="30.0" layoutY="46.0" prefHeight="290.0" prefWidth="640.0" styleClass="scrollPane" stylesheets="@todopage.css">
+            <content>
+                <VBox fx:id="vBoxContainer" style="-fx-background-color: #FFFFFF00;">
+
+                    <children>
+                        <!-- This is where dynamically loaded taskV panes will be added -->
+                    </children>
+                    <padding>
+                        <Insets left="3.0" right="3.0" top="3.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="3" left="3" right="3" top="3" />
+                    </VBox.margin>
+                </VBox>
+            </content>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </ScrollPane>
+      <JFXButton fx:id="back" layoutX="600.0" layoutY="10.0" onAction="#BackToMain" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #193541;" styleClass="scrollPane" stylesheets="@todopage.css" text="Back" textFill="WHITE" />
+    </children>
+</AnchorPane>
