@@ -6,6 +6,7 @@ import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -40,10 +41,10 @@ public class TimerController {
     private Label timerDisplay; // timer display
 
     @FXML
-    private Label timerType; // label describing either break or focus timer
+    public Label timerType; // label describing either break or focus timer
 
     @FXML
-    private Button settingsButton;
+    private JFXButton settingsButton;
 
     @FXML
     private AnchorPane taskPopUp; // focus task popup (when a timer started corresponding to a task)

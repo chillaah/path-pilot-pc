@@ -107,6 +107,10 @@ public class Pomodoro {
         if(isWork) {return "FOCUS";} else return "BREAK";
     }
 
+    public String getTimerType(){
+        if(isWork) {return "FOCUS";} else return "BREAK";
+    }
+
     /**
      * Retrieves the current session type.
      *
