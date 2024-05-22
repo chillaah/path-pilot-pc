@@ -6,20 +6,20 @@ import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
-import com.jfoenix.controls.JFXButton;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
-
 import java.io.IOException;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class TimerController {
     public Label timerType; // label describing either break or focus timer
 
     @FXML
-    private JFXButton settingsButton;
+    private Button settingsButton;
 
     @FXML
     private AnchorPane taskPopUp; // focus task popup (when a timer started corresponding to a task)
@@ -104,6 +104,21 @@ public class TimerController {
                 destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
 
         }
+        countryBackgroundImage();
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), rootAnchorPane);  // Adjust duration as desired
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+    }
+
+    private void countryBackgroundImage() {
+        int userId = SessionManager.getLoggedInUserId();
+        String countryName = explorationDAO.getCurrentExploring(userId);
+        System.out.println("The country name is " + countryName);
+        String backgroundImagePath = getClass().getResource("/com/example/pathpilotfx/assets/" + countryName + "-BG.jpg").toExternalForm();
+        System.out.println("Path is " + backgroundImagePath);
+        rootAnchorPane.setStyle("-fx-background-image: url('" + backgroundImagePath + "'); -fx-background-size: cover;");
     }
 
     /**
@@ -205,12 +220,14 @@ public class TimerController {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Sets the timer after settings are changed.
+     *
+     * @param timer the timer object to set.
+     */
     public void setTimerAfterSettings(Pomodoro timer){
         this.sessionTimer = timer;
         timerDisplay.setText(sessionTimer.getDisplay());
-
-
-
     }
 
     /**
@@ -225,9 +242,13 @@ public class TimerController {
         if (sessionTimer.getSeconds() == 0 || isCrossButtonPressed) {
             if (sessionTimer.getSeconds() == 0)
             {
+                // notify the user that the session has finished
+                sessionFinishNotify();
+
                 // get work duration
                 int userID = SessionManager.getLoggedInUserId();
                 int sessionExp = timer.getWorkDurationByUser(userID);
+
                 // increment with user table for respective user
                 userDAO.updateExp(userID, sessionExp);
 
@@ -250,6 +271,19 @@ public class TimerController {
             // toggle timer type and reset timer
             else{handleRestTimer();}
         }
+    }
+
+    /**
+     * Notifies the user that the session has finished.
+     */
+    private void sessionFinishNotify() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Session Finished");
+            alert.setHeaderText("Session Finished");
+            alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
+            alert.showAndWait();
+        });
     }
 
     /**
@@ -277,7 +311,4 @@ public class TimerController {
 //        taskPopUpLabel1.setText(this.task.getDescription());
 
     }
-
-
-
 }

@@ -91,12 +91,14 @@ public class AuthenticationController {
         // else clear pw field and display wrong password message
         if (email.isEmpty() || password.isEmpty()) {
             statusLabel.setText("Empty email/password");
-        } else if (!isValid(email, regexE) || !isValid(password, regexP) || !authenticateUser(email, password)) {
+        } else if (!isValid(email, regexE) || !isValid(password, regexP)) {
             clearFields();
-            statusLabel.setText("Incorrect email/password");
+            statusLabel.setText("Invalid email/password format");
         } else if (!db.isEmailAvailable(email)) {
-            clearFields();
-            statusLabel.setText("Email not found");
+            statusLabel.setText("User does not exist");
+        } else if (!authenticateUser(email, password)) {
+            passwordTextField.clear();
+            statusLabel.setText("Incorrect password");
         } else {
             UserDAO userDAO = new UserDAO();
             // link to landing page
