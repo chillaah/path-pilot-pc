@@ -156,4 +156,7 @@ public class ToDoTaskController implements TaskChangeListener {
             throw new RuntimeException(e);
         }
     }
+
+    public void ViewPast(ActionEvent actionEvent) {
+    }
 }

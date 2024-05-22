@@ -14,7 +14,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.profile.ProfileController">
    <top>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="700.0" style="-fx-background-color: #264E77;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #264E77;" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="profileLabel" prefHeight="30.0" prefWidth="199.0" text="Username" textFill="#f9f5ee" HBox.hgrow="ALWAYS">
                <font>
