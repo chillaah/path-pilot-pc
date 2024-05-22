@@ -19,9 +19,20 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="taskPrioField" alignment="CENTER" contentDisplay="CENTER" layoutX="513.0" layoutY="6.0" prefHeight="29.0" prefWidth="90.0" styleClass="taskPrio" stylesheets="@todopage.css" text="Label" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="taskPrioField" alignment="CENTER" contentDisplay="CENTER" layoutX="513.0" layoutY="6.0" prefHeight="29.0" prefWidth="90.0" styleClass="taskPrio" stylesheets="@todopage.css" text="MEDIUM" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <Label fx:id="taskDueDate" alignment="CENTER" contentDisplay="CENTER" layoutX="380.0" layoutY="6.0" prefHeight="29.0" prefWidth="90.0" styleClass="taskPrio" stylesheets="@todopage.css" text="2024/11/28" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
          </font>
          <opaqueInsets>
             <Insets />

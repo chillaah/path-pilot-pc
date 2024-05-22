@@ -5,12 +5,15 @@ import com.example.pathpilotfx.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
+import javafx.scene.paint.Color;
 
 import java.io.Console;
+import java.lang.runtime.SwitchBootstraps;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,6 +37,9 @@ public class TaskController {
 
     @FXML
     private Label taskPrioField;
+
+    @FXML
+    private Label taskDueDate;
 
     @FXML
     private Pane taskPane;
@@ -81,8 +87,26 @@ public class TaskController {
     public void setTask(Task task) {
         this.task = task;
         taskNameField.setText(task.getTask());
-        taskPrioField.setText((task.getPriority()));
+
         checkboxField.setSelected(task.getStatus());
+
+
+        if(task.getPriority() != null && task.getDueDate() == null ){
+//            setPrio();
+            taskDueDate.setVisible(false);
+        }
+        else if(task.getPriority() != null && task.getDueDate() != null ) {
+//            setPrio();
+            taskDueDate.setText((task.getDueDate()).toString());
+        }
+        else if(task.getPriority() == null && task.getDueDate() != null){
+            taskPrioField.setText((task.getDueDate()).toString());
+            taskDueDate.setVisible(false);
+        }
+        else {
+            taskPrioField.setVisible(false);
+            taskDueDate.setVisible(false);
+        }
     }
 
     /**
