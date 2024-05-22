@@ -117,7 +117,6 @@ public class TimerSettingsController {
         timerController.timerType.setText(this.timer.getTimerType());
         timerController.initialize();
 
-
         AnchorPane timerSettingContent = new AnchorPane(timerSettings);
         rootAnchorPane.getChildren().setAll(timerSettingContent);
     }

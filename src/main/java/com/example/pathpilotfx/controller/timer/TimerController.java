@@ -139,6 +139,7 @@ public class TimerController {
      */
     @FXML
     protected void onSettingsButtonClick() throws IOException {
+        onStopButtonClick();
         //loads the respective settings page
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/timerSettings.fxml"));
         AnchorPane timerSettings = loader.load();
