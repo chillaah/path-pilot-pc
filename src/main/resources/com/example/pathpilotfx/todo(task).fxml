@@ -6,29 +6,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="taskPane" prefHeight="57.0" prefWidth="424.0" styleClass="task" stylesheets="@todopage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.TaskController">
+<Pane fx:id="taskPane" prefHeight="40.0" prefWidth="620.0" styleClass="task" stylesheets="@todopage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.TaskController">
 <!--   prefHeight="57.0"-->
    <children>
-      <CheckBox fx:id="checkboxField" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleStatusChange" prefHeight="28.0" prefWidth="18.0" styleClass="checkbox" stylesheets="@todopage.css">
+      <CheckBox fx:id="checkboxField" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleStatusChange" prefHeight="28.0" prefWidth="18.0" styleClass="checkbox" stylesheets="@todopage.css">
          <font>
             <Font size="16.0" />
          </font>
       </CheckBox>
-      <Label fx:id="taskNameField" layoutX="50.0" layoutY="16.0" prefHeight="12.0" prefWidth="250.0" text="Label">
+      <Label fx:id="taskNameField" contentDisplay="CENTER" layoutX="48.0" layoutY="8.0" prefHeight="20.0" prefWidth="443.0" text="Label">
          <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="taskPrioField" layoutX="324.0" layoutY="16.0" prefHeight="29.0" prefWidth="89.0" styleClass="taskPrio" stylesheets="@todopage.css" text="Label" textAlignment="CENTER">
+      <Label fx:id="taskPrioField" alignment="CENTER" contentDisplay="CENTER" layoutX="513.0" layoutY="6.0" prefHeight="29.0" prefWidth="90.0" styleClass="taskPrio" stylesheets="@todopage.css" text="Label" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
       </Label>
    </children>
 </Pane>

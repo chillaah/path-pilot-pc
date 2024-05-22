@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.pathpilotfx.controller.todolist.AddItemController">
+<AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.AddItemController">
    <children>
-      <Label fx:id="noTaskLabel" layoutX="190.0" layoutY="138.0" text="No Tasks for Today, yet!">
+      <Label fx:id="noTaskLabel" layoutX="266.0" layoutY="109.0" text="No Tasks for Today, yet!">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <ImageView fx:id="addButton" fitHeight="49.0" fitWidth="54.0" layoutX="250.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="addButton" fitHeight="49.0" fitWidth="54.0" layoutX="327.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/addIcon.png" />
          </image>
