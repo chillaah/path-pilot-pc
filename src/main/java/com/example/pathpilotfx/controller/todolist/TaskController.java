@@ -93,10 +93,12 @@ public class TaskController {
 
         if(task.getPriority() != null && task.getDueDate() == null ){
 //            setPrio();
+            taskPrioField.setText(task.getPriority());
             taskDueDate.setVisible(false);
         }
         else if(task.getPriority() != null && task.getDueDate() != null ) {
 //            setPrio();
+            taskPrioField.setText(task.getPriority());
             taskDueDate.setText((task.getDueDate()).toString());
         }
         else if(task.getPriority() == null && task.getDueDate() != null){
