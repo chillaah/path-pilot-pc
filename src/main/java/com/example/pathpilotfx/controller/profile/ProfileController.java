@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  Class that Controls the profile/dashboard view
  **/
-public class ProfileController {
+public class  ProfileController {
     @FXML
     private Label profileLabel;
     @FXML
@@ -76,15 +76,15 @@ public class ProfileController {
      **/
     public void initialize() {
         User user = userDao.getByUserId(userID);
-        profileLabel.setText(user.getUsername() + "'s profile");
-        email.setText("Email: " + user.getEmail());
+        profileLabel.setText(user.getUsername());
+//        email.setText("Email: " + user.getEmail());
         exp.setText("EXP: " + user.getExp());
-        creationDate.setText("Creation Date: \n" + user.getCreationDate());
-        tasksCompleted.setText("Tasks completed: " + toDoDAO.getTaskIDCount(userID));
-        longestTimer.setText("placeholder");
-        avgTimer.setText("placeholder");
+        creationDate.setText("Created: \n" + user.getCreationDate());
+        tasksCompleted.setText(String.valueOf(toDoDAO.getTaskIDCount(userID)));
+//        longestTimer.setText("placeholder");
+//        avgTimer.setText("placeholder");
         numExploredCountries.setText("Explored countries: " + explorationDAO.countExplored(userID));
-        busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
+//        busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }
 

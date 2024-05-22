@@ -47,7 +47,7 @@
                </image>
             </ImageView>
          </graphic></JFXButton>
-      <JFXButton fx:id="addTaskButton1" layoutX="448.0" layoutY="8.0" onAction="#addTaskAction" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #F9F5EE;" styleClass="scrollPane" stylesheets="@todopage.css" text="ARCHIVE" textFill="#193541">
+      <JFXButton fx:id="addTaskButton1" layoutX="448.0" layoutY="8.0" onAction="#ViewPast" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #F9F5EE;" styleClass="scrollPane" stylesheets="@todopage.css" text="ARCHIVE" textFill="#193541">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
