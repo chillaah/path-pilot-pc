@@ -33,7 +33,7 @@
         <Button fx:id="backButton" layoutX="26.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back to Map" />
         <VBox layoutX="290.0" layoutY="63.0" prefHeight="241.0" prefWidth="297.0">
             <children>
-                <Label fx:id="textLabel" text="Placeholder text" />
+                <Label fx:id="textLabel" text="Placeholder text" wrapText="true" prefWidth="297.0"/>
             </children>
         </VBox>
     </children>

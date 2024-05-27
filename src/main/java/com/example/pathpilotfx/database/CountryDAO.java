@@ -30,7 +30,7 @@ public class CountryDAO {
         try {
             PreparedStatement insertData = connection.prepareStatement(
                     "INSERT INTO country (country_name,required_exp,country_details,stamp_name,bg_name) VALUES(?,?,?,?,?)");
-            insertData.setString(1, country.getCountryDetails());
+            insertData.setString(1, country.getCountryName());
             insertData.setInt(2, country.getRequiredEXP());
             insertData.setString(3, country.getCountryDetails());
             insertData.setString(4, country.getStampImage());
@@ -96,6 +96,7 @@ public class CountryDAO {
                                 rs.getInt("country_id"),
                                 rs.getString("country_name"),
                                 rs.getInt("required_exp"),
+                                rs.getString("country_details"),
                                 rs.getString("stamp_name"),
                                 rs.getString("bg_name")
                         )
@@ -122,6 +123,7 @@ public class CountryDAO {
                                 rs.getInt("country_id"),
                                 rs.getString("country_name"),
                                 rs.getInt("required_exp"),
+                                rs.getString("country_details"),
                                 rs.getString("stamp_name"),
                                 rs.getString("bg_name")
                         )
@@ -151,6 +153,7 @@ public class CountryDAO {
                 return new Country(
                         rs.getString("country_name"),
                         rs.getInt("required_exp"),
+                        rs.getString("country_details"),
                         rs.getString("stamp_name"),
                         rs.getString("bg_name")
                 );

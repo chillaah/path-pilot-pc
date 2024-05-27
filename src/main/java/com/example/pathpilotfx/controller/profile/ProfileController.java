@@ -86,7 +86,7 @@ public class  ProfileController {
         tasksCompleted.setText(String.valueOf(toDoDAO.getTaskIDCount(userID)));
 //        longestTimer.setText("placeholder");
 //        avgTimer.setText("placeholder");
-        numExploredCountries.setText("Explored countries: " + explorationDAO.countExplored(userID));
+        numExploredCountries.setText("" + explorationDAO.countExplored(userID));
 //        busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }

@@ -79,6 +79,8 @@ public class testmix {
 //        ImageView image = new ImageView(countryDAO.getStampByCID(getIDbyCName(CountryName))+ ".png");
 //        image.setImage(image.getImage());
         titleLabel.setText(CountryName);
+        System.out.println("details: "+ countryDetails);
+        System.out.println("SelectedCountry: "+ SelectedCountry.getSelectedCountry());
         textLabel.setText(countryDetails);
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());

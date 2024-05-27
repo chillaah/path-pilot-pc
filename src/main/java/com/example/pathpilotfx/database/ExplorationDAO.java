@@ -236,6 +236,7 @@ public class ExplorationDAO {
                 country = new Country(
                         rs.getString("country_name"),
                         rs.getInt("required_exp"),
+                        rs.getString("country_details"),
                         rs.getString("stamp_name"),
                         rs.getString("bg_name")
                 );
