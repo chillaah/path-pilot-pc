@@ -17,14 +17,17 @@ public class PasswordHash {
      * @return true if the provided password matches the stored hashed password, false otherwise.
      */
     public static boolean authenticateUser(String email, String providedPassword) {
-        
+
         // Retrieve the hashed password from the database
         String storedHashedPassword = db.getStoredHashedPassword(email);
 
-        if (storedHashedPassword == null) {
-            // User not found in the database
+        // User not found in the database
+        if (storedHashedPassword == null)
+        {
             return false;
         }
+
+        byte[] passwordBytes = providedPassword.getBytes();
 
         // Just get a hold on the verifier. No special configuration needed
         Verifier verifier = jargon2Verifier();
@@ -32,7 +35,7 @@ public class PasswordHash {
         // Set the encoded hash, the password and verify
         boolean matches = verifier
                 .hash(storedHashedPassword)
-                .password(providedPassword.getBytes())
+                .password(passwordBytes)
                 .verifyEncoded();
 
         System.out.printf("Matches: %s%n", matches);
@@ -48,6 +51,12 @@ public class PasswordHash {
      * @return The hashed password.
      */
     public static String hashPassword(String password) {
+
+        // Return null if the password is empty
+        if (password.isBlank() || password.isEmpty())
+        {
+            return null;
+        }
 
         // Convert the password to a byte array
         byte[] passwordBytes = password.getBytes();
