@@ -101,7 +101,7 @@ public class TimerController {
         if (destination != null) {
             nextDestination.setVisible(true);
             nextDestination.setText("Next: " +
-                destination.get(0) + " - Exp needed: " + expNeeded);
+                destination.get(0) + " - Needed: " + expNeeded);
 
         }
         countryBackgroundImage();
