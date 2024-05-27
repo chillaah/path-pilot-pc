@@ -1,10 +1,8 @@
 package com.example.pathpilotfx.model;
 
 import com.example.pathpilotfx.database.UserDAO;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import static com.example.pathpilotfx.MainApplication.db;
+import static com.kosprov.jargon2.api.Jargon2.*;
 
 /**
  * This class provides methods for authenticating users and hashing passwords.
@@ -19,6 +17,7 @@ public class PasswordHash {
      * @return true if the provided password matches the stored hashed password, false otherwise.
      */
     public static boolean authenticateUser(String email, String providedPassword) {
+        
         // Retrieve the hashed password from the database
         String storedHashedPassword = db.getStoredHashedPassword(email);
 
@@ -27,41 +26,49 @@ public class PasswordHash {
             return false;
         }
 
-        // Hash the provided password using the same algorithm and salt
-        String hashedPassword = hashPassword(providedPassword);
+        // Just get a hold on the verifier. No special configuration needed
+        Verifier verifier = jargon2Verifier();
 
-        // Compare the hashed passwords
-        assert hashedPassword != null;
-        return hashedPassword.equals(storedHashedPassword);
+        // Set the encoded hash, the password and verify
+        boolean matches = verifier
+                .hash(storedHashedPassword)
+                .password(providedPassword.getBytes())
+                .verifyEncoded();
+
+        System.out.printf("Matches: %s%n", matches);
+
+        // Return the result of the verification
+        return matches;
     }
 
     /**
-     * Hashes the given password using the SHA-256 algorithm.
+     * Hashes the given password using the Argon2 algorithm.
      *
      * @param password The password to be hashed.
-     * @return The hashed password in hexadecimal format.
+     * @return The hashed password.
      */
     public static String hashPassword(String password) {
-        try {
-            // Create MessageDigest instance for SHA-256
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            // Add password bytes to digest
-            md.update(password.getBytes());
+        // Convert the password to a byte array
+        byte[] passwordBytes = password.getBytes();
 
-            // Get the hashed bytes
-            byte[] hashedBytes = md.digest();
+        // Configure the hasher
+        Hasher hasher = jargon2Hasher()
+                .type(Type.ARGON2d) // Data-dependent hashing
+                .memoryCost(65536)  // 64MB memory cost
+                .timeCost(3)        // 3 passes through memory
+                .parallelism(4)     // use 4 lanes and 4 threads
+                .saltLength(16)     // 16 random bytes salt
+                .hashLength(16);    // 16 bytes output hash
 
-            // Convert hashed bytes to hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            // Handle error (e.g., algorithm not found)
-            e.printStackTrace();
-            return null;
-        }
+        // Set the password and calculate the encoded hash
+        String encodedHash = hasher
+                .password(passwordBytes)
+                .encodedHash();
+
+        System.out.printf("Hash: %s%n", encodedHash);
+
+        // Return the encoded hash
+        return encodedHash;
     }
 }
