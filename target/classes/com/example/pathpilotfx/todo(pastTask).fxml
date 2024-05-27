@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="rootAnchorPane" focusTraversable="false" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9f5ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.todolist.PastTaskController">
     <children>
-        <Label layoutX="35.0" layoutY="10.0" prefHeight="30.0" prefWidth="189.0" styleClass="scrollPaneLabel" stylesheets="@todopage.css" text=" Completed Tasks" textFill="WHITE">
+        <Label layoutX="35.0" layoutY="10.0" prefHeight="30.0" prefWidth="189.0" styleClass="scrollPaneLabel" stylesheets="@todopage.css" text=" Completed Tasks">
             <font>
                 <Font size="18.0" />
             </font>

@@ -81,16 +81,13 @@ public class PassportViewController {
         sortedList = orderList(countryList,user_countryList);
         splitCountries = splitList(sortedList,6);
 
-        System.out.println("Sorted List:");
         for(Country country: sortedList){
-            System.out.print(country + ", ");
         }
 
         for (List<Country> sublist : splitCountries) {
             for (Country country : sublist) {
-                System.out.print(country.getCountryName() + " ");
             }
-            System.out.println(); // New line for each sublist
+
         }
 
         if((countryList.size() > 6) && (splitCountries.get(sublist_no).size() == 6)){
@@ -206,7 +203,6 @@ public class PassportViewController {
                 country.setCurrent_loc(userCountry.getStatus().equals("Exploring"));
                 country.setLocked(userCountry.isLocked());
             }
-            System.out.println("Country Name: " + country.getCountryName()+ " ,Locked Status : "+country.isLocked());
         }
 
 
@@ -265,14 +261,12 @@ public class PassportViewController {
     @FXML
     void view(ActionEvent event) {
         SelectedCountry.setSelectedCountry(selectedCountry);
-        System.out.println(SelectedCountry.getSelectedCountry());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/testmix.fxml"));
             AnchorPane countryView = loader.load();
             rootAnchorPane.getChildren().setAll(countryView);
 
         } catch(IOException e){
-            System.out.println("countryView has not been found");
             throw new RuntimeException(e);
         }
 

@@ -28,8 +28,7 @@ public class MapController {
 
     public Button passportButton;
     public Button lockedButton;
-//    public Image stampImage;
-//    public ImageView stamp;
+
     @FXML
     private AnchorPane rootAnchorPane;
 
@@ -45,10 +44,7 @@ public class MapController {
         String fileName = currentCountry.getStampImage() +".png";
 
         String relativeImagePath = "/com/example/pathpilotfx/assets/" + fileName;
-        System.out.println("stamp: "+ relativeImagePath);
-
         URL imageUrl = getClass().getResource(relativeImagePath);
-        System.out.println("stamp: "+ String.valueOf(imageUrl));
 
         Image image = new Image(String.valueOf(imageUrl));
         stamp.setImage(image);
@@ -60,14 +56,11 @@ public class MapController {
      */
     @FXML
     protected void onPassportSelect() throws IOException {
-        Stage stage = (Stage) passportButton.getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("passport.fxml"));
+        //Stage stage = (Stage) passportButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("passport-view.fxml"));
         AnchorPane addPassportView = loader.load();
         rootAnchorPane.getChildren().setAll(addPassportView);
-//        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-//        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-//        stage.setScene(scene);
+
     }
 
     /**
@@ -77,11 +70,7 @@ public class MapController {
      */
     @FXML
     public void onLockedSelect() throws IOException {
-//        Stage stage = (Stage) lockedButton.getScene().getWindow();
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("lockedlocation-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-////        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-//        stage.setScene(scene);
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/lockedlocation-view.fxml"));
             AnchorPane lockedLocView = loader.load();

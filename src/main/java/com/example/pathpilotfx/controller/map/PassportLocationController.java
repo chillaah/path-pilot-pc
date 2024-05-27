@@ -55,7 +55,7 @@ public class PassportLocationController {
      * @param country The country for which the passport location is being displayed.
      */
     public void setCountry(Country country) {
-        System.out.println("Country Name: "+ country.getCountryName() + " , Locked:" + country.isLocked());
+
         if(!country.isLocked()){
             greyPane.setVisible(false);
         }
@@ -63,14 +63,8 @@ public class PassportLocationController {
         locationLabel.setText(country.getCountryName());
 
         String fileName = this.country.getStampImage() +".png";
-        System.out.println("stamp: "+ fileName);
-
         String relativeImagePath = "/com/example/pathpilotfx/assets/" + fileName;
-        System.out.println("stamp: "+ relativeImagePath);
-
         URL imageUrl = getClass().getResource(relativeImagePath);
-        System.out.println("stamp: "+ String.valueOf(imageUrl));
-
         Image passport = new Image(String.valueOf(imageUrl));
         locationStamp.setImage(passport);
     }

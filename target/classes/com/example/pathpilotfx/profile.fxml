@@ -106,7 +106,7 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Label>
-            <JFXButton fx:id="editButton" onAction="#onEditButtonClick" prefHeight="25.0" style="-fx-background-color: #f9f5ee;" text="Edit Profile" textFill="#264e77" HBox.hgrow="ALWAYS">
+            <JFXButton fx:id="logoutButton" onAction="#logoutButton" prefHeight="25.0" style="-fx-background-color: #f9f5ee;" text="Log Out" textFill="#264e77" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

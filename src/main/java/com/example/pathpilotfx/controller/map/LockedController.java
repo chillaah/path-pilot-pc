@@ -72,16 +72,16 @@ public class LockedController {
     @FXML
     void initialize() {
 
-        for(Country country: countryList){
-            System.out.println(country.getCountryName());
-        }
-
-        for (List<Country> sublist : splitCountries) {
-            for (Country country : sublist) {
-                System.out.print(country.getCountryName() + " ");
-            }
-            System.out.println(); // New line for each sublist
-        }
+//        for(Country country: countryList){
+//            System.out.println(country.getCountryName());
+//        }
+//
+//        for (List<Country> sublist : splitCountries) {
+//            for (Country country : sublist) {
+//                System.out.print(country.getCountryName() + " ");
+//            }
+//            System.out.println(); // New line for each sublist
+//        }
 
         if((countryList.size() > 6) && (splitCountries.get(sublist_no).size() == 6)){
             nextButton.setVisible(true);
@@ -219,7 +219,7 @@ public class LockedController {
     @FXML
     void view(ActionEvent event) {
         SelectedCountry.setSelectedCountry(selectedCountry);
-        System.out.println(SelectedCountry.getSelectedCountry());
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/testmix.fxml"));
             AnchorPane countryView = loader.load();

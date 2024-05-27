@@ -8,35 +8,41 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerSettingsController">
+   <Pane layoutX="200.0" layoutY="52.0" prefHeight="250.0" prefWidth="297.0" style="-fx-background-color: #ABBCC6B3; -fx-background-radius: 8px;" />
 
-    <VBox alignment="CENTER" prefHeight="355.0" prefWidth="700.0" spacing="10">
+          <VBox alignment="CENTER" prefHeight="355.0" prefWidth="700.0" spacing="10">
         <Label text="Customise your timer settings">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font></Label>
+         </font>
+      </Label>
         <GridPane alignment="CENTER" hgap="5.0" prefHeight="148.0" prefWidth="530.0" vgap="5.0">
             <columnConstraints>
                 <ColumnConstraints minWidth="70.0" />
             <ColumnConstraints />
             </columnConstraints>
-            <Label text="Focus Length (min):" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Focus Length (min):">
             <font>
                <Font size="14.0" />
-            </font></Label>
-            <Label text="Break Length (min):" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            </font>
+         </Label>
+            <Label text="Break Length (min):" GridPane.rowIndex="2">
             <font>
                <Font size="14.0" />
-            </font></Label>
-            <Label text="Enable Long-Break:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+            </font>
+         </Label>
+            <Label text="Enable Long-Break:" GridPane.rowIndex="4">
             <font>
                <Font size="14.0" />
-            </font></Label>
-            <TextField fx:id="workLength" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            </font>
+         </Label>
+            <TextField fx:id="workLength" GridPane.columnIndex="1" />
             <Label fx:id="focusLengthError" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="breakLength" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="breakLengthError" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -50,10 +56,10 @@
             <RowConstraints />
          </rowConstraints>
 
+      
+              </GridPane>
 
-        </GridPane>
-
-        <HBox alignment="CENTER" spacing="10.0">
+              <HBox alignment="CENTER" spacing="10.0">
          <JFXButton alignment="CENTER" defaultButton="true" onAction="#onConfirmButtonClick" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #193541;" text="Confirm" textFill="#f9f5ee">
             <font>
                <Font name="System Bold" size="14.0" />

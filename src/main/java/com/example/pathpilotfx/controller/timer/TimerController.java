@@ -115,9 +115,7 @@ public class TimerController {
     private void countryBackgroundImage() {
         int userId = SessionManager.getLoggedInUserId();
         String countryName = explorationDAO.getCurrentExploring(userId);
-        System.out.println("The country name is " + countryName);
         String backgroundImagePath = getClass().getResource("/com/example/pathpilotfx/assets/" + countryName + "-BG.jpg").toExternalForm();
-        System.out.println("Path is " + backgroundImagePath);
         rootAnchorPane.setStyle("-fx-background-image: url('" + backgroundImagePath + "'); -fx-background-size: cover;");
     }
 
@@ -204,7 +202,6 @@ public class TimerController {
     public void setupTimer() {
         //initialise the timer with default values
         if (this.sessionTimer == null){
-            System.out.println("timer is null right now");
             sessionTimer = timer.getTimerByUser(SessionManager.getLoggedInUserId());
             if(sessionTimer == null){ //Timer settings not found. Using default settings.
                 sessionTimer = new Pomodoro(25, 5);

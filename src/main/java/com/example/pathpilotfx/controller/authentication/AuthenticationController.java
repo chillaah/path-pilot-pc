@@ -77,8 +77,7 @@ public class AuthenticationController {
 
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
-        System.out.println(authVal);
-        System.out.println(email + password);
+
 
 
         //authSuccess(); // for instant access
@@ -117,8 +116,7 @@ public class AuthenticationController {
 
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
-        System.out.println(authVal);
-        System.out.println(email + password);
+
         // create account logic
         // add sanity checks to email and pw
         // if email not right clear both field
@@ -180,7 +178,6 @@ public class AuthenticationController {
             Pomodoro pomodoro = new Pomodoro();
             pomodoroDAO.insert(pomodoro);
 
-            System.out.println(newUser);
 
             authSuccess();
         }

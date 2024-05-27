@@ -43,15 +43,21 @@
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.MapController">
    <children>
-      <VBox layoutX="300.0" layoutY="77.0" prefHeight="200.0" prefWidth="200.0">
+      <VBox layoutX="335.0" layoutY="110.0" prefHeight="133.0" prefWidth="274.0">
          <children>
             <VBox />
-            <Button fx:id="passportButton" mnemonicParsing="false" onAction="#onPassportSelect" prefHeight="40.0" prefWidth="200.0" text="Passport">
+            <Button fx:id="passportButton" mnemonicParsing="false" onAction="#onPassportSelect" prefHeight="50.0" prefWidth="275.0" style="-fx-background-color: #193541;" text="Passport" textFill="WHITE">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
             </Button>
-            <Button fx:id="lockedButton" mnemonicParsing="false" onAction="#onLockedSelect" prefHeight="40.0" prefWidth="200.0" text="Locked Locations" translateY="20.0" />
+            <Button fx:id="lockedButton" mnemonicParsing="false" onAction="#onLockedSelect" prefHeight="50.0" prefWidth="276.0" style="-fx-background-color: #193541;" text="Locked Locations" textFill="WHITE" translateY="20.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font></Button>
          </children>
       </VBox>
       <!--        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">-->
@@ -59,9 +65,9 @@
       <!--            <Font size="18.0" />-->
       <!--          </font>-->
       <!--        </Label>-->
-      <Label layoutX="25.0" layoutY="17.0" text="Current Locaton:">
+      <Label layoutX="25.0" layoutY="17.0" text="Current Location:">
          <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
          </font>
       </Label>
       <!--          <ImageView fitHeight="320.0" fitWidth="372.0" layoutX="14.0" layoutY="50.0" pickOnBounds="true"-->
@@ -71,7 +77,7 @@
       <!--                  <Image url="assets/australia-stamp.png"/>-->
       <!--              </ImageView>-->
       <VBox layoutX="419.0" layoutY="30.0" />
-      <ImageView fx:id="stamp" fitHeight="256.0" fitWidth="208.0" layoutX="25.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="stamp" fitHeight="256.0" fitWidth="208.0" layoutX="25.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/australia-stamp.png" />
          </image>
