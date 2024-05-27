@@ -96,12 +96,12 @@ public class TimerController {
         crossButton.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             isCrossButtonPressed = false; // Set the flag to false when the crossButton is released
         });
-        currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
-        + "\n" + "Current exp: \n" + user.getExp());
+        currentDestination.setText(explorationDAO.getCurrentExploring(userID)
+        + "\n" + "Exp: " + user.getExp());
         if (destination != null) {
             nextDestination.setVisible(true);
-            nextDestination.setText("Next destination: \n" +
-                destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
+            nextDestination.setText("Next: " +
+                destination.get(0) + " - Exp needed: " + expNeeded);
 
         }
         countryBackgroundImage();

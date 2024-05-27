@@ -98,7 +98,7 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="creationDate" prefHeight="30.0" prefWidth="150.0" text="Created:" textFill="#f9f5ee" wrapText="true" HBox.hgrow="ALWAYS">
+            <Label fx:id="creationDate" prefHeight="30.0" prefWidth="155.0" text="Created:" textFill="#f9f5ee" textOverrun="CLIP" wrapText="true" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

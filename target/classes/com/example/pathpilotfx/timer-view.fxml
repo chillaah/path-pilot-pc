@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" opacity="0.0" prefHeight="355.0" prefWidth="700.0" style="-fx-background-image: url('@assets/Australia-BG.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" style="-fx-background-image: url('@assets/Australia-BG.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TimerController">
    <children>
       <AnchorPane fx:id="taskPopUp" layoutX="197.0" layoutY="14.0" prefHeight="30.0" prefWidth="300.0" style="-fx-background-color: #193541; -fx-background-radius: 5px;">
          <children>
@@ -28,29 +28,31 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <Label fx:id="timerDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="62.0" prefHeight="190.0" prefWidth="200.0" style="-fx-padding: 10; -fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-border-color: #193541; -fx-border-width: 4; -fx-background-color: #ABBCC6B3;" styleClass="timer" stylesheets="@todopage.css" text="00:00">
+      <Label fx:id="timerDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="57.0" prefHeight="190.0" prefWidth="200.0" style="-fx-padding: 10; -fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-border-color: #193541; -fx-border-width: 4; -fx-background-color: #ABBCC6B3;" styleClass="timer" stylesheets="@todopage.css" text="00:00">
          <font>
             <Font size="60.0" />
          </font>
       </Label>
 
-      <Label fx:id="timerType" alignment="CENTER" layoutX="268.0" layoutY="74.0" prefHeight="71.0" prefWidth="159.0" style="-fx-padding: 10;" text="FOCUS">
+      <Label fx:id="timerType" alignment="CENTER" layoutX="269.0" layoutY="69.0" prefHeight="71.0" prefWidth="159.0" style="-fx-padding: 10;" text="FOCUS">
          <font>
              <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="currentDestination" layoutX="38.0" layoutY="102.0" prefHeight="110.0" prefWidth="159.0" text="Current destination:&#10;placeholder&#10;Current exp:&#10;placeholder" textAlignment="JUSTIFY">
+      <Label fx:id="currentDestination" alignment="CENTER" layoutX="271.0" layoutY="178.0" prefHeight="60.0" prefWidth="152.0" text="placeholder&#10;exp: placeholder" textAlignment="CENTER">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="nextDestination" layoutX="527.0" layoutY="93.0" prefHeight="128.0" prefWidth="159.0" text="Next destination: &#10;placeholder&#10;Remaining exp:&#10;placeholder">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Pane layoutX="211.0" layoutY="259.0" prefHeight="71.0" prefWidth="275.0" style="-fx-background-color: #ABBCC6B3; -fx-background-radius: 8px;" />
-      <JFXButton fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="317.0" layoutY="265.0" onAction="#onStartButtonClick" prefHeight="60.0" prefWidth="60.0" style="-fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-background-color: #193541;" textFill="TRANSPARENT" textOverrun="CLIP">
+      <Pane layoutX="207.0" layoutY="254.0" prefHeight="93.0" prefWidth="280.0" style="-fx-background-color: #ABBCC6B3; -fx-background-radius: 8px;">
+         <children>
+            <Label fx:id="nextDestination" alignment="CENTER" layoutY="67.0" prefHeight="25.0" prefWidth="280.0" text="Next: placeholder - exp needed: placeholder" textAlignment="CENTER" textOverrun="CLIP">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <JFXButton fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="317.0" layoutY="260.0" onAction="#onStartButtonClick" prefHeight="60.0" prefWidth="60.0" style="-fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-background-color: #193541;" textFill="TRANSPARENT" textOverrun="CLIP">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -59,7 +61,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="stopButton" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="317.0" layoutY="265.0" onAction="#onStopButtonClick" prefHeight="60.0" prefWidth="60.0" style="-fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-background-color: #B73030;" textFill="TRANSPARENT" textOverrun="CLIP" visible="false">
+      <JFXButton fx:id="stopButton" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="317.0" layoutY="260.0" onAction="#onStopButtonClick" prefHeight="60.0" prefWidth="60.0" style="-fx-shape: &quot;M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0&quot;; -fx-background-color: #B73030;" textFill="TRANSPARENT" textOverrun="CLIP" visible="false">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -68,7 +70,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="270.0" onAction="#onTypeButtonClick" prefHeight="50.0" prefWidth="50.0" textFill="TRANSPARENT" textOverrun="CLIP">
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="265.0" onAction="#onTypeButtonClick" prefHeight="50.0" prefWidth="50.0" textFill="TRANSPARENT" textOverrun="CLIP">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -77,7 +79,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" layoutX="397.0" layoutY="270.0" onAction="#onSettingsButtonClick" prefHeight="50.0" prefWidth="50.0" textFill="TRANSPARENT" textOverrun="CLIP">
+      <JFXButton fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" layoutX="397.0" layoutY="265.0" onAction="#onSettingsButtonClick" prefHeight="50.0" prefWidth="50.0" textFill="TRANSPARENT" textOverrun="CLIP">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
