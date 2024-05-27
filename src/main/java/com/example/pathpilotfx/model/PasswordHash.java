@@ -1,6 +1,8 @@
 package com.example.pathpilotfx.model;
 
 import com.example.pathpilotfx.database.UserDAO;
+import com.kosprov.jargon2.api.Jargon2Exception;
+
 import static com.example.pathpilotfx.MainApplication.db;
 import static com.kosprov.jargon2.api.Jargon2.*;
 
@@ -33,12 +35,18 @@ public class PasswordHash {
         Verifier verifier = jargon2Verifier();
 
         // Set the encoded hash, the password and verify
-        boolean matches = verifier
-                .hash(storedHashedPassword)
-                .password(passwordBytes)
-                .verifyEncoded();
+        boolean matches = false;
+        try{
+            matches = verifier
+                    .hash(storedHashedPassword)
+                    .password(passwordBytes)
+                    .verifyEncoded();
+            System.out.printf("Matches: %s%n", matches);
 
-        System.out.printf("Matches: %s%n", matches);
+
+        } catch(Jargon2Exception err){
+            System.out.println(err);
+        }
 
         // Return the result of the verification
         return matches;
