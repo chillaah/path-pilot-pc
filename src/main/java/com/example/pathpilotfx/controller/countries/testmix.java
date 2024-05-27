@@ -5,6 +5,7 @@ import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.CountryDAO;
 import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 /**
  Controller for all countries view after selecting in Map
@@ -29,6 +31,8 @@ import java.util.Optional;
 public class testmix {
     @FXML
     private Label titleLabel;
+    @FXML
+    private Label textLabel;
     @FXML
     private Button backButton;
     @FXML
@@ -40,15 +44,17 @@ public class testmix {
     private ExplorationDAO explorationDAO;
     private CountryDAO countryDAO;
     private UserDAO userDAO;
-    String CountryName = SelectedCountry.getSelectedCountry().getCountryName();
     private String currentView;
+    private String CountryName = SelectedCountry.getSelectedCountry().getCountryName();
+    private String countryDetails = SelectedCountry.getSelectedCountry().getCountryDetails();
 
     // Method to set the current view
     public void setCurrentView(String viewName) {
         currentView = viewName;
     }
 
-    //
+
+
     public testmix(){
         this.explorationDAO = new ExplorationDAO();
         this.countryDAO = new CountryDAO();
@@ -73,6 +79,7 @@ public class testmix {
 //        ImageView image = new ImageView(countryDAO.getStampByCID(getIDbyCName(CountryName))+ ".png");
 //        image.setImage(image.getImage());
         titleLabel.setText(CountryName);
+        textLabel.setText(countryDetails);
         User user = userDAO.getByUserId(SessionManager.getLoggedInUserId());
         System.out.println("currentexp =" + user.getExp());
         System.out.println("currently exploring " + explorationDAO.getCurrentExploring(SessionManager.getLoggedInUserId()));
