@@ -79,8 +79,7 @@ public class  ProfileController {
      **/
     public void initialize() {
         User user = userDao.getByUserId(userID);
-        profileLabel.setText(user.getUsername());
-//        email.setText("Email: " + user.getEmail());
+        profileLabel.setText(user.getEmail().substring(0, user.getEmail().indexOf('@')));
         exp.setText("EXP: " + user.getExp());
         creationDate.setText("Created: " + user.getCreationDate());
         tasksCompleted.setText(String.valueOf(toDoDAO.getCompletedTaskCount(userID)));

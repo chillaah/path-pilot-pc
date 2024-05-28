@@ -265,10 +265,10 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox prefHeight="120.0" prefWidth="700.0">
+                  <HBox prefHeight="240.0" prefWidth="700.0">
                      <children>
-                        <PieChart fx:id="priorities" legendSide="RIGHT" prefHeight="120.0" prefWidth="224.0" title="Priorities visualised" HBox.hgrow="ALWAYS" />
-                        <PieChart prefHeight="120.0" prefWidth="267.0" title="Work duration vs Break duration" HBox.hgrow="ALWAYS" />
+                        <PieChart fx:id="priorities" legendSide="RIGHT" prefHeight="240.0" prefWidth="267.0" title="Priorities Visualised" HBox.hgrow="ALWAYS" />
+                        <PieChart legendSide="RIGHT" prefHeight="240.0" prefWidth="224.0" title="Work Duration vs Break Duration" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
