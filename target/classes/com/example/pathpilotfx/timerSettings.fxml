@@ -29,17 +29,17 @@
             </columnConstraints>
             <Label text="Focus Length (min):">
             <font>
-               <Font size="14.0" />
+               <Font name="System Bold" size="14.0" />
             </font>
          </Label>
             <Label text="Break Length (min):" GridPane.rowIndex="2">
             <font>
-               <Font size="14.0" />
+               <Font name="System Bold" size="14.0" />
             </font>
          </Label>
             <Label text="Enable Long-Break:" GridPane.rowIndex="4">
             <font>
-               <Font size="14.0" />
+               <Font name="System Bold" size="14.0" />
             </font>
          </Label>
             <TextField fx:id="workLength" GridPane.columnIndex="1" />
