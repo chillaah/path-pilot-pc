@@ -17,6 +17,8 @@ public class SessionDAO {
         connection = DatabaseConnection.getInstance();
     }
 
+
+
     /**
      * Inserts session data into the database.
      *
@@ -25,12 +27,11 @@ public class SessionDAO {
     public void insert(Session session) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO session VALUES(?,?,?,?,?)");
+                    "INSERT INTO session (user_id, session_start, session_end, session_length) VALUES(?,?,?,?)");
             insertData.setInt(1, session.getUserID());
-            insertData.setInt(2, session.getSessionID());
-            insertData.setDate(3, session.getSessionStart());
-            insertData.setDate(4, session.getSessionEnd());
-            insertData.setInt(5, session.getSessionLength());
+            insertData.setDate(2, session.getSessionStart());
+            insertData.setDate(3, session.getSessionEnd());
+            insertData.setInt(4, session.getSessionLength());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -87,7 +88,6 @@ public class SessionDAO {
                 sessions.add(
                         new Session(
                                 rs.getInt("user_id"),
-                                rs.getInt("session_id"),
                                 rs.getDate("session_start"),
                                 rs.getDate("session_end"),
                                 rs.getInt("session_length")
@@ -114,7 +114,6 @@ public class SessionDAO {
             if (rs.next()) {
                 return new Session(
                         rs.getInt("user_id"),
-                        rs.getInt("session_id"),
                         rs.getDate("session_start"),
                         rs.getDate("session_end"),
                         rs.getInt("session_length")

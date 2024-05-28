@@ -16,14 +16,13 @@ public class Session {
      * Constructs a session object with the specified attributes.
      *
      * @param userID        The ID of the user associated with the session.
-     * @param sessionID     The ID of the session.
      * @param sessionStart  The start time of the session.
      * @param sessionEnd    The end time of the session.
      * @param sessionLength The duration of the session.
      */
-    public Session(int userID, int sessionID, Date sessionStart, Date sessionEnd, int sessionLength) {
+    public Session(int userID, Date sessionStart, Date sessionEnd, int sessionLength) {
         this.userID = userID;
-        this.sessionID = sessionID;
+//        this.sessionID = sessionID;
         this.sessionStart = sessionStart;
         this.sessionEnd = sessionEnd;
         this.sessionLength = sessionLength;

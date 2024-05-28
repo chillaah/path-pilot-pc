@@ -4,6 +4,7 @@ import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.timer.TimerSettingsController;
 import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
+import com.example.pathpilotfx.model.Session;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
 import javafx.animation.FadeTransition;
@@ -21,7 +22,10 @@ import javafx.scene.layout.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller class for managing the timer functionality.
@@ -76,6 +80,8 @@ public class TimerController {
     PomodoroDAO timer = new PomodoroDAO();
     ExplorationDAO explorationDAO = new ExplorationDAO();
     UserDAO userDAO = new UserDAO();
+
+    SessionDAO sessionDAO = new SessionDAO();
     CountryDAO countryDAO = new CountryDAO();
     private int userID = SessionManager.getLoggedInUserId();
     private User user = userDAO.getByUserId(userID);
@@ -157,7 +163,7 @@ public class TimerController {
      * Stops the timer.
      */
     @FXML
-    protected void onStopButtonClick() {
+    public void onStopButtonClick() {
         timerTimeline.stop();
         sessionTimer.resetTimer();
         timerDisplay.setText(sessionTimer.getDisplay());
@@ -247,6 +253,7 @@ public class TimerController {
             {
                 // notify the user that the session has finished
                 sessionFinishNotify();
+                Session session = new Session(SessionManager.getLoggedInUserId(), Date.valueOf(LocalDate.now()),Date.valueOf(LocalDate.now()),sessionTimer.getWork());
 
                 // get work duration
                 int userID = SessionManager.getLoggedInUserId();
@@ -254,6 +261,9 @@ public class TimerController {
 
                 // increment with user table for respective user
                 userDAO.updateExp(userID, sessionExp);
+                if(Objects.equals(sessionTimer.getType(), "FOCUS")){
+                    sessionDAO.insert(session);
+                }
 
                 while (true) {
                     int nextCountryID = explorationDAO.getFirstLockedCountry(userID);
@@ -296,10 +306,7 @@ public class TimerController {
             alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
             alert.showAndWait();
         });
-//        currentLocation.setText(explorationDAO.getCurrentExploring(userID));
-//        currentExp.setText(String.valueOf(user.getExp()));
-//        nextLocation.setText(destination.get(0));
-//        needExp.setText(String.valueOf(expNeeded));
+
 
     }
 
