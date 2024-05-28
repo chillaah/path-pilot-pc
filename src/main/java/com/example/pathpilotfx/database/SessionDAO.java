@@ -17,6 +17,8 @@ public class SessionDAO {
         connection = DatabaseConnection.getInstance();
     }
 
+
+
     /**
      * Inserts session data into the database.
      *
@@ -25,12 +27,11 @@ public class SessionDAO {
     public void insert(Session session) {
         try {
             PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO session VALUES(?,?,?,?,?)");
+                    "INSERT INTO session (user_id, session_start, session_end, session_length) VALUES(?,?,?,?)");
             insertData.setInt(1, session.getUserID());
-            insertData.setInt(2, session.getSessionID());
-            insertData.setDate(3, session.getSessionStart());
-            insertData.setDate(4, session.getSessionEnd());
-            insertData.setInt(5, session.getSessionLength());
+            insertData.setDate(2, session.getSessionStart());
+            insertData.setDate(3, session.getSessionEnd());
+            insertData.setInt(4, session.getSessionLength());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -87,7 +88,6 @@ public class SessionDAO {
                 sessions.add(
                         new Session(
                                 rs.getInt("user_id"),
-                                rs.getInt("session_id"),
                                 rs.getDate("session_start"),
                                 rs.getDate("session_end"),
                                 rs.getInt("session_length")
@@ -114,7 +114,6 @@ public class SessionDAO {
             if (rs.next()) {
                 return new Session(
                         rs.getInt("user_id"),
-                        rs.getInt("session_id"),
                         rs.getDate("session_start"),
                         rs.getDate("session_end"),
                         rs.getInt("session_length")
@@ -124,6 +123,48 @@ public class SessionDAO {
             System.err.println(ex);
         }
         return null;
+    }
+
+    /**
+     * Retrieves total focus minutes for a user from the database.
+     *
+     * @param userID The ID of the user to retrieve session data for.
+     * @return A list of Session objects corresponding to the user ID.
+     */
+    public int getTotalFocusMinutes(int userID) {
+        int totalFocusMinutes = -1;
+        try {
+            PreparedStatement getTotalFocusMinutes = connection.prepareStatement("SELECT SUM(session_length) FROM session WHERE user_id = ?");
+            getTotalFocusMinutes.setInt(1, userID);
+            ResultSet rs = getTotalFocusMinutes.executeQuery();
+            if (rs.next()) {
+                totalFocusMinutes = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return totalFocusMinutes;
+    }
+
+    /**
+     * Retrieves total focus sessions for a user from the database.
+     *
+     * @param userID The ID of the user to retrieve session data for.
+     * @return A list of Session objects corresponding to the user ID.
+     */
+    public int getTotalFocusSessions(int userID) {
+        int totalFocusSessions = -1;
+        try {
+            PreparedStatement getTotalFocusSessions = connection.prepareStatement("SELECT COUNT(session_id) FROM session WHERE user_id = ?");
+            getTotalFocusSessions.setInt(1, userID);
+            ResultSet rs = getTotalFocusSessions.executeQuery();
+            if (rs.next()) {
+                totalFocusSessions = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return totalFocusSessions;
     }
 
     /**

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="371.0" prefWidth="549.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TaskTimerController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="355.0" prefWidth="700.0" style="-fx-background-color: #F9F5EE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.timer.TaskTimerController">
    <children>
       <Label layoutX="159.0" layoutY="97.0" prefHeight="34.0" prefWidth="251.0" text="Has the below task been completed?">
          <font>

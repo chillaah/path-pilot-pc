@@ -49,24 +49,6 @@ public class UserDAO {
         }
     }
 
-//    public boolean userExists(String email) throws SQLException {
-//        // SQL query to check if a user with the given email exists
-//        String query = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
-//
-//        try (
-//                PreparedStatement statement = connection.prepareStatement(query)
-//        ) {
-//            statement.setString(1, email);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    int count = resultSet.getInt("count");
-//                    return count > 0; // If count > 0, user exists; otherwise, user does not exist
-//                }
-//            }
-//        }
-//        return false; // Return false if there was an error or no result was found
-//    }
-
     /**
      Method that inserts user data
      @param user the user instance with the data
@@ -102,6 +84,25 @@ public class UserDAO {
             updateData.setInt(5, user.getExp());
             updateData.setInt(6, user.getUserID());
             updateData.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    /**
+     * Updates the exp value for a specific user in the database.
+     *
+     * @param userId the ID of the user to update
+     * @param exp the new exp value
+     */
+    public void updateExp(int userId, int exp) {
+        try {
+            PreparedStatement updateData = connection.prepareStatement(
+                    "UPDATE user SET exp = exp + ? WHERE user_id = ?"
+            );
+            updateData.setInt(1, exp);
+            updateData.setInt(2, userId);
+            updateData.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex);
         }
@@ -205,6 +206,26 @@ public class UserDAO {
             ResultSet rs = getUser.executeQuery();
             if (rs.next()) {
                 return rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return 0;
+    }
+
+    /**
+     * Retrieves the exp of a user based on their ID.
+     *
+     * @param id The ID of the user.
+     * @return The exp of the user.
+     */
+    public int getExpByUserID(int id) {
+        try {
+            PreparedStatement getUser = connection.prepareStatement("SELECT exp FROM user WHERE user_id = ?");
+            getUser.setInt(1, id);
+            ResultSet rs = getUser.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("exp");
             }
         } catch (SQLException ex) {
             System.err.println(ex);

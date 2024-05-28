@@ -2,6 +2,7 @@ package com.example.pathpilotfx.controller.navigation;
 
 
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 import javafx.animation.TranslateTransition;
@@ -36,14 +37,7 @@ public class SideBarController implements Initializable {
     @FXML
     private AnchorPane ap;
 
-    @FXML
-    private ImageView menu;
-
-    @FXML
-    private ImageView menuClose;
-
-    @FXML
-    private AnchorPane slider;
+    private TimerController timerController; // Reference to TimerController
 
     /**
      * Initializes the side bar navigation.
@@ -53,7 +47,6 @@ public class SideBarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        slider.setTranslateX(-150);
         loadPage("timer-view.fxml"); //Default page when application is loaded
     }
 
@@ -64,6 +57,7 @@ public class SideBarController implements Initializable {
      */
     @FXML
     private void home(MouseEvent event){
+
         loadPage("timer-view.fxml");
     }
 
@@ -107,47 +101,7 @@ public class SideBarController implements Initializable {
         loadPage("profile.fxml");
     }
 
-    /**
-     * Opens the side menu when the menu icon is clicked.
-     *
-     * @param event The mouse event triggering the menu action.
-     */
-    @FXML
-    private void menu(MouseEvent event) {
-        TranslateTransition slide = new TranslateTransition();
-        slide.setDuration(Duration.seconds(0.4));
-        slide.setNode(slider);
-        slide.setToX(0);
-        slide.play();
 
-        slider.setTranslateX(-150);
-
-        slide.setOnFinished((ActionEvent e)-> {
-            menu.setVisible(false);
-            menuClose.setVisible(true);
-        });
-    }
-
-    /**
-     * Closes the side menu when the close menu icon is clicked.
-     *
-     * @param event The mouse event triggering the close action.
-     */
-    @FXML
-    private void menuClose(MouseEvent event) {
-        TranslateTransition slide = new TranslateTransition();
-        slide.setDuration(Duration.seconds(0.4));
-        slide.setNode(slider);
-        slide.setToX(-150);
-        slide.play();
-
-        slider.setTranslateX(0);
-
-        slide.setOnFinished((ActionEvent e)-> {
-            menu.setVisible(true);
-            menuClose.setVisible(false);
-        });
-    }
 
     /**
      * Loads the specified FXML page into the center of the border pane.
@@ -157,13 +111,21 @@ public class SideBarController implements Initializable {
     public void loadPage(String page){
         Parent root = null;
 
-
         try {
 //            System.out.println("The page is " + page);
             // load the required page
           //  FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
-
+            FXMLLoader loader =  new FXMLLoader(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
+            root = loader.load();
+            //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
+            // Check if the page being loaded is the timer page
+            if (page.equals("timer-view.fxml")) {
+                timerController = loader.getController(); // Get the controller instance
+            } else if (timerController != null) {
+                // Stop the timer if it's running
+                timerController.onStopButtonClick();
+                timerController = null; // Reset the reference
+            }
 
         } catch (IOException e) {
             System.out.println("root has not been found");

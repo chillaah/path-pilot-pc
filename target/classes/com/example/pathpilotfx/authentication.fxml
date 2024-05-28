@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -18,7 +20,7 @@
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="250.0" style="-fx-background-color: #193541;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutY="163.0" text="Path Pilot" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="163.0">
+            <Label alignment="CENTER" layoutY="200.0" text="Path Pilot" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
@@ -26,7 +28,7 @@
                   <DropShadow />
                </effect>
             </Label>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="213.0" text="Productivity App" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
+            <Label alignment="CENTER" layoutX="1.0" layoutY="250.0" text="Productivity App" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
                <font>
                   <Font name="Verdana" size="20.0" />
                </font>
@@ -34,7 +36,12 @@
                   <DropShadow />
                </effect>
             </Label>
-            <Line endX="100.0" layoutX="108.0" layoutY="204.0" startX="-65.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="100.0" layoutX="108.0" layoutY="241.0" startX="-65.0" stroke="WHITE" strokeWidth="2.0" />
+            <ImageView fitHeight="199.0" fitWidth="223.0" layoutX="26.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/logo2.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
@@ -61,7 +68,7 @@
                </font>
             </Label>
                      <Label fx:id="statusLabel" layoutX="135.0" layoutY="167.0" text=" " />
-            <Label alignment="CENTER" layoutX="193.0" layoutY="50.0" text="Login">
+            <Label alignment="CENTER" layoutX="103.0" layoutY="50.0" text="Let's Focus &amp; Explore 🎧">
                <font>
                   <Font name="Verdana" size="24.0" />
                </font>
@@ -69,7 +76,7 @@
                   <InnerShadow />
                </effect>
             </Label>
-                      <Button fx:id="confirmButton" layoutX="72.0" layoutY="278.0" onAction="#onConfirmButtonClick" prefHeight="33.0" prefWidth="303.0" style="-fx-background-color: #193541;" text="Login" textFill="WHITE">
+                      <Button fx:id="confirmButton" defaultButton="true" layoutX="72.0" layoutY="278.0" onAction="#onConfirmButtonClick" prefHeight="33.0" prefWidth="303.0" style="-fx-background-color: #193541;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

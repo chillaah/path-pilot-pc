@@ -1,4 +1,5 @@
 package com.example.pathpilotfx.database;
+import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.User;
 
@@ -97,6 +98,32 @@ public class ExplorationDAO {
     /**
      Method that gets specific country exploration data
      **/
+    public List<Exploration> getAllbyUser(int user_ID) {
+        List<Exploration> explorationData = new ArrayList<>();
+        try {
+            PreparedStatement getAllStatement = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ?");
+            getAllStatement.setInt(1, user_ID);
+            ResultSet rs = getAllStatement.executeQuery();
+            while (rs.next()) {
+                explorationData.add(
+                        new Exploration(
+                                rs.getInt("user_id"),
+                                rs.getInt("country_id"),
+                                rs.getString("status"),
+                                rs.getBoolean("lockedStatus"),
+                                rs.getBoolean("favourited")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return explorationData;
+    }
+
+    /**
+     Method that gets  country exploration data for a specific user
+     **/
     public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
             PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
@@ -141,7 +168,51 @@ public class ExplorationDAO {
         return countryName;
     }
 
+    /**
+     * Retrieves the first locked country ID for a specific user from the database.
+     *
+     * @param id the ID of the user whose locked country is to be retrieved
+     * @return the country ID of the first locked country for the specified user,
+     *         or -1 if no locked country is found or an error occurs
+     */
+    public int getFirstLockedCountry(int id) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT country_id " +
+                            "FROM exploration " +
+                            "WHERE lockedStatus = 1 AND user_id = ?");
+            currExploring.setInt(1, id);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("country_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
 
+    /**
+     * Unlocks a country for a specific user by updating the locked status in the database.
+     *
+     * @param userID the ID of the user who is unlocking the country
+     * @param countryID the ID of the country to be unlocked
+     */
+    public void unlockCountry(int userID, int countryID) {
+        try {
+            PreparedStatement unlock = connection.prepareStatement(
+                    "UPDATE exploration SET lockedStatus = 0 WHERE user_id = ? AND country_id = ?");
+            unlock.setInt(1, userID);
+            unlock.setInt(2, countryID);
+            unlock.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    /**
+     Method that deletes all exploration data
+     **/
     public void deleteAllExplorations() {
         try {
             PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");
@@ -150,6 +221,35 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+    
+    public Country getCountryCurrent(int userID){
+        Country country = null;
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM country c LEFT JOIN exploration e " +
+                            "ON c.country_id = e.country_id " +
+                            "WHERE e.status = 'Exploring' AND e.user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet rs = currExploring.executeQuery();
+            if (rs.next()) {
+                country = new Country(
+                        rs.getString("country_name"),
+                        rs.getInt("required_exp"),
+                        rs.getString("country_details"),
+                        rs.getString("stamp_name"),
+                        rs.getString("bg_name")
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+        return country;
+
+    }
+
+
     /**
      Method that counts the number of explored countries.
      @param userID the userID
@@ -171,6 +271,50 @@ public class ExplorationDAO {
         }
         return count;
     }
+
+    /**
+     Method that counts the number of unexplored countries.
+     @param userID the userID
+     @return the count of unexplored countries
+     **/
+    public int countLocked(int userID) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE lockedStatus = 1 AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+        return -1;
+    }
+
+    /**
+     Method that counts the number of unlocked countries.
+     @param userID the userID
+     @return the count of unlocked countries
+     **/
+    public int countUnlocked(int userID) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE lockedStatus = 0 AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
+
     /**
      Method that gets the first locked destination with the lowest exp
      @return Returns a list of the country name and the required exp

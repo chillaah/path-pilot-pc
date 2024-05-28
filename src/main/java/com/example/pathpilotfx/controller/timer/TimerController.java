@@ -1,32 +1,41 @@
 package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.database.ExplorationDAO;
-import com.example.pathpilotfx.database.PomodoroDAO;
-import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.controller.timer.TimerSettingsController;
+import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
+import com.example.pathpilotfx.model.Session;
 import com.example.pathpilotfx.model.Task;
 import com.example.pathpilotfx.model.User;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
-
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller class for managing the timer functionality.
  */
 public class TimerController {
+    @FXML
+    private Button stopButton;
+    @FXML
+    private Button startButton;
+
     @FXML
     private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
     @FXML
@@ -36,7 +45,7 @@ public class TimerController {
     private Label timerDisplay; // timer display
 
     @FXML
-    private Label timerType; // label describing either break or focus timer
+    public Label timerType; // label describing either break or focus timer
 
     @FXML
     private Button settingsButton;
@@ -48,14 +57,19 @@ public class TimerController {
     private Label taskPopUpLabel; // task name or details in taskPopUp label
 
     @FXML
-    private Label taskPopUpLabel1;
-    @FXML
-    private Label currentDestination;
-    @FXML
-    private Label nextDestination;
+    private Button crossButton;
 
     @FXML
-    private Button crossButton;
+    private Label currentExp;
+
+    @FXML
+    private Label currentLocation;
+
+    @FXML
+    private Label needExp;
+
+    @FXML
+    private Label nextLocation;
 
     public Pomodoro sessionTimer; // Pomodoro instance
     private Task task; // task instance (when a timer started corresponding to a task)
@@ -66,6 +80,9 @@ public class TimerController {
     PomodoroDAO timer = new PomodoroDAO();
     ExplorationDAO explorationDAO = new ExplorationDAO();
     UserDAO userDAO = new UserDAO();
+
+    SessionDAO sessionDAO = new SessionDAO();
+    CountryDAO countryDAO = new CountryDAO();
     private int userID = SessionManager.getLoggedInUserId();
     private User user = userDAO.getByUserId(userID);
 
@@ -90,13 +107,27 @@ public class TimerController {
         crossButton.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             isCrossButtonPressed = false; // Set the flag to false when the crossButton is released
         });
-        currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
-        + "\n" + "Current exp: \n" + user.getExp());
+        currentLocation.setText(explorationDAO.getCurrentExploring(userID));
+        currentExp.setText(String.valueOf(user.getExp()));
         if (destination != null) {
-            nextDestination.setVisible(true);
-            nextDestination.setText("Next destination: \n" +
-                    destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
+            nextLocation.setVisible(true);
+            nextLocation.setText(destination.get(0));
+            needExp.setText(String.valueOf(expNeeded));
+
         }
+        countryBackgroundImage();
+
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), rootAnchorPane);  // Adjust duration as desired
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+    }
+
+    private void countryBackgroundImage() {
+        int userId = SessionManager.getLoggedInUserId();
+        String countryName = explorationDAO.getCurrentExploring(userId);
+        String backgroundImagePath = getClass().getResource("/com/example/pathpilotfx/assets/" + countryName + "-BG.jpg").toExternalForm();
+        rootAnchorPane.setStyle("-fx-background-image: url('" + backgroundImagePath + "'); -fx-background-size: cover;");
     }
 
     /**
@@ -105,6 +136,8 @@ public class TimerController {
     @FXML
     protected void onStartButtonClick() {
         timerTimeline.play();
+        startButton.setVisible(false);
+        stopButton.setVisible(true);
 
     }
 
@@ -115,6 +148,7 @@ public class TimerController {
      */
     @FXML
     protected void onSettingsButtonClick() throws IOException {
+        onStopButtonClick();
         //loads the respective settings page
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/timerSettings.fxml"));
         AnchorPane timerSettings = loader.load();
@@ -129,10 +163,12 @@ public class TimerController {
      * Stops the timer.
      */
     @FXML
-    protected void onStopButtonClick() {
+    public void onStopButtonClick() {
         timerTimeline.stop();
         sessionTimer.resetTimer();
         timerDisplay.setText(sessionTimer.getDisplay());
+        startButton.setVisible(true);
+        stopButton.setVisible(false);
     }
 
     /**
@@ -142,6 +178,8 @@ public class TimerController {
     protected void onTypeButtonClick(){
 
         handleRestTimer();
+        startButton.setVisible(true);
+        stopButton.setVisible(false);
     }
 
     /**
@@ -175,7 +213,6 @@ public class TimerController {
     public void setupTimer() {
         //initialise the timer with default values
         if (this.sessionTimer == null){
-            System.out.println("timer is null right now");
             sessionTimer = timer.getTimerByUser(SessionManager.getLoggedInUserId());
             if(sessionTimer == null){ //Timer settings not found. Using default settings.
                 sessionTimer = new Pomodoro(25, 5);
@@ -192,12 +229,14 @@ public class TimerController {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Sets the timer after settings are changed.
+     *
+     * @param timer the timer object to set.
+     */
     public void setTimerAfterSettings(Pomodoro timer){
         this.sessionTimer = timer;
         timerDisplay.setText(sessionTimer.getDisplay());
-
-
-
     }
 
     /**
@@ -210,12 +249,65 @@ public class TimerController {
         timerDisplay.setText(sessionTimer.getDisplay());
         //If the timer finishes or cross button is pressed
         if (sessionTimer.getSeconds() == 0 || isCrossButtonPressed) {
+            if (sessionTimer.getSeconds() == 0)
+            {
+                // notify the user that the session has finished
+                sessionFinishNotify();
+                Session session = new Session(SessionManager.getLoggedInUserId(), Date.valueOf(LocalDate.now()),Date.valueOf(LocalDate.now()),sessionTimer.getWork());
+
+                // get work duration
+                int userID = SessionManager.getLoggedInUserId();
+                int sessionExp = timer.getWorkDurationByUser(userID);
+
+                // increment with user table for respective user
+                userDAO.updateExp(userID, sessionExp);
+                if(Objects.equals(sessionTimer.getType(), "FOCUS")){
+                    sessionDAO.insert(session);
+                }
+
+                while (true) {
+                    int nextCountryID = explorationDAO.getFirstLockedCountry(userID);
+                    int nextCountryExp = countryDAO.getRequiredExpByCountryId(nextCountryID);
+                    int userExp = userDAO.getExpByUserID(userID);
+
+                    if (userExp >= nextCountryExp) {
+                        explorationDAO.unlockCountry(userID, nextCountryID);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                user = userDAO.getByUserId(userID);
+                destination = explorationDAO.getNextDestination(userID);
+                expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
+
+
+                currentLocation.setText(explorationDAO.getCurrentExploring(userID));
+                currentExp.setText(String.valueOf(user.getExp()));
+                nextLocation.setText(destination.get(0));
+                needExp.setText(String.valueOf(expNeeded));
+            }
             timerTimeline.stop();
             // If a task is associated with the timer, shows popup
             if (task != null){showPopup();}
             // toggle timer type and reset timer
             else{handleRestTimer();}
         }
+    }
+
+    /**
+     * Notifies the user that the session has finished.
+     */
+    private void sessionFinishNotify() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Session Finished");
+            alert.setHeaderText("Session Finished");
+            alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
+            alert.showAndWait();
+        });
+
+
     }
 
     /**
@@ -239,11 +331,8 @@ public class TimerController {
         this.taskMode = taskMode;
         this.task = task;
         taskPopUp.setVisible(this.taskMode); // update the visibility
-        taskPopUpLabel.setText("Focus Task: " + this.task.getTask());
-        taskPopUpLabel1.setText(this.task.getDescription());
+        taskPopUpLabel.setText(this.task.getTask());
+//        taskPopUpLabel1.setText(this.task.getDescription());
 
     }
-
-
-
 }

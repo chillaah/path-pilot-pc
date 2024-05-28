@@ -4,6 +4,7 @@ module com.example.pathpilotfx {
     requires java.sql;
     requires com.jfoenix;
     requires java.desktop;
+    requires jargon2.api;
 
     opens com.example.pathpilotfx to javafx.fxml;
     opens com.example.pathpilotfx.model to javafx.fxml;

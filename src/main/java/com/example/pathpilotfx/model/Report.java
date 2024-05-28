@@ -17,6 +17,12 @@ public class Report {
         this.details = details;
         this.priority = priority;
     }
+    public Report(int reporterID, String category, String details, String priority) {
+        this.reporterID = reporterID;
+        this.category = category;
+        this.details = details;
+        this.priority = priority;
+    }
 
     public int getReportID() {
         return reportID;

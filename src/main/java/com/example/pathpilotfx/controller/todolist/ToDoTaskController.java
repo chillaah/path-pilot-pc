@@ -140,11 +140,15 @@ public class ToDoTaskController implements TaskChangeListener {
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
-    /**
-     * Called when a task change event occurs.
-     * Reloads the updated task page.
-     * @param isSelected The new status of the task.
-     */
+    @FXML
+    void ViewPast() throws IOException {
+        // Load addItemForm.fxml and preload fields with task details
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(pastTask).fxml"));
+        AnchorPane addItemFormRoot = loader.load();
+        rootAnchorPane.getChildren().setAll(addItemFormRoot);
+    }
+
+
     @Override
     public void onTaskChange(boolean isSelected) {
         // reload updated task page
@@ -156,4 +160,5 @@ public class ToDoTaskController implements TaskChangeListener {
             throw new RuntimeException(e);
         }
     }
+
 }

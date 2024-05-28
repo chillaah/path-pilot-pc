@@ -2,13 +2,16 @@ package com.example.pathpilotfx.controller.map;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
+import com.example.pathpilotfx.controller.countries.SelectedCountry;
 import com.example.pathpilotfx.controller.todolist.TaskController;
 import com.example.pathpilotfx.database.CountryDAO;
+import com.example.pathpilotfx.database.ExplorationDAO;
 import com.example.pathpilotfx.model.Country;
+import com.example.pathpilotfx.model.Exploration;
 import com.example.pathpilotfx.model.Task;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -45,24 +49,45 @@ public class PassportViewController {
     @FXML
     private Button previousButton;
 
+    @FXML
+    private Button unselectButton;
+
+    @FXML
+    private Button viewButton;
+
+    //used to fetch countries and create appropriate countryList (ordered and split)
     CountryDAO countries = new CountryDAO();
-    private List<Country> countryList = countries.getAll();
-    private List<List<Country>> splitCountries = splitList(countryList,6);
+    ExplorationDAO user_countries = new ExplorationDAO();
+    private List<Country> countryList;
+    private List<Exploration> user_countryList;
+    private List<Country> sortedList;
+    private List<List<Country>> splitCountries;
 
     private int sublist_no = 0;
+
+    // below variables used to determine selected country
+    private PassportLocationController selectedLocationController;
+    private Country selectedCountry;
+    private Map<Country, PassportLocationController> countryControllerMap = new HashMap<>();
 
     /**
      * Initializes the passport view.
      */
     @FXML
     void initialize() {
+        countryList = countries.getAll();
+        user_countryList = user_countries.getAllbyUser(SessionManager.getLoggedInUserId());
 
+        sortedList = orderList(countryList,user_countryList);
+        splitCountries = splitList(sortedList,6);
+
+        for(Country country: sortedList){
+        }
 
         for (List<Country> sublist : splitCountries) {
             for (Country country : sublist) {
-                System.out.print(country.getCountryName() + " ");
             }
-            System.out.println(); // New line for each sublist
+
         }
 
         if((countryList.size() > 6) && (splitCountries.get(sublist_no).size() == 6)){
@@ -80,6 +105,7 @@ public class PassportViewController {
 
         displayPassport(sublist_no);
 
+        unselectViewVisibility();
 
     }
 
@@ -96,15 +122,14 @@ public class PassportViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/passport-location.fxml"));
             AnchorPane countryPane = loader.load();
 
-
-
             //add task to the vBox container in taskPage
             passportGrid.add(countryPane,columnIndex,rowIndex);
-//            passportGrid.add(countryPane,0,1);
-            //passportZeroZero.getChildren().add(countryPane);
-
             PassportLocationController controller = loader.getController();
             controller.setCountry(country);
+            addCountryControllerMapping(country,controller);
+
+            // Set the PassportViewController instance
+            controller.setPassportViewController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,6 +178,122 @@ public class PassportViewController {
         }
 
         return sublists;
+    }
+
+    /**
+     * Orders the list of countries based on exploration status.
+     *
+     * @param countries         The list of countries.
+     * @param user_countryList  The list of user countries.
+     * @return The sorted list of countries.
+     */
+    public static List<Country> orderList(List<Country> countries, List<Exploration> user_countryList){
+
+        //Create a map from countryID to Country
+        Map<Integer, Country> countryMap = new HashMap<>();
+        for (Country country : countries) {
+            countryMap.put(country.getCountryID(), country);
+        }
+
+        //Iterate over the user_countryList and update corresponding Country objects
+        for (Exploration userCountry : user_countryList) {
+            int countryID = userCountry.getCountryID();
+            Country country = countryMap.get(countryID);
+            if (country != null){
+                country.setCurrent_loc(userCountry.getStatus().equals("Exploring"));
+                country.setLocked(userCountry.isLocked());
+            }
+        }
+
+
+
+        //Sort the list based on current location, then unlocked, then locked
+        List<Country> sortedCountries = countries.stream()
+                .sorted(Comparator
+                        .comparing(Country::isCurrent_loc).reversed()
+                        .thenComparing(Country::isLocked)
+                )
+                .collect(Collectors.toList());
+
+        return sortedCountries;
+    }
+
+    /**
+     * Updates the selected country when a country is clicked.
+     *
+     * @param clickedCountry The country that was clicked.
+     */
+    public void updateSelectedCountry(Country clickedCountry) {
+        // If a location is already selected, deselect it
+        if (selectedLocationController != null) {
+            selectedLocationController.removeBorder();
+        }
+
+        // Select the new location and update the selectedCountry reference
+        selectedCountry = clickedCountry;
+        selectedLocationController = countryControllerMap.get(clickedCountry);
+        selectedLocationController.applyBorder();
+
+        unselectViewVisibility();
+
+    }
+
+    /**
+     * Handles the unselect button click event.
+     *
+     * @param event The action event.
+     */
+    @FXML
+    void unselect(ActionEvent event) {
+        if (selectedLocationController != null) {
+            selectedLocationController.removeBorder();
+        }
+        selectedCountry = null;
+        unselectViewVisibility();
+
+    }
+
+    /**
+     * Handles the view button click event.
+     *
+     * @param event The action event.
+     */
+    @FXML
+    void view(ActionEvent event) {
+        SelectedCountry.setSelectedCountry(selectedCountry);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/testmix.fxml"));
+            AnchorPane countryView = loader.load();
+            rootAnchorPane.getChildren().setAll(countryView);
+
+        } catch(IOException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Sets the visibility of unselect and view buttons based on the selected country.
+     */
+    public void unselectViewVisibility(){
+        if (selectedCountry == null){
+            unselectButton.setVisible(false);
+            viewButton.setVisible(false);
+        }
+        else{
+            unselectButton.setVisible(true);
+            viewButton.setVisible(true);
+        }
+    }
+
+    /**
+     * Adds a country and its associated controller to the map.
+     *
+     * @param country     The country.
+     * @param controller  The associated controller.
+     */
+    public void addCountryControllerMapping(Country country, PassportLocationController controller) {
+        countryControllerMap.put(country, controller);
     }
 
     /**

@@ -32,6 +32,8 @@ public class TimerSettingsController {
     @FXML
     private Label breakLengthError;
 
+    private Label timerType;
+
     private Pomodoro timer; // This keeps the instance of the timer in the app
     PomodoroDAO pomodoroDAO = new PomodoroDAO();
 
@@ -72,6 +74,7 @@ public class TimerSettingsController {
             int newRestLength = Integer.parseInt(breakLength.getText());
             this.timer.setWork(newWorkLength);
             this.timer.setRest(newRestLength);
+            System.out.println("W "+ newWorkLength);
             pomodoroDAO.update(timer);
 
             loadTimerSettings();
@@ -111,8 +114,8 @@ public class TimerSettingsController {
 
         TimerController timerController = loader.getController();
         timerController.setTimerAfterSettings(this.timer);
+        timerController.timerType.setText(this.timer.getTimerType());
         timerController.initialize();
-
 
         AnchorPane timerSettingContent = new AnchorPane(timerSettings);
         rootAnchorPane.getChildren().setAll(timerSettingContent);
@@ -126,6 +129,10 @@ public class TimerSettingsController {
         this.timer = timer;
         workLength.setText(String.valueOf(timer.getWork()));
         breakLength.setText(String.valueOf(timer.getRest()));
+
+    }
+
+    public void setTimerType(Label tasktype){
 
     }
 

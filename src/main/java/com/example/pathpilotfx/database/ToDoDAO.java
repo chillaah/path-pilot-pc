@@ -82,7 +82,7 @@ public class ToDoDAO {
     public void update(Task task) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE tasks SET user_id = ?, task_name = ?, status = ?, " +
+                    "UPDATE tasks SET user_id = ?, taskName = ?, status = ?, " +
                             "description = ?, priority = ?, due_date = ? " +
                             "WHERE id = ?"
             );
@@ -156,7 +156,43 @@ public class ToDoDAO {
         try {
             if (!connection.isClosed()) { // Check if connection is still open
                 Statement getAll = connection.createStatement();
-                PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?");
+                PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ? AND status = 0");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
+                while (rs.next()) {
+                    Task task = new Task(
+                            rs.getInt("id"),
+                            rs.getInt("user_id"),
+                            rs.getString("taskName"),
+                            rs.getBoolean("status"),
+                            rs.getString("description"),
+                            rs.getString("priority"),
+                            getLocalDateOrNull(rs.getDate("date_created")),
+                            getLocalDateOrNull(rs.getDate("due_date"))
+
+                    );
+                    task.setId(rs.getInt("id"));
+                    task.setStatus(rs.getBoolean("status"));
+                    task.setDatecreated(rs.getDate("date_created"));
+
+                    taskList.add(task);
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+        return taskList;
+    }
+
+    public List<Task> getComplete(int id) {
+        List<Task> taskList = new ArrayList<>();
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                Statement getAll = connection.createStatement();
+                PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ? AND status = 1");
                 getAccount.setInt(1, id);
                 ResultSet rs = getAccount.executeQuery();
                 while (rs.next()) {
@@ -188,11 +224,58 @@ public class ToDoDAO {
     }
 
     /**
-     * Converts a java.sql.Date object to a LocalDate object, or returns null if the input date is null.
+     * Retrieves the count of completed tasks for a specific user from the database.
      *
-     * @param date The java.sql.Date object to convert.
-     * @return A LocalDate object corresponding to the input date, or null if the input date is null.
+     * @param id The ID of the user.
+     * @return A list of Task objects containing all tasks for the specified user.
      */
+    public int getCompletedTaskCount(int id) {
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                PreparedStatement getAccount = connection.prepareStatement("SELECT COUNT(*) AS count FROM tasks WHERE user_id = ? AND status = 1");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
+     * Retrieves the count of uncompleted tasks for a specific user from the database.
+     *
+     * @param id The ID of the user.
+     * @return The count of uncompleted tasks for the specified user.
+     */
+    public int getUncompletedTaskCount(int id) {
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                PreparedStatement getAccount = connection.prepareStatement("SELECT COUNT(*) AS count FROM tasks WHERE user_id = ? AND status = 0");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+
+        return -1;
+    }
+
+
     private LocalDate getLocalDateOrNull(Date date) {
         return date != null ? date.toLocalDate() : null;
     }

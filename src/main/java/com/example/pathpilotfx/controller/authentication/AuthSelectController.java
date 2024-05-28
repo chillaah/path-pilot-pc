@@ -51,12 +51,10 @@ public class AuthSelectController {
 
         if (loginButton.isSelected()) {
             setAuthType(0);
-            System.out.println("login selected");
         }
 
         else if (createAccountButton.isSelected()) {
             setAuthType(1);
-            System.out.println("CA selected");
         }
 
         boolean accepted = loginButton.isSelected() || createAccountButton.isSelected();

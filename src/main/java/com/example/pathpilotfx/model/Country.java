@@ -14,17 +14,31 @@ public class Country {
 
     private String bgImage;
 
+    private boolean current_loc;
+    private boolean locked; // 0 for unlocked and 1 for locked
+
     /**
      * Initializes a Country object with specified attributes.
      *
      * @param countryName  The name of the country.
      * @param requiredEXP  The required experience points to unlock the country.
+     * @param countryDetails The country's information, like a travel guide.
      * @param stampImage   The image representing the stamp of the country.
      * @param bgImage      The background image associated with the country.
      */
-    public Country(String countryName, int requiredEXP, String stampImage, String bgImage) {
+    public Country(String countryName, int requiredEXP, String countryDetails, String stampImage, String bgImage) {
         this.countryName = countryName;
         this.requiredEXP = requiredEXP;
+        this.countryDetails = countryDetails;
+        this.stampImage = stampImage;
+        this.bgImage = bgImage;
+    }
+
+    public Country(int countryID, String countryName, int requiredEXP, String countryDetails, String stampImage, String bgImage) {
+        this.countryID = countryID;
+        this.countryName = countryName;
+        this.requiredEXP = requiredEXP;
+        this.countryDetails = countryDetails;
         this.stampImage = stampImage;
         this.bgImage = bgImage;
     }
@@ -149,5 +163,21 @@ public class Country {
                 ", countryName='" + countryName + '\'' +
                 ", requiredEXP=" + requiredEXP +
                 '}';
+    }
+
+    public boolean isCurrent_loc() {
+        return current_loc;
+    }
+
+    public void setCurrent_loc(boolean current_loc) {
+        this.current_loc = current_loc;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

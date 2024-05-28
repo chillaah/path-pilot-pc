@@ -3,11 +3,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="locationPane" maxHeight="128.0" maxWidth="150.0" minHeight="128.0" minWidth="150.0" prefHeight="128.0" prefWidth="150.0" style="-fx-background-color: #d1edf2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.PassportLocationController">
+<AnchorPane fx:id="locationPane" maxHeight="128.0" maxWidth="150.0" minHeight="120.0" minWidth="150.0" onMouseClicked="#selectCountry" prefHeight="128.0" prefWidth="150.0" style="-fx-background-color: #d1edf2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pathpilotfx.controller.map.PassportLocationController">
    <children>
       <ImageView fx:id="locationStamp" fitHeight="86.0" fitWidth="72.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane fx:id="greyPane" maxHeight="128.0" maxWidth="150.0" minHeight="120.0" minWidth="150.0" prefHeight="122.0" prefWidth="150.0" style="-fx-background-color: #808080A6;" />
       <Label fx:id="locationLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="101.0" text="Country">
          <font>
             <Font name="System Bold" size="12.0" />

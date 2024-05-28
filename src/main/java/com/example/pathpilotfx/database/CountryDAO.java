@@ -1,5 +1,6 @@
 package com.example.pathpilotfx.database;
 
+import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
 
@@ -29,7 +30,7 @@ public class CountryDAO {
         try {
             PreparedStatement insertData = connection.prepareStatement(
                     "INSERT INTO country (country_name,required_exp,country_details,stamp_name,bg_name) VALUES(?,?,?,?,?)");
-            insertData.setString(1, country.getCountryDetails());
+            insertData.setString(1, country.getCountryName());
             insertData.setInt(2, country.getRequiredEXP());
             insertData.setString(3, country.getCountryDetails());
             insertData.setString(4, country.getStampImage());
@@ -92,8 +93,10 @@ public class CountryDAO {
             while (rs.next()) {
                 countries.add(
                         new Country(
+                                rs.getInt("country_id"),
                                 rs.getString("country_name"),
                                 rs.getInt("required_exp"),
+                                rs.getString("country_details"),
                                 rs.getString("stamp_name"),
                                 rs.getString("bg_name")
                         )
@@ -104,6 +107,35 @@ public class CountryDAO {
         }
         return countries;
     }
+
+    public List<Country> getLocked() {
+        List<Country> countries = new ArrayList<>();
+        try {
+            Statement getAll = connection.createStatement();
+            PreparedStatement getLocked = connection.prepareStatement("SELECT * FROM country c " +
+                    "JOIN " + "exploration e ON e.country_id = c.country_id " +
+                    "WHERE e.user_id = ? AND e.lockedStatus = 1");
+            getLocked.setInt(1, SessionManager.getLoggedInUserId());
+            ResultSet rs = getLocked.executeQuery();
+            while (rs.next()) {
+                countries.add(
+                        new Country(
+                                rs.getInt("country_id"),
+                                rs.getString("country_name"),
+                                rs.getInt("required_exp"),
+                                rs.getString("country_details"),
+                                rs.getString("stamp_name"),
+                                rs.getString("bg_name")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return countries;
+    }
+
+
 
     /**
      * Retrieves country data for a specific country ID from the database.
@@ -121,6 +153,7 @@ public class CountryDAO {
                 return new Country(
                         rs.getString("country_name"),
                         rs.getInt("required_exp"),
+                        rs.getString("country_details"),
                         rs.getString("stamp_name"),
                         rs.getString("bg_name")
                 );
@@ -157,6 +190,27 @@ public class CountryDAO {
     }
 
     /**
+     * Retrieves the required experience points for a specific country ID.
+     *
+     * @param countryID The ID of the country.
+     * @return The required experience points for the specified country ID.
+     */
+    public int getRequiredExpByCountryId(int countryID) {
+        try {
+            PreparedStatement getRequiredExp = connection.prepareStatement(
+                    "SELECT required_exp FROM country WHERE country_id = ?");
+            getRequiredExp.setInt(1, countryID);
+            ResultSet rs = getRequiredExp.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("required_exp");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
+
+    /**
      * Retrieves the names of unlocked countries for a specific user ID.
      *
      * @param userId The ID of the user.
@@ -180,6 +234,8 @@ public class CountryDAO {
         }
         return lockedCountryNames;
     }
+
+
 
     /**
      * Closes the database connection.
