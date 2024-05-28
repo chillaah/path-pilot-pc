@@ -52,15 +52,20 @@ public class TimerController {
     @FXML
     private Label taskPopUpLabel; // task name or details in taskPopUp label
 
-//    @FXML
-//    private Label taskPopUpLabel1;
-    @FXML
-    private Label currentDestination;
-    @FXML
-    private Label nextDestination;
-
     @FXML
     private Button crossButton;
+
+    @FXML
+    private Label currentExp;
+
+    @FXML
+    private Label currentLocation;
+
+    @FXML
+    private Label needExp;
+
+    @FXML
+    private Label nextLocation;
 
     public Pomodoro sessionTimer; // Pomodoro instance
     private Task task; // task instance (when a timer started corresponding to a task)
@@ -96,12 +101,12 @@ public class TimerController {
         crossButton.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             isCrossButtonPressed = false; // Set the flag to false when the crossButton is released
         });
-        currentDestination.setText("Currently exploring: \n" + explorationDAO.getCurrentExploring(userID)
-        + "\n" + "Current exp: \n" + user.getExp());
+        currentLocation.setText(explorationDAO.getCurrentExploring(userID));
+        currentExp.setText(String.valueOf(user.getExp()));
         if (destination != null) {
-            nextDestination.setVisible(true);
-            nextDestination.setText("Next destination: \n" +
-                destination.get(0) + "\n" + "Needed exp: \n" + expNeeded);
+            nextLocation.setVisible(true);
+            nextLocation.setText(destination.get(0));
+            needExp.setText(String.valueOf(expNeeded));
 
         }
         countryBackgroundImage();
@@ -255,13 +260,22 @@ public class TimerController {
                     int nextCountryExp = countryDAO.getRequiredExpByCountryId(nextCountryID);
                     int userExp = userDAO.getExpByUserID(userID);
 
-                    if (userExp > nextCountryExp) {
+                    if (userExp >= nextCountryExp) {
                         explorationDAO.unlockCountry(userID, nextCountryID);
                     }
                     else {
                         break;
                     }
                 }
+                user = userDAO.getByUserId(userID);
+                destination = explorationDAO.getNextDestination(userID);
+                expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
+
+
+                currentLocation.setText(explorationDAO.getCurrentExploring(userID));
+                currentExp.setText(String.valueOf(user.getExp()));
+                nextLocation.setText(destination.get(0));
+                needExp.setText(String.valueOf(expNeeded));
             }
             timerTimeline.stop();
             // If a task is associated with the timer, shows popup
@@ -282,6 +296,11 @@ public class TimerController {
             alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
             alert.showAndWait();
         });
+//        currentLocation.setText(explorationDAO.getCurrentExploring(userID));
+//        currentExp.setText(String.valueOf(user.getExp()));
+//        nextLocation.setText(destination.get(0));
+//        needExp.setText(String.valueOf(expNeeded));
+
     }
 
     /**

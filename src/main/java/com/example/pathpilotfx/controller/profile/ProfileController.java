@@ -82,11 +82,11 @@ public class  ProfileController {
         profileLabel.setText(user.getUsername());
 //        email.setText("Email: " + user.getEmail());
         exp.setText("EXP: " + user.getExp());
-        creationDate.setText("Created: \n" + user.getCreationDate());
+        creationDate.setText("Created: " + user.getCreationDate());
         tasksCompleted.setText(String.valueOf(toDoDAO.getTaskIDCount(userID)));
 //        longestTimer.setText("placeholder");
 //        avgTimer.setText("placeholder");
-        numExploredCountries.setText("" + explorationDAO.countExplored(userID));
+        numExploredCountries.setText(String.valueOf(explorationDAO.countExplored(userID)));
 //        busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }
