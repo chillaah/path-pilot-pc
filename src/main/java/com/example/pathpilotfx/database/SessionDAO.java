@@ -127,6 +127,48 @@ public class SessionDAO {
     }
 
     /**
+     * Retrieves total focus minutes for a user from the database.
+     *
+     * @param userID The ID of the user to retrieve session data for.
+     * @return A list of Session objects corresponding to the user ID.
+     */
+    public int getTotalFocusMinutes(int userID) {
+        int totalFocusMinutes = -1;
+        try {
+            PreparedStatement getTotalFocusMinutes = connection.prepareStatement("SELECT SUM(session_length) FROM session WHERE user_id = ?");
+            getTotalFocusMinutes.setInt(1, userID);
+            ResultSet rs = getTotalFocusMinutes.executeQuery();
+            if (rs.next()) {
+                totalFocusMinutes = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return totalFocusMinutes;
+    }
+
+    /**
+     * Retrieves total focus sessions for a user from the database.
+     *
+     * @param userID The ID of the user to retrieve session data for.
+     * @return A list of Session objects corresponding to the user ID.
+     */
+    public int getTotalFocusSessions(int userID) {
+        int totalFocusSessions = -1;
+        try {
+            PreparedStatement getTotalFocusSessions = connection.prepareStatement("SELECT COUNT(session_id) FROM session WHERE user_id = ?");
+            getTotalFocusSessions.setInt(1, userID);
+            ResultSet rs = getTotalFocusSessions.executeQuery();
+            if (rs.next()) {
+                totalFocusSessions = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return totalFocusSessions;
+    }
+
+    /**
      * Closes the database connection.
      */
     public void close() {

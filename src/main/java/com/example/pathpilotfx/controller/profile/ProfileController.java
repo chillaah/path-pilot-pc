@@ -2,29 +2,18 @@ package com.example.pathpilotfx.controller.profile;
 
 import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.database.CountryDAO;
-import com.example.pathpilotfx.database.ExplorationDAO;
-import com.example.pathpilotfx.database.ToDoDAO;
-import com.example.pathpilotfx.database.UserDAO;
-import com.example.pathpilotfx.model.Task;
+import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.User;
-import com.jfoenix.controls.JFXHamburger;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +33,16 @@ public class  ProfileController {
     @FXML
     private Label tasksCompleted;
     @FXML
+    private Label tasksUnCompleted;
+    @FXML
+    private Label focusSessions;
+    @FXML
+    private Label focusMinutes;
+    @FXML
+    private Label locationsLocked;
+    @FXML
+    private Label locationsUnlocked;
+    @FXML
     private Label longestTimer;
     @FXML
     private Label avgTimer;
@@ -60,6 +59,7 @@ public class  ProfileController {
     @FXML
     private Button logoutButton;
     private ExplorationDAO explorationDAO;
+    private SessionDAO sessionDAO;
     private ToDoDAO toDoDAO;
     private UserDAO userDao;
     int userID = SessionManager.getLoggedInUserId();
@@ -71,7 +71,7 @@ public class  ProfileController {
         this.explorationDAO = new ExplorationDAO();
         this.toDoDAO = new ToDoDAO();
         this.userDao = new UserDAO();
-
+        this.sessionDAO = new SessionDAO();
     }
 
     /**
@@ -83,10 +83,15 @@ public class  ProfileController {
 //        email.setText("Email: " + user.getEmail());
         exp.setText("EXP: " + user.getExp());
         creationDate.setText("Created: " + user.getCreationDate());
-        tasksCompleted.setText(String.valueOf(toDoDAO.getTaskIDCount(userID)));
+        tasksCompleted.setText(String.valueOf(toDoDAO.getCompletedTaskCount(userID)));
+        tasksUnCompleted.setText(String.valueOf(toDoDAO.getUncompletedTaskCount(userID)));
+        focusSessions.setText(String.valueOf(sessionDAO.getTotalFocusSessions(userID)));
+        focusMinutes.setText(String.format("%d:00",sessionDAO.getTotalFocusMinutes(userID)));
+        locationsLocked.setText(String.valueOf(explorationDAO.countLocked(userID)));
+        locationsUnlocked.setText(String.valueOf(explorationDAO.countUnlocked(userID)));
 //        longestTimer.setText("placeholder");
 //        avgTimer.setText("placeholder");
-        numExploredCountries.setText(String.valueOf(explorationDAO.countExplored(userID)));
+//        numExploredCountries.setText(String.valueOf(explorationDAO.countExplored(userID)));
 //        busiestMonth.setText("Most busy month: " + getMostCommonMonthByUserId(userID));
         initializePrioritiesData();
     }

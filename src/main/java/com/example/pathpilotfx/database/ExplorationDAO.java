@@ -271,6 +271,50 @@ public class ExplorationDAO {
         }
         return count;
     }
+
+    /**
+     Method that counts the number of unexplored countries.
+     @param userID the userID
+     @return the count of unexplored countries
+     **/
+    public int countLocked(int userID) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE lockedStatus = 1 AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+
+        return -1;
+    }
+
+    /**
+     Method that counts the number of unlocked countries.
+     @param userID the userID
+     @return the count of unlocked countries
+     **/
+    public int countUnlocked(int userID) {
+        try {
+            PreparedStatement currExploring = connection.prepareStatement(
+                    "Select COUNT(*) AS count FROM exploration " +
+                            "WHERE lockedStatus = 0 AND user_id = ?");
+            currExploring.setInt(1, userID);
+            ResultSet resultSet = currExploring.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return -1;
+    }
+
     /**
      Method that gets the first locked destination with the lowest exp
      @return Returns a list of the country name and the required exp

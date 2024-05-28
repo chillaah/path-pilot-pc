@@ -223,6 +223,58 @@ public class ToDoDAO {
         return taskList;
     }
 
+    /**
+     * Retrieves the count of completed tasks for a specific user from the database.
+     *
+     * @param id The ID of the user.
+     * @return A list of Task objects containing all tasks for the specified user.
+     */
+    public int getCompletedTaskCount(int id) {
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                PreparedStatement getAccount = connection.prepareStatement("SELECT COUNT(*) AS count FROM tasks WHERE user_id = ? AND status = 1");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
+     * Retrieves the count of uncompleted tasks for a specific user from the database.
+     *
+     * @param id The ID of the user.
+     * @return The count of uncompleted tasks for the specified user.
+     */
+    public int getUncompletedTaskCount(int id) {
+        try {
+            if (!connection.isClosed()) { // Check if connection is still open
+                PreparedStatement getAccount = connection.prepareStatement("SELECT COUNT(*) AS count FROM tasks WHERE user_id = ? AND status = 0");
+                getAccount.setInt(1, id);
+                ResultSet rs = getAccount.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count");
+                }
+            } else {
+                System.out.println("Database connection is closed.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while getting all tasks:");
+            ex.printStackTrace();
+        }
+
+        return -1;
+    }
+
 
     private LocalDate getLocalDateOrNull(Date date) {
         return date != null ? date.toLocalDate() : null;
