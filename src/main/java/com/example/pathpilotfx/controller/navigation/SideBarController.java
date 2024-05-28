@@ -2,6 +2,7 @@ package com.example.pathpilotfx.controller.navigation;
 
 
 import com.example.pathpilotfx.MainApplication;
+import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 import javafx.animation.TranslateTransition;
@@ -36,6 +37,8 @@ public class SideBarController implements Initializable {
     @FXML
     private AnchorPane ap;
 
+    private TimerController timerController; // Reference to TimerController
+
     /**
      * Initializes the side bar navigation.
      *
@@ -54,6 +57,7 @@ public class SideBarController implements Initializable {
      */
     @FXML
     private void home(MouseEvent event){
+
         loadPage("timer-view.fxml");
     }
 
@@ -107,13 +111,21 @@ public class SideBarController implements Initializable {
     public void loadPage(String page){
         Parent root = null;
 
-
         try {
 //            System.out.println("The page is " + page);
             // load the required page
           //  FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
-
+            FXMLLoader loader =  new FXMLLoader(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
+            root = loader.load();
+            //root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/" + page)));
+            // Check if the page being loaded is the timer page
+            if (page.equals("timer-view.fxml")) {
+                timerController = loader.getController(); // Get the controller instance
+            } else if (timerController != null) {
+                // Stop the timer if it's running
+                timerController.onStopButtonClick();
+                timerController = null; // Reset the reference
+            }
 
         } catch (IOException e) {
             System.out.println("root has not been found");
