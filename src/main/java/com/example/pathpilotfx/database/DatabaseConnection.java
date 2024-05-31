@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static Connection instance = null;
     public static final String dbURL = "jdbc:sqlite:pathpilotpc.db";
+
     /**
      Gets database connection
      **/
@@ -20,6 +21,7 @@ public class DatabaseConnection {
             System.err.println(sqlEx);
         }
     }
+
     /**
      Sets database connection
      **/

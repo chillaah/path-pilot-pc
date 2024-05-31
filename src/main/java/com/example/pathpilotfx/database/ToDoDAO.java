@@ -50,8 +50,6 @@ public class ToDoDAO {
 
     }
 
-    //TO UPDATE
-
     /**
      * Inserts a task into the database.
      *
@@ -187,11 +185,19 @@ public class ToDoDAO {
         return taskList;
     }
 
+
+    /**
+     * Retrieves the list of completed tasks for a specific user from the database.
+     *
+     * @param id the ID of the user whose completed tasks are to be retrieved
+     * @return a list of {@link Task} objects representing the completed tasks for the specified user,
+     *         or an empty list if no tasks are found or an error occurs
+     **/
     public List<Task> getComplete(int id) {
         List<Task> taskList = new ArrayList<>();
         try {
-            if (!connection.isClosed()) { // Check if connection is still open
-                Statement getAll = connection.createStatement();
+            // Check if connection is still open
+            if (!connection.isClosed()) {
                 PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ? AND status = 1");
                 getAccount.setInt(1, id);
                 ResultSet rs = getAccount.executeQuery();
@@ -275,43 +281,17 @@ public class ToDoDAO {
         return -1;
     }
 
-
+    /**
+     * Converts a {@link Date} object to a {@link LocalDate} object, or returns {@code null} if the date is {@code null}.
+     *
+     * @param date the {@link Date} object to be converted
+     * @return the corresponding {@link LocalDate} object if the date is not {@code null}, otherwise {@code null}
+     */
     private LocalDate getLocalDateOrNull(Date date) {
         return date != null ? date.toLocalDate() : null;
     }
 
-    /**
-     * Retrieves a task by its ID from the database.
-     *
-     * @param id The ID of the task to retrieve.
-     * @return The Task object corresponding to the specified ID, or null if no task is found.
-     */
-    public Task getById(int id) {
-        try {
-            PreparedStatement getAccount = connection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
-            getAccount.setInt(1, id);
-            ResultSet rs = getAccount.executeQuery();
-            if (rs.next()) {
-                Task task = new Task(
-                        rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getString("taskName"),
-                        rs.getBoolean("status"),
-                        rs.getString("description"),
-                        rs.getString("priority"),
-                        getLocalDateOrNull(rs.getDate("date_created")),
-                        getLocalDateOrNull(rs.getDate("due_date"))
-                );
-                task.setId(rs.getInt("id"));
-                task.setStatus(rs.getBoolean("status"));
-                task.setDatecreated(rs.getDate("date_created"));
-                return task;
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return null;
-    }
+
 
     /**
      * Retrieves due dates of tasks for a specific user from the database.
@@ -359,26 +339,6 @@ public class ToDoDAO {
             System.err.println(ex);
         }
         return priorities;
-    }
-
-    /**
-     * Retrieves the total count of tasks for a specific user from the database.
-     *
-     * @param userID The ID of the user.
-     * @return The total count of tasks for the specified user.
-     */
-    public int getTaskIDCount(int userID) {
-        try {
-            PreparedStatement getAccount = connection.prepareStatement("SELECT count(id) AS count FROM tasks WHERE user_id = ?");
-            getAccount.setInt(1, userID);
-            ResultSet rs = getAccount.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return 0;
     }
 
     /**

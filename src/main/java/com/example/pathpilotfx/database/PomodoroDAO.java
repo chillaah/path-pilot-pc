@@ -56,20 +56,6 @@ public class PomodoroDAO {
         }
     }
 
-    /**
-     * Deletes Pomodoro data from the database.
-     *
-     * @param userId The ID of the user whose Pomodoro data is to be deleted.
-     */
-    public void deleteTimer(int userId) {
-        try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM timer WHERE user_id = ?");
-            delete.setInt(1, userId);
-            delete.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
 
     /**
      * Retrieves all Pomodoro data from the database.
@@ -104,7 +90,7 @@ public class PomodoroDAO {
     public Pomodoro getTimerByUser(int userId) {
         try {
             PreparedStatement getTimer = connection.prepareStatement("SELECT * FROM timer WHERE user_id = ?");
-            getTimer.setInt(1, SessionManager.getLoggedInUserId());
+            getTimer.setInt(1, userId);
             ResultSet rs = getTimer.executeQuery();
             if (rs.next()) {
                 return new Pomodoro(
