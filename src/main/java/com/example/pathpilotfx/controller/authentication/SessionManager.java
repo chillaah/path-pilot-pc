@@ -1,6 +1,8 @@
 package com.example.pathpilotfx.controller.authentication;
+
+
 /**
- Class that keeps track of the logged-in user
+ * Class that keeps track of the logged-in user
  **/
 public class SessionManager {
 

@@ -5,6 +5,7 @@ module com.example.pathpilotfx {
     requires com.jfoenix;
     requires java.desktop;
     requires jargon2.api;
+    requires jdk.compiler;
 
     opens com.example.pathpilotfx to javafx.fxml;
     opens com.example.pathpilotfx.model to javafx.fxml;

@@ -6,34 +6,60 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class MainApplication extends Application {
-    // Constants defining the window title and size
-    public static final String TITLE = "Path Pilot";
-    public static final double WIDTH = 700;
-    public static final double HEIGHT = 400;
-    public static UserDAO db = new UserDAO();
 
+    private static final String TITLE = "Path Pilot";
+    private static final double WIDTH = 700;
+    private static final double HEIGHT = 400;
+    private static final UserDAO db = new UserDAO();
+
+    /**
+     * Returns the width of the application window.
+     */
+    public static double getWidth() {
+        return WIDTH;
+    }
+
+    /**
+     * Returns the height of the application window.
+     */
+    public static double getHeight() {
+        return HEIGHT;
+    }
+
+    /**
+     * Returns the database.
+     */
+    public static UserDAO getDB() {
+        return db;
+    }
+
+    /**
+     * Starts the application.
+     *
+     * @param stage The primary stage for the application.
+     * @throws IOException If an input or output exception occurred.
+     */
     @Override
     public void start(Stage stage) throws IOException {
-//        Connection connection = DatabaseConnection.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
-//        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("navigation-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
-//        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-        scene.getStylesheets().add(getClass().getResource("/com/example/pathpilotfx/styles.css").toExternalForm());
-        //scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
+        // Load the authentication view
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("authentication.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/pathpilotfx/styles.css")).toExternalForm());
+
+        // Set the stage title and scene
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
     }
 
     public static void main(String[] args) {
-        // clears all database entries
-
 
 //      clears all database entries
 //          db.deleteAllUsers();

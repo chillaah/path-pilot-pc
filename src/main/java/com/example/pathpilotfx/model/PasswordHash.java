@@ -1,9 +1,10 @@
 package com.example.pathpilotfx.model;
 
+import com.example.pathpilotfx.MainApplication;
 import com.example.pathpilotfx.database.UserDAO;
 import com.kosprov.jargon2.api.Jargon2Exception;
+import com.sun.tools.javac.Main;
 
-import static com.example.pathpilotfx.MainApplication.db;
 import static com.kosprov.jargon2.api.Jargon2.*;
 
 /**
@@ -21,7 +22,7 @@ public class PasswordHash {
     public static boolean authenticateUser(String email, String providedPassword) {
 
         // Retrieve the hashed password from the database
-        String storedHashedPassword = db.getStoredHashedPassword(email);
+        String storedHashedPassword = MainApplication.getDB().getStoredHashedPassword(email);
 
         // User not found in the database
         if (storedHashedPassword == null)
