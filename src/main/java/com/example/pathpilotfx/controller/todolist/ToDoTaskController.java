@@ -4,23 +4,14 @@ package com.example.pathpilotfx.controller.todolist;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
-
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javafx.scene.control.Button;
-//import jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+
 
 @SuppressWarnings("javaFxVersionMismatch")
 public class ToDoTaskController implements TaskChangeListener {
@@ -29,23 +20,11 @@ public class ToDoTaskController implements TaskChangeListener {
     private AnchorPane rootAnchorPane;
 
     @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
     private VBox vBoxContainer;
-
-    @FXML
-    private ScrollPane scrollPane2;
-
-    @FXML
-    private VBox CompletedTask;
-
-    @FXML
-    private Button addTaskButton;
 
     private TaskController child;
     private List<Task> taskList;
-    private List<Task> CompletedList = new ArrayList<>();
+
 
     /**
      * Initializes the to-do task controller.
@@ -56,7 +35,7 @@ public class ToDoTaskController implements TaskChangeListener {
     @FXML
     void initialize() throws IOException {
 
-        //intialise DB connection
+        //initialize DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
         taskList = toDoDAO.getUncomplete(SessionManager.getLoggedInUserId());
@@ -71,11 +50,11 @@ public class ToDoTaskController implements TaskChangeListener {
                 addTask(task);
             }
         }
-
     }
 
     /**
      * Adds a task to the task page.
+     *
      * @param task The task to add.
      */
     private void addTask(Task task) {
@@ -140,15 +119,23 @@ public class ToDoTaskController implements TaskChangeListener {
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
+    /**
+     * Method to load the completed (past) tasks
+     *
+     * @throws IOException If an IO exception occurs.
+     */
     @FXML
     void ViewPast() throws IOException {
-        // Load addItemForm.fxml and preload fields with task details
+        // Load todo(pastTask).fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(pastTask).fxml"));
         AnchorPane addItemFormRoot = loader.load();
         rootAnchorPane.getChildren().setAll(addItemFormRoot);
     }
 
-
+    /**
+     * Method to reload updated task page.
+     * @param isSelected boolean to represent if tick box is selected
+     */
     @Override
     public void onTaskChange(boolean isSelected) {
         // reload updated task page

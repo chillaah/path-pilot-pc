@@ -5,27 +5,14 @@ import com.example.pathpilotfx.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
-import javafx.scene.paint.Color;
-
-import java.io.Console;
-import java.lang.runtime.SwitchBootstraps;
-import java.net.URL;
 import java.util.ResourceBundle;
+
 
 /**
  * Controller class for managing individual tasks in the to-do list.
  */
 public class TaskController {
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private CheckBox checkboxField;
@@ -41,13 +28,8 @@ public class TaskController {
     @FXML
     private Label taskDueDate;
 
-    @FXML
-    private Pane taskPane;
-
     private Task task;
 
-    private ToDoTaskController parent;
-    private boolean isCompleted;
 
     /**
      * Initializes the task controller.
@@ -75,7 +57,6 @@ public class TaskController {
         //updates Db about task status
         ToDoDAO toDoDAO = new ToDoDAO();
         toDoDAO.update(task);
-        //toDoDOA.close();
 
         notifyTaskChangeListener(task.getStatus());
     }
@@ -92,12 +73,10 @@ public class TaskController {
 
 
         if(task.getPriority() != null && task.getDueDate() == null ){
-//            setPrio();
             taskPrioField.setText(task.getPriority());
             taskDueDate.setVisible(false);
         }
         else if(task.getPriority() != null && task.getDueDate() != null ) {
-//            setPrio();
             taskPrioField.setText(task.getPriority());
             taskDueDate.setText((task.getDueDate()).toString());
         }

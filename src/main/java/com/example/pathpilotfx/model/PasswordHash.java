@@ -1,10 +1,9 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.database.UserDAO;
 import com.kosprov.jargon2.api.Jargon2Exception;
-
 import static com.example.pathpilotfx.MainApplication.db;
 import static com.kosprov.jargon2.api.Jargon2.*;
+
 
 /**
  * This class provides methods for authenticating users and hashing passwords.

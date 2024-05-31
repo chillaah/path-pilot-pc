@@ -1,7 +1,6 @@
 package com.example.pathpilotfx.database;
 import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
-import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
 import java.util.*;
@@ -32,7 +31,7 @@ public class ExplorationDAO {
             insertData.setInt(2, exploration.getCountryID());
             insertData.setString(3, exploration.getStatus());
             insertData.setBoolean(4, exploration.isLocked());
-            insertData.setBoolean(5, exploration.isFavourited());
+            insertData.setBoolean(5, exploration.isFavourite());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
@@ -48,7 +47,7 @@ public class ExplorationDAO {
             );
             updateData.setString(1, exploration.getStatus());
             updateData.setBoolean(2, exploration.isLocked());
-            updateData.setBoolean(3, exploration.isFavourited());
+            updateData.setBoolean(3, exploration.isFavourite());
             updateData.setInt(4, exploration.getUserID());
             updateData.setInt(5, exploration.getCountryID());
             updateData.execute();

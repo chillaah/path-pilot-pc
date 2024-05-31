@@ -1,7 +1,6 @@
 package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.controller.timer.TimerSettingsController;
 import com.example.pathpilotfx.database.*;
 import com.example.pathpilotfx.model.Pomodoro;
 import com.example.pathpilotfx.model.Session;
@@ -27,17 +26,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
  * Controller class for managing the timer functionality.
  */
 public class TimerController {
     @FXML
     private Button stopButton;
+
     @FXML
     private Button startButton;
 
     @FXML
     private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
+
     @FXML
     private Timeline timerTimeline;
 
@@ -46,9 +48,6 @@ public class TimerController {
 
     @FXML
     public Label timerType; // label describing either break or focus timer
-
-    @FXML
-    private Button settingsButton;
 
     @FXML
     private AnchorPane taskPopUp; // focus task popup (when a timer started corresponding to a task)
@@ -85,7 +84,6 @@ public class TimerController {
     CountryDAO countryDAO = new CountryDAO();
     private int userID = SessionManager.getLoggedInUserId();
     private User user = userDAO.getByUserId(userID);
-
     List<String> destination = explorationDAO.getNextDestination(userID);
     private Integer expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
 
@@ -113,16 +111,17 @@ public class TimerController {
             nextLocation.setVisible(true);
             nextLocation.setText(destination.get(0));
             needExp.setText(String.valueOf(expNeeded));
-
         }
         countryBackgroundImage();
-
         FadeTransition ft = new FadeTransition(Duration.millis(1000), rootAnchorPane);  // Adjust duration as desired
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.play();
     }
 
+    /**
+     * Method to load the correct background image for the timer, based on country.
+     */
     private void countryBackgroundImage() {
         int userId = SessionManager.getLoggedInUserId();
         String countryName = explorationDAO.getCurrentExploring(userId);
@@ -138,7 +137,6 @@ public class TimerController {
         timerTimeline.play();
         startButton.setVisible(false);
         stopButton.setVisible(true);
-
     }
 
     /**
@@ -176,7 +174,6 @@ public class TimerController {
      */
     @FXML
     protected void onTypeButtonClick(){
-
         handleRestTimer();
         startButton.setVisible(true);
         stopButton.setVisible(false);
@@ -200,7 +197,6 @@ public class TimerController {
             }
             taskTimerController.initialize(); // initialise
             AnchorPane wrappedContent = new AnchorPane(loadedContent); // put the loaded content inside anchor pane
-
             rootAnchorPane.getChildren().setAll(wrappedContent); // set rootAnchorPane to display wrappedContent
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,8 +276,6 @@ public class TimerController {
                 user = userDAO.getByUserId(userID);
                 destination = explorationDAO.getNextDestination(userID);
                 expNeeded = Integer.parseInt(destination.get(1)) - user.getExp();
-
-
                 currentLocation.setText(explorationDAO.getCurrentExploring(userID));
                 currentExp.setText(String.valueOf(user.getExp()));
                 nextLocation.setText(destination.get(0));
@@ -306,8 +300,6 @@ public class TimerController {
             alert.setContentText("Your session has finished. Take a break! \uD83D\uDE42");
             alert.showAndWait();
         });
-
-
     }
 
     /**
@@ -318,7 +310,6 @@ public class TimerController {
         timerType.setText(sessionTimer.toggleType());
         sessionTimer.resetTimer();
         timerDisplay.setText(sessionTimer.getDisplay());
-
     }
 
     /**
@@ -332,7 +323,5 @@ public class TimerController {
         this.task = task;
         taskPopUp.setVisible(this.taskMode); // update the visibility
         taskPopUpLabel.setText(this.task.getTask());
-//        taskPopUpLabel1.setText(this.task.getDescription());
-
     }
 }
