@@ -1,5 +1,7 @@
 package com.example.pathpilotfx.model;
+
 import javafx.animation.Timeline;
+
 
 /**
  * Represents a Pomodoro timer for managing work and break sessions.
@@ -41,15 +43,6 @@ public class Pomodoro {
         this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
         this.isWork = true;
     }
-
-    //for testing purpose only
-//    public Pomodoro (int seconds, int rest, boolean test) {
-//        this.seconds = seconds;
-//        this.rest = rest;
-//        this.sessionCount = 0;
-//        this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
-//        this.isWork = true;
-//    }
 
     /**
      * Retrieves the remaining seconds on the timer.

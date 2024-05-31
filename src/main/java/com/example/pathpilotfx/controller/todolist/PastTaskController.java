@@ -4,25 +4,19 @@ package com.example.pathpilotfx.controller.todolist;
 import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
-
-import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
 import javafx.scene.control.Button;
-//import jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+
 
 @SuppressWarnings("javaFxVersionMismatch")
 public class PastTaskController implements TaskChangeListener{
@@ -37,19 +31,19 @@ public class PastTaskController implements TaskChangeListener{
     private VBox vBoxContainer;
 
     @FXML
-    private ScrollPane scrollPane2;
-
-    @FXML
     private VBox CompletedTask;
 
     @FXML
-//    private JFXButton addTaskButton;
     private Button BackButton;
 
     private TaskController child;
     private List<Task> taskList;
     private List<Task> CompletedList = new ArrayList<>();
 
+    /**
+     * Initializes the controller.
+     * @throws IOException If an IO exception occurs.
+     */
     @FXML
     void initialize() throws IOException {
 
@@ -57,7 +51,6 @@ public class PastTaskController implements TaskChangeListener{
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
         taskList = toDoDAO.getComplete(SessionManager.getLoggedInUserId());
-
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));
@@ -69,15 +62,13 @@ public class PastTaskController implements TaskChangeListener{
                 addTask(task);
             }
         }
-
-
-
-
-
-        //toDoDOA.close();
-
     }
 
+    /**
+     * Method to create a new task
+     *
+     * @param task Task to be created.
+     */
     private void addTask(Task task) {
         // create a task using todo(task).fxml
         try {
@@ -107,6 +98,13 @@ public class PastTaskController implements TaskChangeListener{
         }
 
     }
+
+    /**
+     * Method to edit a task
+     *
+     * @param task Task to be edited
+     * @throws IOException If an IO exception occurs.
+     */
     private void editTask(Task task) throws IOException {
         // Load addItemForm.fxml and preload fields with task details
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItemForm).fxml"));
@@ -120,6 +118,12 @@ public class PastTaskController implements TaskChangeListener{
 
     }
 
+    /**
+     * Method to load the main task page
+     *
+     * @param event mouse click on back button
+     * @throws IOException if IO Exception occurs
+     */
     @FXML
     void BackToMain(ActionEvent event) throws IOException {
 
@@ -141,6 +145,10 @@ public class PastTaskController implements TaskChangeListener{
         }
     }
 
+    /**
+     * Method to reload task page is a tick box is clicked.
+     * @param isSelected status of tick box.
+     */
     public void onTaskChange(boolean isSelected) {
         // reload updated task page
         try {

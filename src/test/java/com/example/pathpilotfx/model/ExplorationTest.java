@@ -1,6 +1,5 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.model.Exploration;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,14 +66,14 @@ public class ExplorationTest {
     @Test
     public void testIsFavourited() {
         Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        assertTrue(exploration.isFavourited());
+        assertTrue(exploration.isFavourite());
     }
 
     @Test
     public void testSetFavourited() {
         Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        exploration.setFavourited(false);
-        assertFalse(exploration.isFavourited());
+        exploration.setFavourite(false);
+        assertFalse(exploration.isFavourite());
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.example.pathpilotfx.model;
 
 import java.sql.Timestamp;
 
+
 /**
  Class that initialises User Object
  **/

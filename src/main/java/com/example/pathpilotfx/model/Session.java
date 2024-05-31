@@ -2,6 +2,7 @@ package com.example.pathpilotfx.model;
 
 import java.sql.Date;
 
+
 /**
  Class that initialises Session Object
  **/

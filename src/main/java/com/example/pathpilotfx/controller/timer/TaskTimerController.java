@@ -2,15 +2,13 @@ package com.example.pathpilotfx.controller.timer;
 
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
-import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
+
 
 /**
  * Controller class for managing the task timer functionality.
@@ -18,19 +16,10 @@ import java.io.IOException;
 public class TaskTimerController {
 
     @FXML
-    private JFXButton completeTaskButton;
-
-    @FXML
-    private JFXButton notcompleteTaskButton;
-
-    @FXML
     private AnchorPane rootAnchorPane; // the beige pane within which all views are to be loaded
 
     @FXML
     private Label taskLabel;
-    @FXML
-    private Label taskLabel1;
-
 
     private Task task;
     public boolean timer_finish = false; // flag to determine if this screen has been loaded because timer has finished
@@ -69,7 +58,7 @@ public class TaskTimerController {
 
     /**
      * Action handler for not completing the task.
-     * Navigates back to the timer view or starts the rest timer, depending on the timer finish flag..
+     * Navigates back to the timer view or starts the rest timer, depending on the timer finish flag.
      */
     @FXML
     void notcompleteTaskAction() {

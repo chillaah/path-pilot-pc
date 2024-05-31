@@ -1,12 +1,9 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
-import com.example.pathpilotfx.database.UserDAO;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
+
 
 /**
  * Represents a task in the to-do list.
