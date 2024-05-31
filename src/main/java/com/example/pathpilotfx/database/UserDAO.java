@@ -161,9 +161,7 @@ public class UserDAO {
         }
         return users;
     }
-    //to get the exp,you first get a user based on their ID and then using the returned user,
-    // you can call the class getters e.g getExp() or getRequiredExp(). Concatenating them
-    //can help with the exp / requiredexp part of the passport.
+
 
     /**
      * Retrieves user data for a specific user based on the user ID.
@@ -280,17 +278,6 @@ public class UserDAO {
     }
 
     /**
-     * Closes the database connection.
-     */
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
-
-    /**
      * Checks if an email is available (i.e., not already in use) in the database.
      *
      * @param email The email to check.
@@ -344,5 +331,17 @@ public class UserDAO {
             System.err.println(ex);
         }
         return "";
+    }
+
+
+    /**
+     * Closes the database connection.
+     */
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
     }
 }

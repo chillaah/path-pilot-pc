@@ -29,6 +29,7 @@ public class ReportDAO {
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
+
     /**
      Method that updates report data
      **/
@@ -46,20 +47,7 @@ public class ReportDAO {
             System.err.println(ex);
         }
     }
-    /**
-     Method that deletes specific report data
-     @param id the report id
-     **/
 
-    public void deleteReport(int id) {
-        try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM report WHERE report_id = ?");
-            delete.setInt(1, id);
-            delete.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
     /**
      Method that gets all report data
      @return Arraylist of reports
@@ -86,30 +74,7 @@ public class ReportDAO {
         }
         return reports;
     }
-    /**
-     Method that gets all report data for a report id
-     @return Report instance
-     **/
 
-    public Report getByReportId(int reportID) {
-        try {
-            PreparedStatement getReport = connection.prepareStatement("SELECT * FROM report WHERE report_id = ?");
-            getReport.setInt(1, reportID);
-            ResultSet rs = getReport.executeQuery();
-            if (rs.next()) {
-                return new Report(
-                        rs.getInt("report_id"),
-                        rs.getInt("reporter_id"),
-                        rs.getString("category"),
-                        rs.getString("details"),
-                        rs.getString("priority")
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return null;
-    }
     /**
      Method that closes the database connection
      **/

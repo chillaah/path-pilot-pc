@@ -108,6 +108,16 @@ public class CountryDAO {
         return countries;
     }
 
+    /**
+     * Retrieves a list of countries that are locked for the currently logged-in user.
+     *
+     * This method executes a SQL query to fetch all countries associated with the
+     * currently logged-in user that have a locked status. The results are mapped
+     * to a list of {@link Country} objects and returned.
+     *
+     * @return a list of {@link Country} objects that are locked for the currently logged-in user.
+     *         If an SQL exception occurs, an empty list is returned.
+     */
     public List<Country> getLocked() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -135,34 +145,6 @@ public class CountryDAO {
         return countries;
     }
 
-
-
-    /**
-     * Retrieves country data for a specific country ID from the database.
-     *
-     * @param countryID The ID of the country.
-     * @return A Country object containing the data for the specified country ID.
-     */
-    public Country getByCountryId(int countryID) {
-        try {
-            PreparedStatement getCountry = connection.prepareStatement(
-                    "SELECT * FROM country WHERE country_id = ?");
-            getCountry.setInt(1, countryID);
-            ResultSet rs = getCountry.executeQuery();
-            if (rs.next()) {
-                return new Country(
-                        rs.getString("country_name"),
-                        rs.getInt("required_exp"),
-                        rs.getString("country_details"),
-                        rs.getString("stamp_name"),
-                        rs.getString("bg_name")
-                );
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return null;
-    }
 
     /**
      * Retrieves the names of locked countries for a specific user ID.
@@ -209,33 +191,6 @@ public class CountryDAO {
         }
         return -1;
     }
-
-    /**
-     * Retrieves the names of unlocked countries for a specific user ID.
-     *
-     * @param userId The ID of the user.
-     * @return A list of unlocked country names.
-     */
-    public List<String> getUnlockedCountryNamesByUserId(int userId) {
-        List<String> lockedCountryNames = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT c.country_name FROM country c " +
-                            "JOIN " + "exploration e ON e.country_id = c.country_id " +
-                            "WHERE e.user_id = ? AND e.lockedStatus = 0");
-            statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                lockedCountryNames.add(resultSet.getString("country_name"));
-            }
-            statement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return lockedCountryNames;
-    }
-
-
 
     /**
      * Closes the database connection.
