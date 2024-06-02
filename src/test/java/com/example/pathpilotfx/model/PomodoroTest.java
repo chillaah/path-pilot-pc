@@ -11,14 +11,18 @@ public class PomodoroTest {
 
     private Pomodoro pomodoro;
 
-//    @BeforeEach
-//    public void setUp() {
-//        pomodoro = new Pomodoro();
-//    }
+    @BeforeEach
+    public void setUp() {
+        pomodoro = new Pomodoro();
+    }
+
+    @AfterEach
+    public void tearDown(){
+        pomodoro = null;
+    }
 
     @Test
     public void testDefaultConstructor() {
-        pomodoro = new Pomodoro();
         assertNotNull(pomodoro); // Ensure the object is not null
         assertEquals(1500, pomodoro.getSeconds());
         assertEquals("25:00", pomodoro.getDisplay());
@@ -35,7 +39,6 @@ public class PomodoroTest {
 
     @Test
     public void testDecreaseSeconds() {
-        pomodoro = new Pomodoro();
         int initialSeconds = pomodoro.getSeconds();
         pomodoro.decreaseSeconds();
         assertEquals(initialSeconds - 1, pomodoro.getSeconds()); // Check if seconds decreased by 1
@@ -43,7 +46,6 @@ public class PomodoroTest {
 
     @Test
     public void testResetTimer() {
-        pomodoro = new Pomodoro();
         pomodoro.decreaseSeconds();
         pomodoro.resetTimer();
         assertEquals(1500, pomodoro.getSeconds()); // Check if seconds reset to default
@@ -53,7 +55,6 @@ public class PomodoroTest {
 
     @Test
     public void testToggleType() {
-        pomodoro = new Pomodoro();
         assertEquals("FOCUS", pomodoro.getType());
         assertEquals("BREAK", pomodoro.toggleType());
         assertEquals("BREAK", pomodoro.getType());
@@ -84,59 +85,50 @@ public class PomodoroTest {
 
     @Test
     public void testGetSessionCount() {
-        pomodoro = new Pomodoro();
         assertEquals(0, pomodoro.getSessionCount());
     }
 
     @Test
     public void testGetRest() {
-        pomodoro = new Pomodoro();
         assertEquals(5, pomodoro.getRest());
     }
 
     @Test
     public void testGetWork() {
-        pomodoro = new Pomodoro();
         assertEquals(25, pomodoro.getWork());
     }
 
     @Test
     public void testGetTimerType() {
-        pomodoro = new Pomodoro();
         assertEquals("FOCUS", pomodoro.getTimerType());
     }
 
     @Test
     public void testSetSeconds() {
-        pomodoro = new Pomodoro();
         pomodoro.setSeconds(200);
         assertEquals(200, pomodoro.getSeconds());
     }
 
     @Test
     public void testSetDisplay() {
-        pomodoro = new Pomodoro();
         pomodoro.setDisplay("10:00");
         assertEquals("10:00", pomodoro.getDisplay());
     }
 
     @Test
     public void testSetSessionCount() {
-        pomodoro = new Pomodoro();
         pomodoro.setSessionCount(3);
         assertEquals(3, pomodoro.getSessionCount());
     }
 
     @Test
     public void testSetRest() {
-        pomodoro = new Pomodoro();
         pomodoro.setRest(7);
         assertEquals(7, pomodoro.getRest());
     }
 
     @Test
     public void testSetWork() {
-        pomodoro = new Pomodoro();
         pomodoro.setWork(30);
         assertEquals(30, pomodoro.getWork());
     }
