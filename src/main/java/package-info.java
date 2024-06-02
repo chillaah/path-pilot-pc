@@ -10,4 +10,4 @@
  * @since 1.0
  * @see java.awt
  */
-package java.lang.applet;
+package com.example.pathpilotfx;
