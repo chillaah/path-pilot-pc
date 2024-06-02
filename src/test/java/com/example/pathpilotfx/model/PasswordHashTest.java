@@ -60,25 +60,25 @@ class PasswordHashTest {
         }
     }
 
-//    // Test case for authenticating a user with correct password
-//    @Test
-//    public void testAuthenticateUserCorrectPassword() throws SQLException {
-//        String email = "test@example.com";
-//        String password = "Password@123";
-//        String storedHashedPassword = getStoredHashedPassword(email);
-//        assertNotNull(storedHashedPassword);
-//        boolean isAuthenticated = PasswordHash.authenticateUser(email, password);
-//        assertTrue(isAuthenticated);
-//    }
+    // Test case for authenticating a user with correct password
+
+    // Test case for authenticating a user with correct password
+    @Test
+    public void testAuthenticateUserCorrectPassword() {
+        String password = "Password@123";
+        String storedHashedPassword = PasswordHash.hashPassword(password);
+        assertNotNull(storedHashedPassword);
+        boolean isAuthenticated = PasswordHash.authenticateUserTest(storedHashedPassword, password);
+        assertTrue(isAuthenticated);
+    }
 
     // Test case for authenticating a user with incorrect password
     @Test
-    public void testAuthenticateUserIncorrectPassword() throws SQLException {
-        String email = "test@example.com";
+    public void testAuthenticateUserIncorrectPassword() {
         String password = "incorrectPassword";
-        String storedHashedPassword = getStoredHashedPassword(email);
+        String storedHashedPassword = PasswordHash.hashPassword("Password@123"); // Use a different password for hashing
         assertNotNull(storedHashedPassword);
-        boolean isAuthenticated = PasswordHash.authenticateUser(email, password);
+        boolean isAuthenticated = PasswordHash.authenticateUserTest(storedHashedPassword, password);
         assertFalse(isAuthenticated);
     }
 

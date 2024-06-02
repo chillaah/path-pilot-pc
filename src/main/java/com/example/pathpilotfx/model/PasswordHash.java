@@ -2,6 +2,7 @@ package com.example.pathpilotfx.model;
 
 import com.example.pathpilotfx.MainApplication;
 import com.kosprov.jargon2.api.Jargon2Exception;
+
 import static com.kosprov.jargon2.api.Jargon2.*;
 
 
@@ -50,6 +51,36 @@ public class PasswordHash {
         return matches;
     }
 
+    /**
+     * Authenticates a user by comparing the provided password with the stored hashed password.
+     *
+     * @param storedHashedPassword The stored hashed password retrieved from the database.
+     * @param providedPassword    The password provided by the user.
+     * @return true if the provided password matches the stored hashed password, false otherwise.
+     * @throws Jargon2Exception if there is an error during the password verification process.
+     */
+    public static boolean authenticateUserTest(String storedHashedPassword, String providedPassword) {
+        // Just get a hold on the verifier. No special configuration needed
+        Verifier verifier = jargon2Verifier();
+
+        byte[] passwordBytes = providedPassword.getBytes();
+
+        // Set the encoded hash, the password, and verify
+        boolean matches = verifier
+                .hash(storedHashedPassword) // Pass the stored hash directly
+                .password(passwordBytes) // Verify against the provided password
+                .verifyEncoded();
+
+        // Return the result of the verification
+        return matches;
+    }
+
+    /**
+     * Hashes the given password using the Argon2 algorithm.
+     *
+     * @param password The password to be hashed.
+     * @return The hashed password.
+     */
     /**
      * Hashes the given password using the Argon2 algorithm.
      *
