@@ -100,6 +100,11 @@ public class Pomodoro {
         if(isWork) {return "FOCUS";} else return "BREAK";
     }
 
+    /**
+     * Retrieves the current timer type.
+     *
+     * @return A string representing the current timer type.
+     */
     public String getTimerType(){
         if(isWork) {return "FOCUS";} else return "BREAK";
     }
@@ -158,18 +163,35 @@ public class Pomodoro {
         return rest;
     }
 
+    /**
+     * Retrieves the duration of the work session.
+     *
+     */
     public void setRest(int rest) {
         this.rest = rest;
     }
 
+    /**
+     * Retrieves the duration of the work session.
+     *
+     * @return The work session duration.
+     */
     public int getWork() {
         return work;
     }
 
+    /**
+     * Retrieves the duration of the work session.
+     *
+     */
     public void setWork(Boolean work) {
         isWork = work;
     }
 
+    /**
+     * Retrieves the duration of the work session.
+     *
+     */
     public void setWork(int work) {
         this.work = work;
     }

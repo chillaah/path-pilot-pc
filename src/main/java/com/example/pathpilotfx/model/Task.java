@@ -65,17 +65,6 @@ public class Task {
         }
     }
 
-    public Task(String testTask, String description, String high, LocalDate now) {
-        this.task = testTask;
-        this.description = description;
-        this.priority = high;
-        this.dateCreated = java.sql.Date.valueOf(LocalDate.now());
-        // Check if dueDate is not null and is not a past date
-        if (now != null && !now.isBefore(LocalDate.now())) {
-            this.dueDate = java.sql.Date.valueOf(now);
-        }
-    }
-
     /**
      * Retrieves the ID of the task.
      *

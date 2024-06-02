@@ -23,7 +23,7 @@ class MockToDoDAOTest {
     @Test
     void testAddTask() {
         // Test adding a task
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
         List<Task> allTasks = mockToDoDAO.getAllTasks();
         assertEquals(1, allTasks.size());
@@ -33,11 +33,10 @@ class MockToDoDAOTest {
     @Test
     void testUpdateTaskName() {
         // Test updating task name
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
 
-        Task updatedTask = new Task("Updated Task", task.getDescription(), task.getPriority(), task.getDueDate().toLocalDate());
-        updatedTask.setId(task.getID());
+        Task updatedTask = new Task(task.getID(), task.getUserID(), "Updated Task", task.getStatus(), task.getDescription(), task.getPriority(), task.getDatecreated().toLocalDate(), task.getDueDate().toLocalDate());
         mockToDoDAO.updateTask(updatedTask);
 
         Task retrievedTask = mockToDoDAO.getTaskById(task.getID());
@@ -47,11 +46,10 @@ class MockToDoDAOTest {
     @Test
     void testUpdateTaskDescription() {
         // Test updating task description
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
 
-        Task updatedTask = new Task(task.getTask(), "Updated Description", task.getPriority(), task.getDueDate().toLocalDate());
-        updatedTask.setId(task.getID());
+        Task updatedTask = new Task(task.getID(), task.getUserID(), task.getTask(), task.getStatus(), "Updated Description", task.getPriority(), task.getDatecreated().toLocalDate(), task.getDueDate().toLocalDate());
         mockToDoDAO.updateTask(updatedTask);
 
         Task retrievedTask = mockToDoDAO.getTaskById(task.getID());
@@ -61,11 +59,10 @@ class MockToDoDAOTest {
     @Test
     void testUpdateTaskPriority() {
         // Test updating task priority
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
 
-        Task updatedTask = new Task(task.getTask(), task.getDescription(), "LOW", task.getDueDate().toLocalDate());
-        updatedTask.setId(task.getID());
+        Task updatedTask = new Task(task.getID(), task.getUserID(), task.getTask(), task.getStatus(), task.getDescription(), "LOW", task.getDatecreated().toLocalDate(), task.getDueDate().toLocalDate());
         mockToDoDAO.updateTask(updatedTask);
 
         Task retrievedTask = mockToDoDAO.getTaskById(task.getID());
@@ -75,12 +72,11 @@ class MockToDoDAOTest {
     @Test
     void testUpdateTaskDueDate() {
         // Test updating task due date
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
 
         LocalDate newDueDate = LocalDate.now().plusDays(1);
-        Task updatedTask = new Task(task.getTask(), task.getDescription(), task.getPriority(), newDueDate);
-        updatedTask.setId(task.getID());
+        Task updatedTask = new Task(task.getID(), task.getUserID(), task.getTask(), task.getStatus(), task.getDescription(), task.getPriority(), task.getDatecreated().toLocalDate(), newDueDate);
         mockToDoDAO.updateTask(updatedTask);
 
         Task retrievedTask = mockToDoDAO.getTaskById(task.getID());
@@ -90,8 +86,8 @@ class MockToDoDAOTest {
     @Test
     void testDeleteTask() {
         // Test deleting a task
-        Task task1 = new Task("Task 1", "Description", "HIGH", LocalDate.now());
-        Task task2 = new Task("Task 2", "Description", "MEDIUM", LocalDate.now());
+        Task task1 = new Task("Task 1", 1, "Description", "HIGH", LocalDate.now());
+        Task task2 = new Task("Task 2", 1, "Description", "MEDIUM", LocalDate.now());
 
         mockToDoDAO.addTask(task1);
         mockToDoDAO.addTask(task2);
@@ -105,8 +101,8 @@ class MockToDoDAOTest {
     @Test
     void testGetAllTasks() {
         // Test retrieving all tasks
-        Task task1 = new Task("Task 1", "Description", "HIGH", LocalDate.now());
-        Task task2 = new Task("Task 2", "Description", "MEDIUM", LocalDate.now());
+        Task task1 = new Task("Task 1", 1, "Description", "HIGH", LocalDate.now());
+        Task task2 = new Task("Task 2", 1, "Description", "MEDIUM", LocalDate.now());
 
         mockToDoDAO.addTask(task1);
         mockToDoDAO.addTask(task2);
@@ -120,7 +116,7 @@ class MockToDoDAOTest {
     @Test
     void testGetTaskById() {
         // Test retrieving a task by ID
-        Task task = new Task("Test Task", "Description", "HIGH", LocalDate.now());
+        Task task = new Task("Test Task", 1, "Description", "HIGH", LocalDate.now());
         mockToDoDAO.addTask(task);
 
         Task retrievedTask = mockToDoDAO.getTaskById(task.getID());

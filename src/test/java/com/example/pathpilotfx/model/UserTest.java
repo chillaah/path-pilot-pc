@@ -1,6 +1,5 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.model.User;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
@@ -111,6 +110,18 @@ class UserTest {
         assertNull(user.getPassword());
         assertNull(user.getCreationDate());
         assertEquals(0, user.getExp());
+    }
+
+    @Test
+    void testConstructorWithoutUserID() {
+        Timestamp creationDate = new Timestamp(System.currentTimeMillis());
+        User user = new User("username", "email@example.com", "password", creationDate, 100);
+
+        assertEquals("username", user.getUsername());
+        assertEquals("email@example.com", user.getEmail());
+        assertEquals("password", user.getPassword());
+        assertEquals(creationDate, user.getCreationDate());
+        assertEquals(100, user.getExp());
     }
 
     @Test

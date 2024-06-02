@@ -37,16 +37,17 @@
 -fx-border-radius:5px;
 -fx-background-radius:5px;
 }
-/* .timer {
+
+.timer {
 -fx-background-color: Gainsboro;
 -fx-background-radius:10 10 10 10 ;
-} */
+}
 
-/* .scroll-pane .viewport {
+.scroll-pane .viewport {
        -fx-background-color: transparent;
 }
 .scrollPaneLabel{
     -fx-background-radius: 10 10 10 10;
     -fx-font-color:white;
     -fx-background-color:black;
-} */
+}
