@@ -1,6 +1,5 @@
 package com.example.pathpilotfx.model;
 
-import javafx.animation.Timeline;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +16,13 @@ public class PomodoroTest {
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         pomodoro = null;
     }
 
     @Test
     public void testDefaultConstructor() {
-        assertNotNull(pomodoro); // Ensure the object is not null
+        assertNotNull(pomodoro);
         assertEquals(1500, pomodoro.getSeconds());
         assertEquals("25:00", pomodoro.getDisplay());
         assertEquals("FOCUS", pomodoro.getType());
@@ -41,14 +40,14 @@ public class PomodoroTest {
     public void testDecreaseSeconds() {
         int initialSeconds = pomodoro.getSeconds();
         pomodoro.decreaseSeconds();
-        assertEquals(initialSeconds - 1, pomodoro.getSeconds()); // Check if seconds decreased by 1
+        assertEquals(initialSeconds - 1, pomodoro.getSeconds());
     }
 
     @Test
     public void testResetTimer() {
         pomodoro.decreaseSeconds();
         pomodoro.resetTimer();
-        assertEquals(1500, pomodoro.getSeconds()); // Check if seconds reset to default
+        assertEquals(1500, pomodoro.getSeconds());
         assertEquals("25:00", pomodoro.getDisplay());
         assertEquals("FOCUS", pomodoro.getType());
     }
