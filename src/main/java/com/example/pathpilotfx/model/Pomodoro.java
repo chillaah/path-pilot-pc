@@ -36,11 +36,18 @@ public class Pomodoro {
      * @param rest The duration of the break session in minutes.
      */
     public Pomodoro (int work, int rest) {
-        this.work = work;
-        this.seconds = work * 60;
-        this.rest = rest;
+        if (work <= 0 || rest <= 0) {
+            this.work = 0;
+            this.rest = 0;
+            this.seconds = 0;
+            this.display = "00:00";
+        } else {
+            this.work = work;
+            this.rest = rest;
+            this.seconds = work * 60;
+            this.display = String.format("%02d:%02d", seconds / 60, seconds % 60);
+        }
         this.sessionCount = 0;
-        this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
         this.isWork = true;
     }
 

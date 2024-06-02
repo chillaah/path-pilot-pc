@@ -1,7 +1,9 @@
-package com.example.pathpilotfx.model;
+package com.example.pathpilotfx.database;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.pathpilotfx.model.MockToDoDAO;
+import com.example.pathpilotfx.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
