@@ -79,7 +79,7 @@ public class ExplorationTest {
     @Test
     public void testToString() {
         Exploration exploration = new Exploration(1, 100, "InProgress", false, true);
-        String expectedToString = "Exploration{userID=1, countryID=100, status='InProgress', isLocked=false, isFavourited=true}";
+        String expectedToString = "Exploration{userID=1, countryID=100, status='InProgress', isLocked=false, isFavourite=true}";
         assertEquals(expectedToString, exploration.toString());
     }
 }

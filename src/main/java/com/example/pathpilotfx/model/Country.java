@@ -1,19 +1,16 @@
 package com.example.pathpilotfx.model;
 
+
 /**
- Class that initialises Country Object
+ * Class that initialises Country Object
  **/
 public class Country {
     private int countryID;
     private String countryName;
     private int requiredEXP;
-
     private String countryDetails;
-
     private String stampImage;
-
     private String bgImage;
-
     private boolean current_loc;
     private boolean locked; // 0 for unlocked and 1 for locked
 
@@ -168,11 +165,7 @@ public class Country {
      */
     @Override
     public String toString() {
-        return "Country{" +
-                "countryID=" + countryID +
-                ", countryName='" + countryName + '\'' +
-                ", requiredEXP=" + requiredEXP +
-                '}';
+        return "Country{" + "countryID=" + countryID + ", countryName='" + countryName + '\'' + ", requiredEXP=" + requiredEXP + '}';
     }
 
     /**

@@ -1,11 +1,9 @@
 package com.example.pathpilotfx.model;
 
 import com.example.pathpilotfx.MainApplication;
-import com.example.pathpilotfx.database.UserDAO;
 import com.kosprov.jargon2.api.Jargon2Exception;
-import com.sun.tools.javac.Main;
-
 import static com.kosprov.jargon2.api.Jargon2.*;
+
 
 /**
  * This class provides methods for authenticating users and hashing passwords.
@@ -25,8 +23,7 @@ public class PasswordHash {
         String storedHashedPassword = MainApplication.getDB().getStoredHashedPassword(email);
 
         // User not found in the database
-        if (storedHashedPassword == null)
-        {
+        if (storedHashedPassword == null) {
             return false;
         }
 
@@ -36,8 +33,8 @@ public class PasswordHash {
         Verifier verifier = jargon2Verifier();
 
         // Set the encoded hash, the password and verify
-        boolean matches = false;
-        try{
+        boolean matches;
+        try {
             matches = verifier
                     .hash(storedHashedPassword)
                     .password(passwordBytes)
@@ -45,8 +42,8 @@ public class PasswordHash {
             System.out.printf("Matches: %s%n", matches);
 
 
-        } catch(Jargon2Exception err){
-            System.out.println(err);
+        } catch (Jargon2Exception err) {
+            throw new Jargon2Exception("Error verifying password");
         }
 
         // Return the result of the verification
@@ -62,8 +59,7 @@ public class PasswordHash {
     public static String hashPassword(String password) {
 
         // Return null if the password is empty
-        if (password.isBlank() || password.isEmpty())
-        {
+        if (password.isBlank() || password.isEmpty()) {
             return null;
         }
 

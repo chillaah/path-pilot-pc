@@ -37,7 +37,7 @@ public class Pomodoro {
      */
     public Pomodoro (int work, int rest) {
         this.work = work;
-        this.seconds = (int) work * 60;
+        this.seconds = work * 60;
         this.rest = rest;
         this.sessionCount = 0;
         this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
@@ -86,7 +86,7 @@ public class Pomodoro {
      * Resets the timer to its initial state based on the current session type (work or break).
      */
     public void resetTimer(){
-        this.seconds = (isWork) ? (int) work * 60 : rest * 60;
+        this.seconds = (isWork) ? work * 60 : rest * 60;
         this.display = String.format("%02d:%02d", seconds/60 , seconds % 60);
     }
 

@@ -2,17 +2,16 @@ package com.example.pathpilotfx.database;
 
 import com.example.pathpilotfx.controller.authentication.SessionManager;
 import com.example.pathpilotfx.model.Country;
-import com.example.pathpilotfx.model.Exploration;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+
 /**
  Class for Country for SQLite queries
  **/
 public class CountryDAO {
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Constructs a new ToDoDAO object and initializes the database connection.
@@ -36,8 +35,8 @@ public class CountryDAO {
             insertData.setString(4, country.getStampImage());
             insertData.setString(5, country.getBgImage());
             insertData.execute();
-        } catch (SQLException sqlexc) {
-            System.err.println(sqlexc);
+        } catch (SQLException e) {
+            System.err.println(e);
         }
     }
 
@@ -110,7 +109,7 @@ public class CountryDAO {
 
     /**
      * Retrieves a list of countries that are locked for the currently logged-in user.
-     *
+     * <p>
      * This method executes a SQL query to fetch all countries associated with the
      * currently logged-in user that have a locked status. The results are mapped
      * to a list of {@link Country} objects and returned.

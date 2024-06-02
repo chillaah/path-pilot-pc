@@ -1,17 +1,17 @@
 package com.example.pathpilotfx.database;
 
 import com.example.pathpilotfx.model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- Class for User Data Access Object for SQLite queries
+ * Class for User Data Access Object for SQLite queries
  **/
 public class UserDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Initializes a new instance of the UserDAO class.
@@ -25,20 +25,13 @@ public class UserDAO {
      */
     public void createTable() {
 
-        Statement statement = null;
+        Statement statement;
 
         try {
             statement = connection.createStatement();
 
             // SQL query
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS user (" +
-                    "user_id INT AUTOINCREMENT PRIMARY KEY," +
-                    "username TEXT NOT NULL," +
-                    "email TEXT NOT NULL," +
-                    "password TEXT NOT NULL," +
-                    "creation_date TIMESTAMP NOT NULL," +
-                    "exp INT NOT NULL" +
-                    ")";
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS user (" + "user_id INT AUTOINCREMENT PRIMARY KEY," + "username TEXT NOT NULL," + "email TEXT NOT NULL," + "password TEXT NOT NULL," + "creation_date TIMESTAMP NOT NULL," + "exp INT NOT NULL" + ")";
 
 
             statement.executeUpdate(createTableSQL);
@@ -50,13 +43,13 @@ public class UserDAO {
     }
 
     /**
-     Method that inserts user data
-     @param user the user instance with the data
+     * Method that inserts user data
+     *
+     * @param user the user instance with the data
      **/
     public void insert(User user) {
         try {
-            PreparedStatement insertData = connection.prepareStatement(
-                    "INSERT INTO user (username, email, password, creation_date, exp) VALUES(?,?,?,?,?)");
+            PreparedStatement insertData = connection.prepareStatement("INSERT INTO user (username, email, password, creation_date, exp) VALUES(?,?,?,?,?)");
             insertData.setString(1, user.getUsername());
             insertData.setString(2, user.getEmail());
             insertData.setString(3, user.getPassword());
@@ -69,14 +62,13 @@ public class UserDAO {
     }
 
     /**
-     Method that updates user data
-     @param user the user instance with the updated data
+     * Method that updates user data
+     *
+     * @param user the user instance with the updated data
      **/
     public void update(User user) {
         try {
-            PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET username = ?, email = ?, password = ?, creation_date = ?, exp = ? WHERE user_id = ?"
-            );
+            PreparedStatement updateData = connection.prepareStatement("UPDATE user SET username = ?, email = ?, password = ?, creation_date = ?, exp = ? WHERE user_id = ?");
             updateData.setString(1, user.getUsername());
             updateData.setString(2, user.getEmail());
             updateData.setString(3, user.getPassword());
@@ -93,13 +85,11 @@ public class UserDAO {
      * Updates the exp value for a specific user in the database.
      *
      * @param userId the ID of the user to update
-     * @param exp the new exp value
+     * @param exp    the new exp value
      */
     public void updateExp(int userId, int exp) {
         try {
-            PreparedStatement updateData = connection.prepareStatement(
-                    "UPDATE user SET exp = exp + ? WHERE user_id = ?"
-            );
+            PreparedStatement updateData = connection.prepareStatement("UPDATE user SET exp = exp + ? WHERE user_id = ?");
             updateData.setInt(1, exp);
             updateData.setInt(2, userId);
             updateData.executeUpdate();
@@ -136,8 +126,9 @@ public class UserDAO {
     }
 
     /**
-     Method that gets all user data
-     @return a list with all user data
+     * Method that gets all user data
+     *
+     * @return a list with all user data
      **/
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -145,23 +136,13 @@ public class UserDAO {
             Statement getAll = connection.createStatement();
             ResultSet rs = getAll.executeQuery("SELECT * FROM bankAccounts");
             while (rs.next()) {
-                users.add(
-                        new User(
-                                rs.getInt("user_id"),
-                                rs.getString("username"),
-                                rs.getString("email"),
-                                rs.getString("password"),
-                                rs.getTimestamp("creation_date"),
-                                rs.getInt("exp")
-                        )
-                );
+                users.add(new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getTimestamp("creation_date"), rs.getInt("exp")));
             }
         } catch (SQLException ex) {
             System.err.println(ex);
         }
         return users;
     }
-
 
     /**
      * Retrieves user data for a specific user based on the user ID.
@@ -175,14 +156,7 @@ public class UserDAO {
             getUser.setInt(1, id);
             ResultSet rs = getUser.executeQuery();
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getTimestamp("creation_date"),
-                        rs.getInt("exp")
-                );
+                return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getTimestamp("creation_date"), rs.getInt("exp"));
             }
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -198,8 +172,7 @@ public class UserDAO {
      */
     public int getIdByEmail(String email) {
         try {
-            PreparedStatement getUser = connection.prepareStatement(
-                    "SELECT user_id FROM user WHERE email = ?");
+            PreparedStatement getUser = connection.prepareStatement("SELECT user_id FROM user WHERE email = ?");
             getUser.setString(1, email);
             ResultSet rs = getUser.executeQuery();
             if (rs.next()) {
@@ -243,14 +216,7 @@ public class UserDAO {
             getUser.setInt(1, id);
             ResultSet rs = getUser.executeQuery();
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getTimestamp("creation_date"),
-                        rs.getInt("exp")
-                );
+                return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getTimestamp("creation_date"), rs.getInt("exp"));
             }
         } catch (SQLException ex) {
             System.err.println(ex);
@@ -265,8 +231,7 @@ public class UserDAO {
      */
     public int getLatestUser() {
         try {
-            PreparedStatement getUserID = connection.prepareStatement(
-                    "SELECT user_id FROM user ORDER BY user_id DESC LIMIT 1");
+            PreparedStatement getUserID = connection.prepareStatement("SELECT user_id FROM user ORDER BY user_id DESC LIMIT 1");
             ResultSet rs = getUserID.executeQuery();
             if (rs.next()) {
                 return rs.getInt("user_id");
@@ -287,9 +252,7 @@ public class UserDAO {
 
         boolean available = false;
 
-        try (
-                PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?");
-        ) {
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
             // Set the email parameter
             stmt.setString(1, email);
 
@@ -332,7 +295,6 @@ public class UserDAO {
         }
         return "";
     }
-
 
     /**
      * Closes the database connection.

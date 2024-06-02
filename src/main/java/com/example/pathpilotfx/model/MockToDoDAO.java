@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * Mock DAO for the ToDoList application.
+ */
 public class MockToDoDAO {
 
-    private Map<Integer, Task> taskMap = new HashMap<>();
+    private final Map<Integer, Task> taskMap = new HashMap<>();
     private int idCounter = 1;
 
     /**

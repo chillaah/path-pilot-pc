@@ -38,7 +38,7 @@ public class ToDoTaskController implements TaskChangeListener {
         //initialize DB connection
         ToDoDAO toDoDAO = new ToDoDAO();
         // fetch all existing tasks from DB
-        taskList = toDoDAO.getUncomplete(SessionManager.getLoggedInUserId());
+        taskList = toDoDAO.getUncompleted(SessionManager.getLoggedInUserId());
 
         if (taskList.isEmpty()){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/pathpilotfx/todo(addItem).fxml"));

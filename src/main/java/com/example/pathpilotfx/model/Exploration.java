@@ -1,4 +1,6 @@
 package com.example.pathpilotfx.model;
+
+
 /**
  Class that initialises Exploration Object
  **/
@@ -10,7 +12,7 @@ public class Exploration {
     private boolean isFavourite;
 
     /**
-     * Initializes a Exploration object with specified attributes.
+     * Initializes an Exploration object with specified attributes.
      *
      * @param userID    The ID of the user.
      * @param countryID The ID of the country.
@@ -77,7 +79,7 @@ public class Exploration {
                 ", countryID=" + countryID +
                 ", status='" + status + '\'' +
                 ", isLocked=" + isLocked +
-                ", isFavourited=" + isFavourite +
+                ", isFavourite=" + isFavourite +
                 '}';
     }
 }

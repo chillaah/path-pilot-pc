@@ -1,16 +1,17 @@
 package com.example.pathpilotfx;
 
 import com.example.pathpilotfx.database.UserDAO;
-import com.example.pathpilotfx.database.ExplorationDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Objects;
 
 
+/**
+ * Main class for the Path Pilot application.
+ */
 public class MainApplication extends Application {
 
     private static final String TITLE = "Path Pilot";
@@ -59,14 +60,15 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Main method to launch the application.
+     *
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
+        // clears all database entries for testing purposes
+        // db.deleteAllUsers();
 
-//      clears all database entries
-//          db.deleteAllUsers();
-
-//        db2.deleteAllExplorations();
-//        ExplorationDAO explorationDAO = new ExplorationDAO();
-//        explorationDAO.deleteAllExplorations();
         launch();
     }
 }
