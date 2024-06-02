@@ -40,8 +40,6 @@ public class PasswordHash {
                     .hash(storedHashedPassword)
                     .password(passwordBytes)
                     .verifyEncoded();
-            System.out.printf("Matches: %s%n", matches);
-
 
         } catch (Jargon2Exception err) {
             throw new Jargon2Exception("Error verifying password");
@@ -52,7 +50,7 @@ public class PasswordHash {
     }
 
     /**
-     * Authenticates a user by comparing the provided password with the stored hashed password.
+     * Authenticates a user by comparing the provided password with the stored hashed password for testing purposes.
      *
      * @param storedHashedPassword The stored hashed password retrieved from the database.
      * @param providedPassword    The password provided by the user.
@@ -75,12 +73,6 @@ public class PasswordHash {
         return matches;
     }
 
-    /**
-     * Hashes the given password using the Argon2 algorithm.
-     *
-     * @param password The password to be hashed.
-     * @return The hashed password.
-     */
     /**
      * Hashes the given password using the Argon2 algorithm.
      *
@@ -110,8 +102,6 @@ public class PasswordHash {
         String encodedHash = hasher
                 .password(passwordBytes)
                 .encodedHash();
-
-        System.out.printf("Hash: %s%n", encodedHash);
 
         // Return the encoded hash
         return encodedHash;

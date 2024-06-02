@@ -148,8 +148,8 @@ public class CountryViewController {
         alert.setResizable(true);
         alert.setHeight(70.0);
         alert.setTitle("Confirmation Warning");
-        alert.setHeaderText("Are you sure you want to begin exploration");
-        alert.setContentText("You are currently exploring " + currExploration + ". Pressing OK may mean losing your progress");
+        alert.setHeaderText("Are you sure you want to begin exploration?");
+        alert.setContentText("You are currently exploring " + currExploration);
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
