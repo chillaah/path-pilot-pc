@@ -21,7 +21,7 @@ public class Pomodoro {
      */
     public Pomodoro () {
         this.work = 25;
-        this.seconds = this.work * 60; //25 * 60
+        this.seconds = 25 * 60;
         this.sessionCount = 0;
         this.rest = 5;
         this.display = String.format("%02d:%02d", 25 , 0);
