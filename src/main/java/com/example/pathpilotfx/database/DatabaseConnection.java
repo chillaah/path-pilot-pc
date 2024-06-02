@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 /**
  Class to connect to database through an instance
  **/
 public class DatabaseConnection {
     private static Connection instance = null;
     public static final String dbURL = "jdbc:sqlite:pathpilotpc.db";
+
     /**
      Gets database connection
      **/
@@ -20,6 +22,7 @@ public class DatabaseConnection {
             System.err.println(sqlEx);
         }
     }
+
     /**
      Sets database connection
      **/

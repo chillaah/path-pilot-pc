@@ -2,31 +2,20 @@ package com.example.pathpilotfx.controller.todolist;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import java.util.ResourceBundle;
+
 
 /**
  * Controller class for adding items to the to-do list.
  */
 public class AddItemController {
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private ImageView addButton;
-
-    @FXML
-    private Label noTaskLabel;
 
     @FXML
     private AnchorPane rootAnchorPane;

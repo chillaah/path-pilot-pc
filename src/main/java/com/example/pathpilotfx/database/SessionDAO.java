@@ -59,20 +59,6 @@ public class SessionDAO {
         }
     }
 
-    /**
-     * Deletes session data from the database.
-     *
-     * @param id The ID of the session to be deleted.
-     */
-    public void deleteSession(int id) {
-        try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM session WHERE session_id = ?");
-            delete.setInt(1, id);
-            delete.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
 
     /**
      * Retrieves all session data from the database.

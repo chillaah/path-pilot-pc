@@ -1,12 +1,8 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.controller.authentication.SessionManager;
-import com.example.pathpilotfx.controller.todolist.TaskChangeListener;
-import com.example.pathpilotfx.database.UserDAO;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
+
 
 /**
  * Represents a task in the to-do list.
@@ -19,9 +15,7 @@ public class Task {
     private boolean status;
     private String description;
     private String priority;
-    private java.sql.Date datecreated, dueDate;
-
-    private TaskChangeListener taskChangeListener;
+    private java.sql.Date dateCreated, dueDate;
 
     /**
      * Constructs a new task.
@@ -38,7 +32,7 @@ public class Task {
         this.status = false;
         this.description = description;
         this.priority = priority;
-        this.datecreated = java.sql.Date.valueOf(LocalDate.now());
+        this.dateCreated = java.sql.Date.valueOf(LocalDate.now());
         // Check if dueDate is not null and is not a past date
         if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
@@ -54,17 +48,17 @@ public class Task {
      * @param status      The status of the task.
      * @param description The description of the task.
      * @param priority    The priority of the task.
-     * @param datecreated The creation date of the task.
+     * @param dateCreated The creation date of the task.
      * @param dueDate     The due date of the task.
      */
-    public Task(int id, int user_id, String task, boolean status, String description, String priority, LocalDate datecreated, LocalDate dueDate) {
+    public Task(int id, int user_id, String task, boolean status, String description, String priority, LocalDate dateCreated, LocalDate dueDate) {
         this.id = id;
         this.task = task;
         this.userID = user_id;
         this.status = status;
         this.description = description;
         this.priority = priority;
-        this.datecreated = java.sql.Date.valueOf(LocalDate.now());
+        this.dateCreated = java.sql.Date.valueOf(dateCreated); //java.sql.Date.valueOf(LocalDate.now());
         // Check if dueDate is not null and is not a past date
         if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
@@ -100,7 +94,6 @@ public class Task {
 
     /**
      * Retrieves the Task of the task.
-     *
      */
     public void setTask(String task) {
         this.task = task;
@@ -117,7 +110,6 @@ public class Task {
 
     /**
      * Retrieves the status of the task.
-     *
      */
     public void setStatus(boolean status) {
         this.status = status;
@@ -151,11 +143,11 @@ public class Task {
     }
 
     public java.sql.Date getDatecreated() {
-        return datecreated;
+        return dateCreated;
     }
 
     public void setDatecreated(Date datecreated) {
-        this.datecreated = new java.sql.Date(datecreated.getTime());
+        this.dateCreated = new java.sql.Date(datecreated.getTime());
     }
 
     /**
@@ -168,16 +160,6 @@ public class Task {
     }
 
     /**
-     * Sets the due date of the task.
-     *
-     * @param dueDate The due date of the task.
-     */
-    public void setDueDate(Date dueDate) {
-        this.dueDate = new java.sql.Date(dueDate.getTime());
-
-    }
-
-    /**
      * Sets the due date of the task from a LocalDate object.
      *
      * @param dueDate The due date of the task.
@@ -185,8 +167,7 @@ public class Task {
     public void setDueDate(LocalDate dueDate) {
         if (dueDate != null && !dueDate.isBefore(LocalDate.now())) {
             this.dueDate = java.sql.Date.valueOf(dueDate);
-        }
-        else{
+        } else {
             this.dueDate = null;
         }
     }

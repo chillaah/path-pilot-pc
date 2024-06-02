@@ -6,13 +6,11 @@ import com.example.pathpilotfx.controller.timer.TimerController;
 import com.example.pathpilotfx.database.ToDoDAO;
 import com.example.pathpilotfx.model.Task;
 import com.jfoenix.controls.JFXButton;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
@@ -139,7 +137,9 @@ public class AddItemFormController {
         });
     }
 
-
+    /**
+     * Method to delete a task.
+     */
     @FXML
     void deleteTaskAction() {
 
@@ -189,6 +189,9 @@ public class AddItemFormController {
 
     }
 
+    /**
+     * Method to start a timer for the selected task.
+     */
     @FXML
     void startTimerAction(){
         System.out.println("button clicked start timer");

@@ -1,4 +1,0 @@
---patch-module
-com.example.pathpilotfx=_
---add-reads
-com.example.pathpilotfx=ALL-UNNAMED

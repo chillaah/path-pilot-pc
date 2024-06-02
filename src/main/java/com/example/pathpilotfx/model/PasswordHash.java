@@ -1,10 +1,10 @@
 package com.example.pathpilotfx.model;
 
-import com.example.pathpilotfx.database.UserDAO;
+import com.example.pathpilotfx.MainApplication;
 import com.kosprov.jargon2.api.Jargon2Exception;
 
-import static com.example.pathpilotfx.MainApplication.db;
 import static com.kosprov.jargon2.api.Jargon2.*;
+
 
 /**
  * This class provides methods for authenticating users and hashing passwords.
@@ -21,11 +21,10 @@ public class PasswordHash {
     public static boolean authenticateUser(String email, String providedPassword) {
 
         // Retrieve the hashed password from the database
-        String storedHashedPassword = db.getStoredHashedPassword(email);
+        String storedHashedPassword = MainApplication.getDB().getStoredHashedPassword(email);
 
         // User not found in the database
-        if (storedHashedPassword == null)
-        {
+        if (storedHashedPassword == null) {
             return false;
         }
 
@@ -35,18 +34,40 @@ public class PasswordHash {
         Verifier verifier = jargon2Verifier();
 
         // Set the encoded hash, the password and verify
-        boolean matches = false;
-        try{
+        boolean matches;
+        try {
             matches = verifier
                     .hash(storedHashedPassword)
                     .password(passwordBytes)
                     .verifyEncoded();
-            System.out.printf("Matches: %s%n", matches);
 
-
-        } catch(Jargon2Exception err){
-            System.out.println(err);
+        } catch (Jargon2Exception err) {
+            throw new Jargon2Exception("Error verifying password");
         }
+
+        // Return the result of the verification
+        return matches;
+    }
+
+    /**
+     * Authenticates a user by comparing the provided password with the stored hashed password for testing purposes.
+     *
+     * @param storedHashedPassword The stored hashed password retrieved from the database.
+     * @param providedPassword    The password provided by the user.
+     * @return true if the provided password matches the stored hashed password, false otherwise.
+     * @throws Jargon2Exception if there is an error during the password verification process.
+     */
+    public static boolean authenticateUserTest(String storedHashedPassword, String providedPassword) {
+        // Just get a hold on the verifier. No special configuration needed
+        Verifier verifier = jargon2Verifier();
+
+        byte[] passwordBytes = providedPassword.getBytes();
+
+        // Set the encoded hash, the password, and verify
+        boolean matches = verifier
+                .hash(storedHashedPassword) // Pass the stored hash directly
+                .password(passwordBytes) // Verify against the provided password
+                .verifyEncoded();
 
         // Return the result of the verification
         return matches;
@@ -61,8 +82,7 @@ public class PasswordHash {
     public static String hashPassword(String password) {
 
         // Return null if the password is empty
-        if (password.isBlank() || password.isEmpty())
-        {
+        if (password.isBlank() || password.isEmpty()) {
             return null;
         }
 
@@ -82,8 +102,6 @@ public class PasswordHash {
         String encodedHash = hasher
                 .password(passwordBytes)
                 .encodedHash();
-
-        System.out.printf("Hash: %s%n", encodedHash);
 
         // Return the encoded hash
         return encodedHash;

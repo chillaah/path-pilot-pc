@@ -1,30 +1,27 @@
 package com.example.pathpilotfx.model;
 
+
 /**
- Class that initialises Country Object
+ * Class that initialises Country Object
  **/
 public class Country {
     private int countryID;
     private String countryName;
     private int requiredEXP;
-
     private String countryDetails;
-
     private String stampImage;
-
     private String bgImage;
-
     private boolean current_loc;
     private boolean locked; // 0 for unlocked and 1 for locked
 
     /**
      * Initializes a Country object with specified attributes.
      *
-     * @param countryName  The name of the country.
-     * @param requiredEXP  The required experience points to unlock the country.
+     * @param countryName    The name of the country.
+     * @param requiredEXP    The required experience points to unlock the country.
      * @param countryDetails The country's information, like a travel guide.
-     * @param stampImage   The image representing the stamp of the country.
-     * @param bgImage      The background image associated with the country.
+     * @param stampImage     The image representing the stamp of the country.
+     * @param bgImage        The background image associated with the country.
      */
     public Country(String countryName, int requiredEXP, String countryDetails, String stampImage, String bgImage) {
         this.countryName = countryName;
@@ -34,6 +31,16 @@ public class Country {
         this.bgImage = bgImage;
     }
 
+    /**
+     * Initializes a Country object with specified attributes.
+     *
+     * @param countryID      The ID of the country.
+     * @param countryName    The name of the country.
+     * @param requiredEXP    The required experience points to unlock the country.
+     * @param countryDetails The country's information, like a travel guide.
+     * @param stampImage     The image representing the stamp of the country.
+     * @param bgImage        The background image associated with the country.
+     */
     public Country(int countryID, String countryName, int requiredEXP, String countryDetails, String stampImage, String bgImage) {
         this.countryID = countryID;
         this.countryName = countryName;
@@ -158,25 +165,41 @@ public class Country {
      */
     @Override
     public String toString() {
-        return "Country{" +
-                "countryID=" + countryID +
-                ", countryName='" + countryName + '\'' +
-                ", requiredEXP=" + requiredEXP +
-                '}';
+        return "Country{" + "countryID=" + countryID + ", countryName='" + countryName + '\'' + ", requiredEXP=" + requiredEXP + '}';
     }
 
+    /**
+     * Method to check if the location in the parameters matches the current location.
+     *
+     * @return true if location matches the current location
+     */
     public boolean isCurrent_loc() {
         return current_loc;
     }
 
+    /**
+     * Set the current location to the location in the parameters
+     *
+     * @param current_loc location to be set as the current location.
+     */
     public void setCurrent_loc(boolean current_loc) {
         this.current_loc = current_loc;
     }
 
+    /**
+     * Location to retrieve the locked status of the country.
+     *
+     * @return true if the country is locked.
+     */
     public boolean isLocked() {
         return locked;
     }
 
+    /**
+     * Sets the locked status of a country
+     *
+     * @param locked the locked status to be set.
+     */
     public void setLocked(boolean locked) {
         this.locked = locked;
     }

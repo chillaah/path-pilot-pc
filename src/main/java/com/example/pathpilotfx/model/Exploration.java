@@ -1,4 +1,6 @@
 package com.example.pathpilotfx.model;
+
+
 /**
  Class that initialises Exploration Object
  **/
@@ -7,13 +9,23 @@ public class Exploration {
     private int countryID;
     private String status;
     private boolean isLocked;
-    private boolean isFavourited;
-    public Exploration(int userID, int countryID, String status, boolean isLocked, boolean isFavourited) {
+    private boolean isFavourite;
+
+    /**
+     * Initializes an Exploration object with specified attributes.
+     *
+     * @param userID    The ID of the user.
+     * @param countryID The ID of the country.
+     * @param status    The exploration status.
+     * @param isLocked  The status of the location.
+     * @param isFavourite  Favourite status for location.
+     */
+    public Exploration(int userID, int countryID, String status, boolean isLocked, boolean isFavourite) {
         this.userID = userID;
         this.countryID = countryID;
         this.status = status;
         this.isLocked = isLocked;
-        this.isFavourited = isFavourited;
+        this.isFavourite = isFavourite;
     }
 
     public int getUserID() {
@@ -48,14 +60,18 @@ public class Exploration {
         isLocked = locked;
     }
 
-    public boolean isFavourited() {
-        return isFavourited;
+    public boolean isFavourite() {
+        return isFavourite;
     }
 
-    public void setFavourited(boolean favourited) {
-        isFavourited = favourited;
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
+    /**
+     * toString method for Exploration.
+     * @return A string representation the Exploration object.
+     */
     @Override
     public String toString() {
         return "Exploration{" +
@@ -63,7 +79,7 @@ public class Exploration {
                 ", countryID=" + countryID +
                 ", status='" + status + '\'' +
                 ", isLocked=" + isLocked +
-                ", isFavourited=" + isFavourited +
+                ", isFavourite=" + isFavourite +
                 '}';
     }
 }

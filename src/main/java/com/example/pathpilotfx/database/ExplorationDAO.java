@@ -1,7 +1,6 @@
 package com.example.pathpilotfx.database;
 import com.example.pathpilotfx.model.Country;
 import com.example.pathpilotfx.model.Exploration;
-import com.example.pathpilotfx.model.User;
 
 import java.sql.*;
 import java.util.*;
@@ -15,13 +14,9 @@ public class ExplorationDAO {
         connection = DatabaseConnection.getInstance();
     }
 
-    //default: Exploration exploration = new Exploration(1, 'Exploring', 0, 0)
-    //ExplorationDAO explorationdao = new ExplorationDAO
-    //explorationdao.insert(exploration)
     /**
      Method that inserts exploration data
      **/
-
     public void insert(Exploration exploration) {
         UserDAO userDAO = new UserDAO();
         try {
@@ -32,15 +27,15 @@ public class ExplorationDAO {
             insertData.setInt(2, exploration.getCountryID());
             insertData.setString(3, exploration.getStatus());
             insertData.setBoolean(4, exploration.isLocked());
-            insertData.setBoolean(5, exploration.isFavourited());
+            insertData.setBoolean(5, exploration.isFavourite());
             insertData.execute();
         }
         catch (SQLException sqlexc){System.err.println(sqlexc);}
     }
+
     /**
      Method that updates the exploration data
      **/
-
     public void update(Exploration exploration) {
         try {
             PreparedStatement updateData = connection.prepareStatement(
@@ -48,7 +43,7 @@ public class ExplorationDAO {
             );
             updateData.setString(1, exploration.getStatus());
             updateData.setBoolean(2, exploration.isLocked());
-            updateData.setBoolean(3, exploration.isFavourited());
+            updateData.setBoolean(3, exploration.isFavourite());
             updateData.setInt(4, exploration.getUserID());
             updateData.setInt(5, exploration.getCountryID());
             updateData.execute();
@@ -69,6 +64,7 @@ public class ExplorationDAO {
             System.err.println(ex);
         }
     }
+
     /**
      Method that gets all exploration data
      **/
@@ -122,8 +118,17 @@ public class ExplorationDAO {
     }
 
     /**
-     Method that gets  country exploration data for a specific user
-     **/
+     * Retrieves the exploration data for a specific user and country.
+     *
+     * This method executes a SQL query to fetch the exploration details for the given
+     * user ID and country ID. If a matching record is found, it is mapped to an
+     * {@link Exploration} object and returned.
+     *
+     * @param userID the ID of the user for whom the exploration data is being retrieved
+     * @param countryID the ID of the country for which the exploration data is being retrieved
+     * @return an {@link Exploration} object containing the exploration data for the specified user and country,
+     *         or {@code null} if no matching record is found or an SQL exception occurs
+     */
     public Exploration getByUserIdCountryId(int userID, int countryID) {
         try {
             PreparedStatement explorationData = connection.prepareStatement("SELECT * FROM exploration WHERE user_id = ? and country_id = ?");
@@ -144,9 +149,12 @@ public class ExplorationDAO {
         }
         return null;
     }
+
     /**
-     Method that gets the country the user is currently exploring
-     @return returns the countryName
+     * Method that gets the country the user is currently exploring
+     *
+     * @param id the ID of the user whose current exploring country is being retrieved
+     * @return the name of the country the user is currently exploring, or an empty string if no such country is found or an exception occurs
      **/
     public String getCurrentExploring(int id) {
         String countryName = "";
@@ -170,6 +178,9 @@ public class ExplorationDAO {
 
     /**
      * Retrieves the first locked country ID for a specific user from the database.
+     *
+     * This method executes a SQL query to fetch the ID of the first country that is marked
+     * as locked for the specified user. If a matching record is found, the country ID is returned.
      *
      * @param id the ID of the user whose locked country is to be retrieved
      * @return the country ID of the first locked country for the specified user,
@@ -211,17 +222,16 @@ public class ExplorationDAO {
     }
 
     /**
-     Method that deletes all exploration data
-     **/
-    public void deleteAllExplorations() {
-        try {
-            PreparedStatement delete = connection.prepareStatement("DELETE FROM exploration");
-            delete.execute();
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-    }
-    
+     * Retrieves the current country that the specified user is exploring.
+     *
+     * This method executes a SQL query to fetch the details of the country that the specified
+     * user is currently marked as exploring. If a matching record is found, it is mapped to a
+     * {@link Country} object and returned.
+     *
+     * @param userID the ID of the user whose current exploring country is to be retrieved
+     * @return a {@link Country} object containing the details of the country the user is currently exploring,
+     *         or {@code null} if no such country is found or an error occurs
+     */
     public Country getCountryCurrent(int userID){
         Country country = null;
         try {
@@ -246,31 +256,9 @@ public class ExplorationDAO {
         }
 
         return country;
-
     }
 
 
-    /**
-     Method that counts the number of explored countries.
-     @param userID the userID
-     @return the count of explored countries
-     **/
-    public int countExplored(int userID) {
-        int count = 0;
-        try {
-            PreparedStatement currExploring = connection.prepareStatement(
-                    "Select COUNT(*) AS count FROM exploration " +
-                            "WHERE status = 'Explored' AND user_id = ?");
-            currExploring.setInt(1, userID);
-            ResultSet resultSet = currExploring.executeQuery();
-            if (resultSet.next()) {
-                count = resultSet.getInt("count");
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        return count;
-    }
 
     /**
      Method that counts the number of unexplored countries.
@@ -293,6 +281,7 @@ public class ExplorationDAO {
 
         return -1;
     }
+
 
     /**
      Method that counts the number of unlocked countries.
@@ -346,6 +335,7 @@ public class ExplorationDAO {
 
         return destination;
     }
+
     /**
      Method that closes the database connection
      **/
