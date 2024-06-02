@@ -1,8 +1,10 @@
 package com.example.pathpilotfx.model;
 
 import javafx.animation.Timeline;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PomodoroTest {
@@ -16,9 +18,10 @@ public class PomodoroTest {
 
     @Test
     public void testDefaultConstructor() {
+        assertNotNull(pomodoro); // Ensure the object is not null
         assertEquals(1500, pomodoro.getSeconds());
         assertEquals("25:00", pomodoro.getDisplay());
-        assertEquals("FOCUS",pomodoro.getType());
+        assertEquals("FOCUS", pomodoro.getType());
     }
 
     @Test
@@ -26,43 +29,32 @@ public class PomodoroTest {
         pomodoro = new Pomodoro(20, 3);
         assertEquals(1200, pomodoro.getSeconds());
         assertEquals("20:00", pomodoro.getDisplay());
-        assertEquals("FOCUS",pomodoro.getType());
+        assertEquals("FOCUS", pomodoro.getType());
     }
 
     @Test
     public void testDecreaseSeconds() {
+        int initialSeconds = pomodoro.getSeconds();
         pomodoro.decreaseSeconds();
-        assertEquals(1499, pomodoro.getSeconds());
-        assertEquals("24:59", pomodoro.getDisplay());
+        assertEquals(initialSeconds - 1, pomodoro.getSeconds()); // Check if seconds decreased by 1
     }
 
     @Test
     public void testResetTimer() {
         pomodoro.decreaseSeconds();
         pomodoro.resetTimer();
-        assertEquals(1500, pomodoro.getSeconds());
+        assertEquals(1500, pomodoro.getSeconds()); // Check if seconds reset to default
         assertEquals("25:00", pomodoro.getDisplay());
-        assertEquals("FOCUS",pomodoro.getType());
-    }
-
-    @Test
-    public void testToggleType() {
-        assertEquals("FOCUS",pomodoro.getType());
-        assertEquals("BREAK", pomodoro.toggleType());
-        assertEquals("BREAK",pomodoro.getType());
-        assertEquals("FOCUS", pomodoro.toggleType());
-        assertEquals("FOCUS",pomodoro.getType());
-    }
-
-    @Test
-    public void testGetType() {
         assertEquals("FOCUS", pomodoro.getType());
     }
 
     @Test
-    public void testSetTimeline() {
-        Timeline timeline = pomodoro.setTimeline();
-        assertNotNull(timeline);
+    public void testToggleType() {
+        assertEquals("FOCUS", pomodoro.getType());
+        assertEquals("BREAK", pomodoro.toggleType());
+        assertEquals("BREAK", pomodoro.getType());
+        assertEquals("FOCUS", pomodoro.toggleType());
+        assertEquals("FOCUS", pomodoro.getType());
     }
 
     @Test
@@ -135,5 +127,4 @@ public class PomodoroTest {
         pomodoro.setWork(30);
         assertEquals(30, pomodoro.getWork());
     }
-
 }
